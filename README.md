@@ -1,0 +1,1 @@
+Easy to use (hopefully) linear/logistic regression tool for data prediction.
