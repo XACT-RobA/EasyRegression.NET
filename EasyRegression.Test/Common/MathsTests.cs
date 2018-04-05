@@ -10,6 +10,39 @@ namespace EasyRegression.Test
     {
         private double _delta = 1e-8;
 
+        // Numeric validation
+
+        private static IEnumerable<object[]> TestValidDoubleData()
+        {
+            yield return new object[] { 1.0, true };
+            yield return new object[] { -1.0, true };
+            yield return new object[] { 0.0, true };
+            yield return new object[] { -0.0, true };
+            yield return new object[] { double.MaxValue, true };
+            yield return new object[] { double.MinValue, true };
+            yield return new object[] { double.NaN, false };
+            yield return new object[] { double.PositiveInfinity, false };
+            yield return new object[] { double.NegativeInfinity, false };
+        }
+
+        [Theory, MemberData(nameof(TestValidDoubleData))]
+        public void TestValidDouble(double input, bool answer)
+        {
+            Assert.Equal(input.IsValidDouble(), answer);
+        }
+
+        private static IEnumerable<object[]> TestValidNullableDoubleData()
+        {
+            foreach (var data in TestValidDoubleData()) yield return data;
+            yield return new object[] { null, false };
+        }
+
+        [Theory, MemberData(nameof(TestValidNullableDoubleData))]
+        public void TestValidNullableDouble(double? input, bool answer)
+        {
+            Assert.Equal(input.IsValidDouble(), answer);
+        }
+
         // Statistics
         // Mean
 
@@ -28,7 +61,6 @@ namespace EasyRegression.Test
         public void TestMean(double[] data, double answer)
         {
             double error = Math.Abs(data.Mean() - answer);
-
             Assert.True(error < _delta);
         }
 
@@ -49,7 +81,6 @@ namespace EasyRegression.Test
         public void TestNullableMean(double?[] data, double answer)
         {
             double error = Math.Abs(data.Mean() - answer);
-
             Assert.True(error < _delta);
         }
     }
