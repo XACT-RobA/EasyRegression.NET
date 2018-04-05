@@ -41,7 +41,7 @@ namespace EasyRegression.Core.Common
                 }
             }
 
-            if (count < 1) return 1.0;
+            if (count < 1) return 0.0;
 
             return sum / count;
         }
@@ -60,7 +60,7 @@ namespace EasyRegression.Core.Common
                 }
             }
 
-            if (count < 1) return 1.0;
+            if (count < 1) return 0.0;
 
             return sum / count;
         }
@@ -79,7 +79,7 @@ namespace EasyRegression.Core.Common
                 }
             }
 
-            if (count < 1) return 1.0;
+            if (count < 1) return 0.0;
 
             return sum / count;
         }
@@ -98,7 +98,7 @@ namespace EasyRegression.Core.Common
                 }
             }
 
-            if (count < 1) return 1.0;
+            if (count < 1) return 0.0;
 
             return sum / count;
         }
@@ -114,7 +114,9 @@ namespace EasyRegression.Core.Common
             int validLength = validInputs.Length;
             int halfLength = validLength / 2;
 
-            if (validLength % 2 == 0)
+            if (validLength < 1) return 0.0;
+
+            if (validLength % 2 != 0)
             {
                 return validInputs[halfLength];
             }
@@ -135,7 +137,9 @@ namespace EasyRegression.Core.Common
             int validLength = validInputs.Length;
             int halfLength = validLength / 2;
 
-            if (validLength % 2 == 0)
+            if (validLength < 1) return 0.0;
+
+            if (validLength % 2 != 0)
             {
                 return validInputs[halfLength];
             }

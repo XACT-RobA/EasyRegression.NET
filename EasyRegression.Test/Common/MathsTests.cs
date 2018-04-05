@@ -54,7 +54,7 @@ namespace EasyRegression.Test
             yield return new object[] { new double[] { 2.0, double.NaN }, 2.0 };
             yield return new object[] { new double[] { 1.0, 3.0, double.PositiveInfinity }, 2.0 };
             yield return new object[] { new double[] { 1.0, 2.0, 3.0, double.NegativeInfinity }, 2.0 };
-            yield return new object[] { new double[] { double.NaN }, 1.0 };
+            yield return new object[] { new double[] { double.NaN }, 0.0 };
         }
 
         [Theory, MemberData(nameof(TestMeanData))]
@@ -72,15 +72,57 @@ namespace EasyRegression.Test
             yield return new object[] { new double?[] { 2.0, double.NaN }, 2.0 };
             yield return new object[] { new double?[] { 1.0, 3.0, double.PositiveInfinity }, 2.0 };
             yield return new object[] { new double?[] { 1.0, 2.0, 3.0, double.NegativeInfinity }, 2.0 };
-            yield return new object[] { new double?[] { double.NaN }, 1.0 };
+            yield return new object[] { new double?[] { double.NaN }, 0.0 };
             yield return new object[] { new double?[] { 2.0, null }, 2.0 };
-            yield return new object[] { new double?[] { null }, 1.0 };
+            yield return new object[] { new double?[] { null }, 0.0 };
         }
 
         [Theory, MemberData(nameof(TestNullableMeanData))]
         public void TestNullableMean(double?[] data, double answer)
         {
             double error = Math.Abs(data.Mean() - answer);
+            Assert.True(error < _delta);
+        }
+
+        private static IEnumerable<object[]> TestMedianData()
+        {
+            yield return new object[] { new double[] { 1.0, 2.0, 3.0 }, 2.0 };
+            yield return new object[] { new double[] { 1.0, 3.0, 2.0 }, 2.0 };
+            yield return new object[] { new double[] { 1.0, 3.0 }, 2.0 };
+            yield return new object[] { new double[] { 2.0 }, 2.0 };
+            yield return new object[] { new double[] { 2.0, double.NaN }, 2.0 };
+            yield return new object[] { new double[] { 1.0, 3.0, double.PositiveInfinity }, 2.0 };
+            yield return new object[] { new double[] { 1.0, 2.0, 3.0, double.NegativeInfinity }, 2.0 };
+            yield return new object[] { new double[] { 1.0, 3.0, 2.0, double.NegativeInfinity }, 2.0 };
+            yield return new object[] { new double[] { double.NaN }, 0.0 };
+        }
+
+        [Theory, MemberData(nameof(TestMedianData))]
+        public void TestMedian(double[] data, double answer)
+        {
+            double error = Math.Abs(data.Median() - answer);
+            Assert.True(error < _delta);
+        }
+
+        private static IEnumerable<object[]> TestNullableMedianData()
+        {
+            yield return new object[] { new double?[] { 1.0, 2.0, 3.0 }, 2.0 };
+            yield return new object[] { new double?[] { 1.0, 3.0, 2.0 }, 2.0 };
+            yield return new object[] { new double?[] { 1.0, 3.0 }, 2.0 };
+            yield return new object[] { new double?[] { 2.0 }, 2.0 };
+            yield return new object[] { new double?[] { 2.0, double.NaN }, 2.0 };
+            yield return new object[] { new double?[] { 1.0, 3.0, double.PositiveInfinity }, 2.0 };
+            yield return new object[] { new double?[] { 1.0, 2.0, 3.0, double.NegativeInfinity }, 2.0 };
+            yield return new object[] { new double?[] { 1.0, 3.0, 2.0, double.NegativeInfinity }, 2.0 };
+            yield return new object[] { new double?[] { double.NaN }, 0.0 };
+            yield return new object[] { new double?[] { 2.0, null }, 2.0 };
+            yield return new object[] { new double?[] { null }, 0.0 };
+        }
+
+        [Theory, MemberData(nameof(TestNullableMedianData))]
+        public void TestNullableMedian(double?[] data, double answer)
+        {
+            double error = Math.Abs(data.Median() - answer);
             Assert.True(error < _delta);
         }
     }
