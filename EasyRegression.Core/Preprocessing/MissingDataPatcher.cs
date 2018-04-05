@@ -6,9 +6,9 @@ namespace EasyRegression.Core.Preprocessing
     public class MissingDataPatcher : IPreprocessingPlugin
     {
         private PreprocessingDefinitions.MissingDataPatchMethod _missingDataPatchMethod;
-
         private double?[][] _inputdata;
         private double[] _fillParameters;
+        private int _width;
 
         public MissingDataPatcher(double?[][] inputdata)
         {
@@ -26,12 +26,20 @@ namespace EasyRegression.Core.Preprocessing
 
         public double[][] Process()
         {
-            throw new System.NotImplementedException();
+            return FillData();
         }
 
-        public double[] Reprocess(double[] input)
+        public double[] Reprocess(double?[] inputdata)
         {
-            throw new System.NotImplementedException();
+            var outputdata = new double[_width];
+
+            for (int iw = 0; iw < _width; iw++)
+            {
+                outputdata[iw] = inputdata[iw].IsValidDouble() ?
+                    inputdata[iw].Value : _fillParameters[iw];
+            }
+
+            return outputdata;
         }
 
         public void StoreParameters(string filepath)
@@ -46,12 +54,11 @@ namespace EasyRegression.Core.Preprocessing
 
         private void PopulateParameters()
         {
-            int length = _inputdata.Length;
-            int width = _inputdata[0].Length;
+            _width = _inputdata[0].Length;
 
-            _fillParameters = new double[width];
+            _fillParameters = new double[_width];
 
-            for (int i = 0; i < width; i++)
+            for (int i = 0; i < _width; i++)
             {
                 _fillParameters[i] = CalculateParameter(i);
             }
@@ -62,7 +69,7 @@ namespace EasyRegression.Core.Preprocessing
             switch (_missingDataPatchMethod)
             {
                 case (PreprocessingDefinitions.MissingDataPatchMethod.median):
-                    throw new System.NotImplementedException();
+                    return _inputdata.ColumnMedian(column);
                 case (PreprocessingDefinitions.MissingDataPatchMethod.zero):
                     return 0.0;
                 case (PreprocessingDefinitions.MissingDataPatchMethod.mean):
@@ -73,7 +80,22 @@ namespace EasyRegression.Core.Preprocessing
 
         private double[][] FillData()
         {
-            throw new System.NotImplementedException();
+            int length = _inputdata.Length;
+
+            var outputdata = new double[length][];
+
+            for (int il = 0; il < length; il++)
+            {
+                outputdata[il] = new double[_width];
+
+                for (int iw = 0; iw < _width; iw++)
+                {
+                    outputdata[il][iw] = _inputdata[il][iw].IsValidDouble() ?
+                        _inputdata[il][iw].Value : _fillParameters[iw];
+                }
+            }
+
+            return outputdata;
         }
     }
 }

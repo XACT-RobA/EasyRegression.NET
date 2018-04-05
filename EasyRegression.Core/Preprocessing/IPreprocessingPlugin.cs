@@ -7,7 +7,7 @@ namespace EasyRegression.Core.Preprocessing
         
         // Perform preprocessing on data to predict
         // (using values from training data)
-        double[] Reprocess(double[] input);
+        double[] Reprocess(double?[] input);
 
         // Stores preprocessing parameters to json file
         void StoreParameters(string filepath);
