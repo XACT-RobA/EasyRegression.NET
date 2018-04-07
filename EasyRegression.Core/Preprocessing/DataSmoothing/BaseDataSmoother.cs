@@ -10,7 +10,7 @@ namespace EasyRegression.Core.Preprocessing.DataSmoothing
             throw new System.NotImplementedException();
         }
 
-        public double[][] Smooth(double[][] data)
+        public virtual double[][] Smooth(double[][] data)
         {
             CalculateParameters(data);
 
@@ -33,7 +33,7 @@ namespace EasyRegression.Core.Preprocessing.DataSmoothing
             return smoothedData;
         }
 
-        public double[] ReSmooth(double[] data)
+        public virtual double[] ReSmooth(double[] data)
         {
             int width = data.Length;
 
