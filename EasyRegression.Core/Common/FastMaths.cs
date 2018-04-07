@@ -53,5 +53,24 @@ namespace EasyRegression.Core.Common
 
             return means;
         }
+
+        // Fast mins/maxes
+        /*
+        for (int iw = 0; iw < width; iw++)
+        {
+            mins[iw] = double.MaxValue;
+            maxes[iw] = double.MinValue;
+        }
+
+        for (int il = 0; il < length; il++)
+        {
+            for (int iw = 0; iw < width; iw++)
+            {
+                var value = data[il][iw];
+                if (value < mins[iw]) mins[iw] = value;
+                if (value > maxes[iw]) maxes[iw] = value;
+            }
+        }
+        */
     }
 }

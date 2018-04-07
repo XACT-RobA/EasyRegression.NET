@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -90,6 +91,55 @@ namespace EasyRegression.Core.Common
                               .Select(x => x.Value)
                               .OrderBy(x => x);
             return valids.Any() ? valids.Middle() : 0.0;
+        }
+
+        // Minimum
+
+        public static double ColumnMinimum(this IEnumerable<double[]> input, int column)
+        {
+            if (!input.Any()) return 0.0;
+            return input.Select(arr => arr[column])
+                        .Min();
+        }
+
+        public static double[] ColumnMinimums(this IEnumerable<double[]> input)
+        {
+            return input.First()
+                        .Select((x, i) => input.ColumnMinimum(i))
+                        .ToArray();
+        }
+
+        // Maximum
+
+        public static double ColumnMaximum(this IEnumerable<double[]> input, int column)
+        {
+            if (!input.Any()) return 0.0;
+            return input.Select(arr => arr[column])
+                        .Max();
+        }
+
+        public static double[] ColumnMaximums(this IEnumerable<double[]> input)
+        {
+            return input.First()
+                        .Select((x, i) => input.ColumnMaximum(i))
+                        .ToArray();
+        }
+
+        // Variance
+
+        public static double Variance(this IEnumerable<double> input)
+        {
+            var mean = input.Mean();
+            return input.Select(x => x - mean)
+                        .Select(x => x * x)
+                        .Sum() / input.Count();
+        }
+
+        // Standard deviation
+
+        public static double StandardDeviation(this IEnumerable<double> input)
+        {
+            return Math.Sqrt(input.Variance());
         }
     }
 }
