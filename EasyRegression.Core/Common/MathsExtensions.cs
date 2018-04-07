@@ -60,6 +60,22 @@ namespace EasyRegression.Core.Common
             return valids.Any() ? valids.Average() : 0.0;
         }
 
+        public static double[] ColumnMeans(this IEnumerable<double[]> input)
+        {
+            if (!input.Any()) return new[] { 0.0 };
+            return input.First()
+                        .Select((x, i) => input.ColumnMean(i))
+                        .ToArray();
+        }
+
+        public static double[] ColumnMeans(this IEnumerable<double?[]> input)
+        {
+            if (!input.Any()) return new[] { 0.0 };
+            return input.First()
+                        .Select((x, i) => input.ColumnMean(i))
+                        .ToArray();
+        }
+
         // Median
         public static double Median(this IEnumerable<double> input)
         {
@@ -93,6 +109,22 @@ namespace EasyRegression.Core.Common
             return valids.Any() ? valids.Middle() : 0.0;
         }
 
+        public static double[] ColumnMedians(this IEnumerable<double[]> input)
+        {
+            if (!input.Any()) return new[] { 0.0 };
+            return input.First()
+                        .Select((x, i) => input.ColumnMedian(i))
+                        .ToArray();
+        }
+
+        public static double[] ColumnMedians(this IEnumerable<double?[]> input)
+        {
+            if (!input.Any()) return new[] { 0.0 };
+            return input.First()
+                        .Select((x, i) => input.ColumnMedian(i))
+                        .ToArray();
+        }
+
         // Minimum
 
         public static double ColumnMinimum(this IEnumerable<double[]> input, int column)
@@ -104,6 +136,7 @@ namespace EasyRegression.Core.Common
 
         public static double[] ColumnMinimums(this IEnumerable<double[]> input)
         {
+            if (!input.Any()) return new[] { 0.0 };
             return input.First()
                         .Select((x, i) => input.ColumnMinimum(i))
                         .ToArray();
@@ -120,6 +153,7 @@ namespace EasyRegression.Core.Common
 
         public static double[] ColumnMaximums(this IEnumerable<double[]> input)
         {
+            if (!input.Any()) return new[] { 0.0 };
             return input.First()
                         .Select((x, i) => input.ColumnMaximum(i))
                         .ToArray();
@@ -129,10 +163,27 @@ namespace EasyRegression.Core.Common
 
         public static double Variance(this IEnumerable<double> input)
         {
+            if (!input.Any()) return 0.0;
             var mean = input.Mean();
             return input.Select(x => x - mean)
                         .Select(x => x * x)
                         .Sum() / input.Count();
+        }
+
+        public static double ColumnVariance(this IEnumerable<double[]> input, int column)
+        {
+            if (!input.Any()) return 0.0;
+            var mean = input.ColumnMean(column);
+            return input.Select(arr => arr[column])
+                        .Variance();
+        }
+
+        public static double[] ColumnVariances(this IEnumerable<double[]> input)
+        {
+            if (!input.Any()) return new[] { 0.0 };
+            return input.First()
+                        .Select((x, i) => input.ColumnVariance(i))
+                        .ToArray();
         }
 
         // Standard deviation
@@ -140,6 +191,18 @@ namespace EasyRegression.Core.Common
         public static double StandardDeviation(this IEnumerable<double> input)
         {
             return Math.Sqrt(input.Variance());
+        }
+
+        public static double ColumnStandardDeviation(this IEnumerable<double[]> input, int column)
+        {
+            return Math.Sqrt(input.ColumnStandardDeviation(column));
+        }
+
+        public static double[] ColumnStandardDeviations(this IEnumerable<double[]> input)
+        {
+            return input.ColumnVariances()
+                        .Select(x => Math.Sqrt(x))
+                        .ToArray();
         }
     }
 }

@@ -6,13 +6,7 @@ namespace EasyRegression.Core.Preprocessing.DataPatching
     {
         protected override void CalculateParameters(double?[][] data)
         {
-            int width = data[0].Length;
-            _parameters = new double[width];
-
-            for (int i = 0; i < width; i++)
-            {
-                _parameters[i] = data.ColumnMedian(i);
-            }
+            _parameters = data.ColumnMedians();
         }
     }
 }
