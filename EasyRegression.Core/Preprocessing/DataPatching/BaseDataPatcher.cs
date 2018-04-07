@@ -2,7 +2,7 @@ using EasyRegression.Core.Common;
 
 namespace EasyRegression.Core.Preprocessing.DataPatching
 {
-    public class BaseDataPatcher : IDataPatcher
+    public abstract class BaseDataPatcher : IDataPatcher
     {
         protected double[] _parameters;
 
