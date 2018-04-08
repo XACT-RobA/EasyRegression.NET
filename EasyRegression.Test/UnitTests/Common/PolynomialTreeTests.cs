@@ -22,8 +22,6 @@ namespace EasyRegression.Test.Common
             var tree = new PolynomialTree(order, input);
             var output = tree.GetExpandedData();
 
-            System.Console.WriteLine($"Output: {string.Join(", ", output)}");
-
             Assert.Equal(output.Length, expected.Length);
 
             for (int i = 0; i < expected.Length; i++)

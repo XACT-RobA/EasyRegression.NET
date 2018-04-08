@@ -5,7 +5,7 @@ using EasyRegression.Core.Preprocessing.DataSmoothing;
 
 namespace EasyRegression.Core.Preprocessing
 {
-    public class Preprocessor
+    public class Preprocessor : IPreprocessor
     {
         private IDataPatcher _dataPatcher;
         private IDataSmoother _dataSmoother;
@@ -37,12 +37,12 @@ namespace EasyRegression.Core.Preprocessing
             return output;
         }
 
-        public double[] ReProcess(double[] input)
+        public double[] Reprocess(double[] input)
         {
             throw new System.NotImplementedException();
         }
 
-        public double[] ReProcess(double?[] input)
+        public double[] Reprocess(double?[] input)
         {
             throw new System.NotImplementedException();
         }
