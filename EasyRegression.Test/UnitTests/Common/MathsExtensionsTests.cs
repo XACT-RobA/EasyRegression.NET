@@ -4,9 +4,9 @@ using Xunit;
 using Xunit.Extensions;
 using EasyRegression.Core.Common;
 
-namespace EasyRegression.Test
+namespace EasyRegression.Test.Common
 {
-    public class MathsTests
+    public class MathsExtensionsTests
     {
         private int _places = 6;
 

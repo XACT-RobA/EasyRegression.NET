@@ -1,4 +1,5 @@
 using System;
+using EasyRegression.Core.Common;
 
 namespace EasyRegression.Core.Preprocessing.DataExpansion
 {
@@ -16,22 +17,19 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
             int length = input.Length;
             var expandedData = new double[length][];
 
-            int oldWidth = input[0].Length;
-            int newWidth = (int)(Math.Pow(_order + 1, oldWidth) + 0.5);
-
             for (int il = 0; il < length; il++)
             {
-                expandedData[il] = new double[newWidth];
+                var tree = new PolynomialTree(_order, input[il]);
+                expandedData[il] = tree.GetExpandedData();
             }
 
-            
-
-            throw new NotImplementedException();
+            return expandedData;
         }
 
         public override double[] ReExpand(double[] input)
         {
-            throw new System.NotImplementedException();
+            var tree = new PolynomialTree(_order, input);
+            return tree.GetExpandedData();
         }
     }
 }
