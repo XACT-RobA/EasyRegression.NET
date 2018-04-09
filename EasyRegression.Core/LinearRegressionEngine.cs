@@ -13,27 +13,31 @@ namespace EasyRegression.Core
             IOptimiser optimiser = null)
         {
             _preprocessor = preprocessor ?? new Preprocessor();
-            _optimiser = optimiser ?? new BaseOptimiser();
+            _optimiser = optimiser ?? new BatchGradientDescentOptimiser();
         }
 
         public void Train(double[][] x, double[] y)
         {
-            throw new NotImplementedException();
+            var preprocessedData = _preprocessor.Preprocess(x);
+            _optimiser.Train(preprocessedData, y);
         }
 
         public void Train(double?[][] x, double[] y)
         {
-            throw new NotImplementedException();
+            var preprocessedData = _preprocessor.Preprocess(x);
+            _optimiser.Train(preprocessedData, y);
         }
 
         public double Predict(double[] input)
         {
-            throw new NotImplementedException();
+            var preprocessedData = _preprocessor.Reprocess(input);
+            return _optimiser.Predict(preprocessedData);
         }
 
         public double Predict(double?[] input)
         {
-            throw new NotImplementedException();
+            var preprocessedData = _preprocessor.Reprocess(input);
+            return _optimiser.Predict(preprocessedData);
         }
     }
 }

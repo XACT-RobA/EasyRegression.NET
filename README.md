@@ -135,7 +135,7 @@ Stdev multiple from mean | - | -
 Item | Completed | Tested
 -----|-----------|-------
 **Linear regression** | |
-Batch gradient descent | - | -
+Batch gradient descent | ✓ | -
 Stochastci gradient descent | - | -
 Mini-batch descent | - | -
 Multi threaded BGD | - | -
