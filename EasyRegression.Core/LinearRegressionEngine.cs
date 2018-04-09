@@ -13,7 +13,7 @@ namespace EasyRegression.Core
             IOptimiser optimiser = null)
         {
             _preprocessor = preprocessor ?? new Preprocessor();
-            _optimiser = optimiser ?? new Optimiser();
+            _optimiser = optimiser ?? new BaseOptimiser();
         }
 
         public void Train(double[][] x, double[] y)

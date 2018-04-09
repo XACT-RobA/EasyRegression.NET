@@ -1,5 +1,7 @@
 # EasyRegression.NET
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 ## Aim
 - Easy to use regression library for .Net Core applications
 - Flexible data preprocessing
