@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EasyRegression.Core.Common
+namespace EasyRegression.Core.Common.Maths
 {
-    public static class MathsExtensions
+    public static class StatisticsExtensions
     {
         // Numeric validation
         public static bool IsValidDouble(this double input)

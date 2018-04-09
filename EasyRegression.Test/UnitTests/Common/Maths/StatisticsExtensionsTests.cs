@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using Xunit.Extensions;
-using EasyRegression.Core.Common;
+using EasyRegression.Core.Common.Maths;
 
-namespace EasyRegression.Test.Common
+namespace EasyRegression.Test.Common.Maths
 {
-    public class MathsExtensionsTests
+    public class StatisticsExtensionsTests
     {
         private int _places = 6;
 

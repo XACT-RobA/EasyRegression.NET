@@ -1,4 +1,5 @@
 using EasyRegression.Core.Common;
+using EasyRegression.Core.Common.Maths;
 
 namespace EasyRegression.Core.Preprocessing.DataSmoothing
 {
