@@ -39,12 +39,19 @@ namespace EasyRegression.Core.Preprocessing
 
         public double[] Reprocess(double[] input)
         {
-            throw new System.NotImplementedException();
+            var output = input;
+            output = _dataPatcher.RePatch(output);
+            output = _dataSmoother.ReSmooth(output);
+            output = _dataExpander.ReExpand(output);
+            return output;
         }
 
         public double[] Reprocess(double?[] input)
         {
-            throw new System.NotImplementedException();
+            var output = _dataPatcher.RePatch(input);
+            output = _dataSmoother.ReSmooth(output);
+            output = _dataExpander.ReExpand(output);
+            return output;
         }
     }
 }
