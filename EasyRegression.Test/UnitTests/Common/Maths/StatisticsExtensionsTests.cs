@@ -8,7 +8,7 @@ namespace EasyRegression.Test.Common.Maths
 {
     public class StatisticsExtensionsTests
     {
-        private int _places = 6;
+        private readonly int _places = 6;
 
         // Numeric validation
 
@@ -33,7 +33,11 @@ namespace EasyRegression.Test.Common.Maths
 
         private static IEnumerable<object[]> TestValidNullableDoubleData()
         {
-            foreach (var data in TestValidDoubleData()) yield return data;
+            foreach (var data in TestValidDoubleData())
+            {
+                yield return data;
+            }
+            
             yield return new object[] { null, false };
         }
 

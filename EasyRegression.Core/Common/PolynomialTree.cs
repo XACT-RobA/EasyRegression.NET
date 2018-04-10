@@ -6,9 +6,9 @@ namespace EasyRegression.Core.Common
 {
     public class PolynomialTree
     {
-        private int _order;
-        private double[] _values;
-        private PolynomialTreeNode _root;
+        private readonly int _order;
+        private readonly double[] _values;
+        private readonly PolynomialTreeNode _root;
 
         public PolynomialTree(int order, double[] values)
         {

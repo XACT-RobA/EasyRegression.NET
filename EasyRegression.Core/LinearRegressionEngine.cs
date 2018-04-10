@@ -6,8 +6,8 @@ namespace EasyRegression.Core
 {
     public class LinearRegressionEngine
     {
-        private IPreprocessor _preprocessor;
-        private IOptimiser _optimiser;
+        private readonly IPreprocessor _preprocessor;
+        private readonly IOptimiser _optimiser;
 
         public LinearRegressionEngine(IPreprocessor preprocessor = null,
             IOptimiser optimiser = null)

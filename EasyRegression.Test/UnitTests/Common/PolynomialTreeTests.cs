@@ -8,7 +8,7 @@ namespace EasyRegression.Test.Common
 {
     public class PolynomialTreeTests
     {
-        private int _places = 6;
+        private readonly int _places = 6;
 
         private static IEnumerable<object[]> TestData()
         {
