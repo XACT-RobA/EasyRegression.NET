@@ -94,7 +94,10 @@ namespace EasyRegression.Core.Optimisation
             if (_iter > 0)
             {
                 var diff = Math.Abs(_errors[_iter] - _errors[_iter - 1]);
-                if (diff <= _limit) _converged = true;
+                if (diff <= _limit)
+                {
+                    _converged = true;
+                }
             }
         }
     }
