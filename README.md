@@ -40,16 +40,17 @@ To change this functionality, a preprocessor instance can be passed into the con
 ```cs
 // Create a set of preprocessing plugins to configure the preprocessor
 IDataPatcher medianPatcher = new MedianDataPatcher();
-IDataSmoother normaliser = new DataNormaliser();
 IDataExpander polynomialExpander = new PolynomialDataExpander(order: 2);
+IDataSmoother normaliser = new DataNormaliser();
 
 // Create instance of the Preprocessor class
-IPreprocessor pre = new Preprocessor(dataPatcher: medianPatcher,
-    dataSmoother: normaliser,
-    dataExpander: polynomialExpander);
+IPreprocessor preprocessor = new Preprocessor();
+preprocessor.SetDataPatcher(medianPatcher);
+preprocessor.SetDataExpander(polynomialExpander);
+preprocessor.SetDataSmoother(normalise);
 
 // Create instance of LinearRegressionEngine passing in the custom/configured preprocessor
-var regression = new LinearRegressionEngine(preprocessor: pre);
+var regression = new LinearRegressionEngine(preprocessor: preprocessor);
 ```
 
 The preprocessor comprises of a data patcher, a data smoother, a data expander, and a data filter.
@@ -70,7 +71,26 @@ IDataPatcher zeroPatcher = new ZeroDataPatcher();
 double[][] patchedData = meanPatcher.Patch(data);
 
 // Pass a specific data patcher into a Preprocessor
-IPreprocessor preprocessor = new Preprocessor(dataPatcher: medianPatcher);
+IPreprocessor preprocessor = new Preprocessor();
+preprocessor.SetDataPatcher(meanPatcher);
+```
+
+The only non-blank data expander currently implemented is the PolynomialExpander, which expands the number of columns in a dataset to a polynomial power, using each input as a variable to be expanded.
+This is not enabled by default, as it's use cases are quite specific, and it has the effect of expanding exponentially large with more columns and higher polynomial orders.
+
+```cs
+// Create polynomial expander with polynomial order 1
+// [x0, x1] => [1, x1, x0, x0x1]
+IDataExpander polynomialExpander = new PolynomialDataExpander(order: 1);
+
+// Expand a double[][] of data
+// This expander creates huge amounts of data as data.Length and order increase
+// Creates Math.Pow(order + 1, data.Length) features
+double[][] expandedData = polynomialExpander.Expand(data);
+
+// Pass an expander into a preprocessor
+IPreprocessor preprocessor = new Preprocessor();
+preprocessor.SetDataExpander(polynomialExpander);
 ```
 
 The user can also currently choose between two data smoothers, one that normalises the data, and one that standardises the data. [(link)](http://www.dataminingblog.com/standardization-vs-normalization/)
@@ -93,24 +113,8 @@ IDataSmoother blankSmoother = new BlankDataSmoother();
 double[][] smoothedData = standardiser.Smooth(data);
 
 // Pass a specific data smoother into a Preprocessor
-IPreprocessor preprocessor = new Preprocessor(dataSmoother: normaliser);
-```
-
-The only non-blank data expander currently implemented is the PolynomialExpander, which expands the number of columns in a dataset to a polynomial power, using each input as a variable to be expanded.
-This is not enabled by default, as it's use cases are quite specific, and it has the effect of expanding exponentially large with more columns and higher polynomial orders.
-
-```cs
-// Create polynomial expander with polynomial order 1
-// [x0, x1] => [1, x1, x0, x0x1]
-IDataExpander polynomialExpander = new PolynomialDataExpander(order: 1);
-
-// Expand a double[][] of data
-// This expander creates huge amounts of data as data.Length and order increase
-// Creates Math.Pow(order + 1, data.Length) features
-double[][] expandedData = polynomialExpander.Expand(data);
-
-// Pass an expander into a preprocessor
-IPreprocessor preprocessor = new Preprocessor(dataExpander: polynomialExpander);
+IPreprocessor preprocessor = new Preprocessor();
+preprocessor.SetDataSmoother(normaliser);
 ```
 
 ## Progress

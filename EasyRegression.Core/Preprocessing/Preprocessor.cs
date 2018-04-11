@@ -11,13 +11,26 @@ namespace EasyRegression.Core.Preprocessing
         private IDataExpander _dataExpander;
         private IDataSmoother _dataSmoother;
 
-        public Preprocessor(IDataPatcher dataPatcher = null, 
-            IDataExpander dataExpander = null,
-            IDataSmoother dataSmoother = null)
+        public Preprocessor()
         {
-            _dataPatcher = dataPatcher ?? new MeanDataPatcher();
-            _dataExpander = dataExpander ?? new BlankDataExpander();
-            _dataSmoother = dataSmoother ?? new DataStandardiser();
+            _dataPatcher =  new MeanDataPatcher();
+            _dataExpander =  new BlankDataExpander();
+            _dataSmoother =  new DataStandardiser();
+        }
+
+        public void SetDataPatcher(IDataPatcher dataPatcher)
+        {
+            _dataPatcher = dataPatcher ?? _dataPatcher;
+        }
+
+        public void SetDataExpander(IDataExpander dataExpander)
+        {
+            _dataExpander = dataExpander ?? _dataExpander;
+        }
+
+        public void SetDataSmoother(IDataSmoother dataSmoother)
+        {
+            _dataSmoother = dataSmoother ?? _dataSmoother;
         }
 
         public double[][] Preprocess(double[][] input)

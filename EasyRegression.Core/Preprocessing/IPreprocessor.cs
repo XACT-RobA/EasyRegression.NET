@@ -1,7 +1,17 @@
+using EasyRegression.Core.Preprocessing.DataExpansion;
+using EasyRegression.Core.Preprocessing.DataPatching;
+using EasyRegression.Core.Preprocessing.DataSmoothing;
+
 namespace EasyRegression.Core.Preprocessing
 {
     public interface IPreprocessor
     {
+        // Set plugins
+        void SetDataPatcher(IDataPatcher dataPatcher);
+        void SetDataExpander(IDataExpander dataExpander);
+        void SetDataSmoother(IDataSmoother dataSmoother);
+
+
         // Preprocess training data
         double[][] Preprocess(double[][] input);
         double[][] Preprocess(double?[][] input);
