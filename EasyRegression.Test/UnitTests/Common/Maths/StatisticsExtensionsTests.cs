@@ -12,141 +12,200 @@ namespace EasyRegression.Test.Common.Maths
 
         // Numeric validation
 
-        private static IEnumerable<object[]> TestValidDoubleData()
+        [Fact]
+        public void TestValidDouble()
         {
-            yield return new object[] { 1.0, true };
-            yield return new object[] { -1.0, true };
-            yield return new object[] { 0.0, true };
-            yield return new object[] { -0.0, true };
-            yield return new object[] { double.MaxValue, true };
-            yield return new object[] { double.MinValue, true };
-            yield return new object[] { double.NaN, false };
-            yield return new object[] { double.PositiveInfinity, false };
-            yield return new object[] { double.NegativeInfinity, false };
+            Assert.Equal(true, 1.0.IsValidDouble());
+            Assert.Equal(true, (-1.0).IsValidDouble());
+            Assert.Equal(true, 0.0.IsValidDouble());
+            Assert.Equal(true, (-0.0).IsValidDouble());
+            Assert.Equal(true, double.MaxValue.IsValidDouble());
+            Assert.Equal(true, double.MinValue.IsValidDouble());
+            Assert.Equal(false, double.NaN.IsValidDouble());
+            Assert.Equal(false, double.PositiveInfinity.IsValidDouble());
+            Assert.Equal(false, double.NegativeInfinity.IsValidDouble());
         }
 
-        [Theory, MemberData(nameof(TestValidDoubleData))]
-        public void TestValidDouble(double input, bool answer)
+        [Fact]
+        public void TestValidNullableDouble()
         {
-            Assert.Equal(input.IsValidDouble(), answer);
-        }
-
-        private static IEnumerable<object[]> TestValidNullableDoubleData()
-        {
-            foreach (var data in TestValidDoubleData())
-            {
-                yield return data;
-            }
-            
-            yield return new object[] { null, false };
-        }
-
-        [Theory, MemberData(nameof(TestValidNullableDoubleData))]
-        public void TestValidNullableDouble(double? input, bool answer)
-        {
-            Assert.Equal(input.IsValidDouble(), answer);
+            Assert.Equal(((double?)null).IsValidDouble(), false);
         }
 
         // Middle
 
-        private static IEnumerable<object[]> TestMiddleData()
+        [Fact]
+        public void TestMiddle()
         {
-            yield return new object[] { new double[] { 1.0, 2.0, 3.0 }, 2.0 };
-            yield return new object[] { new double[] { 1.0, 3.0, 2.0 }, 3.0 };
-            yield return new object[] { new double[] { 1.0, 3.0 }, 2.0 };
-            yield return new object[] { new double[] { 2.0 }, 2.0 };
-            yield return new object[] { new double[0], 0.0 };
-        }
-
-        [Theory, MemberData(nameof(TestMiddleData))]
-        public void TestMiddle(double[] data, double answer)
-        {
-            Assert.Equal(answer, data.Middle(), _places);
+            Assert.Equal(2.0, (new[] { 1.0, 2.0, 3.0 }).Middle(), _places);
+            Assert.Equal(3.0, (new[] { 1.0, 3.0, 2.0 }).Middle(), _places);
+            Assert.Equal(2.0, (new[] { 1.0, 3.0 }).Middle(), _places);
+            Assert.Equal(2.0, (new[] { 2.0 }).Middle(), _places);
+            Assert.Equal(0.0, (new double[0]).Middle(), _places);
         }
 
         // Statistics
         // Mean
 
-        private static IEnumerable<object[]> TestMeanData()
+        [Fact]
+        public void TestMean()
         {
-            yield return new object[] { new double[] { 1.0, 2.0, 3.0 }, 2.0 };
-            yield return new object[] { new double[] { 1.0, 3.0 }, 2.0 };
-            yield return new object[] { new double[] { 2.0 }, 2.0 };
-            yield return new object[] { new double[] { 2.0, double.NaN }, 2.0 };
-            yield return new object[] { new double[] { 1.0, 3.0, double.PositiveInfinity }, 2.0 };
-            yield return new object[] { new double[] { 1.0, 2.0, 3.0, double.NegativeInfinity }, 2.0 };
-            yield return new object[] { new double[] { double.NaN }, 0.0 };
-            yield return new object[] { new double[0], 0.0 };
+            Assert.Equal(2.0, (new[] { 1.0, 2.0, 3.0 }).Mean(), _places);
+            Assert.Equal(2.0, (new[] { 2.0 }).Mean(), _places);
+            Assert.Equal(2.0, (new[] { 1.0, 3.0, double.PositiveInfinity }).Mean(), _places);
+            Assert.Equal(0.0, (new[] { double.NaN }).Mean(), _places);
+            Assert.Equal(0.0, (new double[0]).Mean(), _places);
         }
 
-        [Theory, MemberData(nameof(TestMeanData))]
-        public void TestMean(double[] data, double answer)
+        [Fact]
+        public void TestNullableMean()
         {
-            Assert.Equal(answer, data.Mean(), _places);
+            Assert.Equal(2.0, (new double?[] { 2.0, null }).Mean(), _places);
+            Assert.Equal(0.0, (new double?[] { null }).Mean(), _places);
         }
 
-        private static IEnumerable<object[]> TestNullableMeanData()
+        [Fact]
+        public void TestColumnMean()
         {
-            yield return new object[] { new double?[] { 1.0, 2.0, 3.0 }, 2.0 };
-            yield return new object[] { new double?[] { 1.0, 3.0 }, 2.0 };
-            yield return new object[] { new double?[] { 2.0 }, 2.0 };
-            yield return new object[] { new double?[] { 2.0, double.NaN }, 2.0 };
-            yield return new object[] { new double?[] { 1.0, 3.0, double.PositiveInfinity }, 2.0 };
-            yield return new object[] { new double?[] { 1.0, 2.0, 3.0, double.NegativeInfinity }, 2.0 };
-            yield return new object[] { new double?[] { double.NaN }, 0.0 };
-            yield return new object[] { new double?[] { 2.0, null }, 2.0 };
-            yield return new object[] { new double?[] { null }, 0.0 };
-            yield return new object[] { new double?[0], 0.0 };
+            var data = new double[][]
+            { 
+                new[] { 1.0, 2.0 },
+                new[] { 3.0, 4.0 },
+            };
+            Assert.Equal(2.0, data.ColumnMean(0), _places);
+            Assert.Equal(3.0, data.ColumnMean(1), _places);
         }
 
-        [Theory, MemberData(nameof(TestNullableMeanData))]
-        public void TestNullableMean(double?[] data, double answer)
+        [Fact]
+        public void TestNullableColumnMean()
         {
-            Assert.Equal(answer, data.Mean(), _places);
+            var data = new double?[][]
+            {
+                new double?[] { 1.0, null },
+                new double?[] { null, 2.0 },
+                new double?[] { 3.0, 4.0 },
+            };
+            Assert.Equal(2.0, data.ColumnMean(0), _places);
+            Assert.Equal(3.0, data.ColumnMean(1), _places);
+        }
+
+        [Fact]
+        public void TestColumnMeans()
+        {
+            var data = new double[][]
+            { 
+                new[] { 1.0, 2.0 },
+                new[] { 3.0, 4.0 },
+            };
+            var expected = new[] { 2.0, 3.0 };
+            var actual = data.ColumnMeans();
+
+            for (int i = 0; i < expected.Length; i++)
+            {
+                Assert.Equal(expected[i], actual[i], _places);
+            }
+        }
+
+        [Fact]
+        public void TestNullableColumnMeans()
+        {
+            var data = new double?[][]
+            {
+                new double?[] { 1.0, null },
+                new double?[] { null, 2.0 },
+                new double?[] { 3.0, 4.0 },
+            };
+            var expected = new[] { 2.0, 3.0 };
+            var actual = data.ColumnMeans();
+
+            for (int i = 0; i < expected.Length; i++)
+            {
+                Assert.Equal(expected[i], actual[i], _places);
+            }
         }
 
         // Median
 
-        private static IEnumerable<object[]> TestMedianData()
+        [Fact]
+        public void TestMedian()
         {
-            yield return new object[] { new double[] { 1.0, 2.0, 3.0 }, 2.0 };
-            yield return new object[] { new double[] { 1.0, 3.0, 2.0 }, 2.0 };
-            yield return new object[] { new double[] { 1.0, 3.0 }, 2.0 };
-            yield return new object[] { new double[] { 2.0 }, 2.0 };
-            yield return new object[] { new double[] { 2.0, double.NaN }, 2.0 };
-            yield return new object[] { new double[] { 1.0, 3.0, double.PositiveInfinity }, 2.0 };
-            yield return new object[] { new double[] { 1.0, 2.0, 3.0, double.NegativeInfinity }, 2.0 };
-            yield return new object[] { new double[] { 1.0, 3.0, 2.0, double.NegativeInfinity }, 2.0 };
-            yield return new object[] { new double[] { double.NaN }, 0.0 };
-            yield return new object[] { new double[0], 0.0 };
+            Assert.Equal(2.0, (new[] { 1.0, 3.0, 2.0 }).Median(), _places);
+            Assert.Equal(2.0, (new[] { 2.0 }).Median(), _places);
+            Assert.Equal(2.0, (new[] { 2.0, double.PositiveInfinity }).Median(), _places);
+            Assert.Equal(2.0, (new[] { 1.0, 3.0, double.NegativeInfinity }).Median(), _places);
+            Assert.Equal(0.0, (new[] { double.NaN }).Median(), _places);
+            Assert.Equal(0.0, (new double[0]).Median(), _places);
         }
 
-        [Theory, MemberData(nameof(TestMedianData))]
-        public void TestMedian(double[] data, double answer)
+        [Fact]
+        public void TestNullableMedian()
         {
-            Assert.Equal(answer, data.Median(), _places);
+            Assert.Equal(2.0, (new double?[] { 2.0, null }).Median(), _places);
+            Assert.Equal(0.0, (new double?[] { null }).Median(), _places);
         }
 
-        private static IEnumerable<object[]> TestNullableMedianData()
+        [Fact]
+        public void TestColumnMedian()
         {
-            yield return new object[] { new double?[] { 1.0, 2.0, 3.0 }, 2.0 };
-            yield return new object[] { new double?[] { 1.0, 3.0, 2.0 }, 2.0 };
-            yield return new object[] { new double?[] { 1.0, 3.0 }, 2.0 };
-            yield return new object[] { new double?[] { 2.0 }, 2.0 };
-            yield return new object[] { new double?[] { 2.0, double.NaN }, 2.0 };
-            yield return new object[] { new double?[] { 1.0, 3.0, double.PositiveInfinity }, 2.0 };
-            yield return new object[] { new double?[] { 1.0, 2.0, 3.0, double.NegativeInfinity }, 2.0 };
-            yield return new object[] { new double?[] { 1.0, 3.0, 2.0, double.NegativeInfinity }, 2.0 };
-            yield return new object[] { new double?[] { double.NaN }, 0.0 };
-            yield return new object[] { new double?[] { 2.0, null }, 2.0 };
-            yield return new object[] { new double?[] { null }, 0.0 };
-            yield return new object[] { new double?[0], 0.0 };
+            var data = new double[][]
+            { 
+                new[] { 1.0, 2.0 },
+                new[] { 3.0, 4.0 },
+                new[] { 2.0, double.NaN },
+            };
+            Assert.Equal(2.0, data.ColumnMedian(0), _places);
+            Assert.Equal(3.0, data.ColumnMedian(1), _places);
         }
 
-        [Theory, MemberData(nameof(TestNullableMedianData))]
-        public void TestNullableMedian(double?[] data, double answer)
+        [Fact]
+        public void TestNullableColumnMedian()
         {
-            Assert.Equal(answer, data.Median(), _places);
+            var data = new double?[][]
+            {
+                new double?[] { 1.0, null },
+                new double?[] { null, 2.0 },
+                new double?[] { 3.0, 4.0 },
+                new double?[] { 2.0, double.NaN },
+            };
+            Assert.Equal(2.0, data.ColumnMedian(0), _places);
+            Assert.Equal(3.0, data.ColumnMedian(1), _places);
+        }
+
+        [Fact]
+        public void TestColumnMedians()
+        {
+            var data = new double[][]
+            { 
+                new[] { 1.0, 2.0 },
+                new[] { 3.0, 4.0 },
+                new[] { 2.0, double.NaN },
+            };
+            var expected = new[] { 2.0, 3.0 };
+            var actual = data.ColumnMedians();
+
+            for (int i = 0; i < expected.Length; i++)
+            {
+                Assert.Equal(expected[i], actual[i], _places);
+            }
+        }
+
+        [Fact]
+        public void TestNullableColumnMedians()
+        {
+            var data = new double?[][]
+            {
+                new double?[] { 1.0, null },
+                new double?[] { null, 2.0 },
+                new double?[] { 3.0, 4.0 },
+                new double?[] { 2.0, double.NaN },
+            };
+            var expected = new[] { 2.0, 3.0 };
+            var actual = data.ColumnMedians();
+
+            for (int i = 0; i < expected.Length; i++)
+            {
+                Assert.Equal(expected[i], actual[i], _places);
+            }
         }
     }
 }

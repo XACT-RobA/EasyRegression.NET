@@ -54,17 +54,14 @@ namespace EasyRegression.Core.Common.Maths
 
         public static double ColumnMean(this IEnumerable<double[]> input, int column)
         {
-            var valids = input.Select(arr => arr[column])
-                              .Where(x => x.IsValidDouble());
-            return valids.Any() ? valids.Average() : 0.0;
+            return input.Select(arr => arr[column])
+                        .Mean();
         }
 
         public static double ColumnMean(this IEnumerable<double?[]> input, int column)
         {
-            var valids = input.Select(arr => arr[column])
-                              .Where(x => x.IsValidDouble())
-                              .Select(x => x.Value);
-            return valids.Any() ? valids.Average() : 0.0;
+            return input.Select(arr => arr[column])
+                        .Mean();
         }
 
         public static double[] ColumnMeans(this IEnumerable<double[]> input)
@@ -109,19 +106,14 @@ namespace EasyRegression.Core.Common.Maths
 
         public static double ColumnMedian(this IEnumerable<double[]> input, int column)
         {
-            var valids = input.Select(arr => arr[column])
-                              .Where(x => x.IsValidDouble())
-                              .OrderBy(x => x);
-            return valids.Any() ? valids.Middle() : 0.0;
+            return input.Select(arr => arr[column])
+                        .Median();
         }
 
         public static double ColumnMedian(this IEnumerable<double?[]> input, int column)
         {
-            var valids = input.Select(arr => arr[column])
-                              .Where(x => x.IsValidDouble())
-                              .Select(x => x.Value)
-                              .OrderBy(x => x);
-            return valids.Any() ? valids.Middle() : 0.0;
+            return input.Select(arr => arr[column])
+                        .Median();
         }
 
         public static double[] ColumnMedians(this IEnumerable<double[]> input)
