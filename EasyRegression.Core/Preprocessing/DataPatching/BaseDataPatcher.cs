@@ -7,22 +7,24 @@ namespace EasyRegression.Core.Preprocessing.DataPatching
     {
         protected double[] _parameters;
 
-        protected virtual void CalculateParameters(double?[][] data)
+        protected virtual void CalculateParameters(Matrix<double?> input)
         {
-            _parameters = new double[data[0].Length];
+            _parameters = new double[input.Width];
         }
 
-        protected virtual void CalculateParameters(double[][] data)
+        protected virtual void CalculateParameters(Matrix<double> input)
         {
-            _parameters = new double[data[0].Length];
+            _parameters = new double[input.Width];
         }
 
-        public double[][] Patch(double?[][] data)
+        public Matrix<double> Patch(Matrix<double?> input)
         {
-            CalculateParameters(data);
+            CalculateParameters(input);
 
-            int length = data.Length;
-            int width = data[0].Length;
+            int length = input.Length;
+            int width = input.Width;
+
+            var data = input.Data;
 
             double[][] patchedData = new double[length][];
 
@@ -39,15 +41,15 @@ namespace EasyRegression.Core.Preprocessing.DataPatching
                 }
             }
 
-            return patchedData;
+            return new Matrix<double>(patchedData);
         }
 
-        public double[][] Patch(double[][] data)
+        public Matrix<double> Patch(Matrix<double> input)
         {
-            CalculateParameters(data);
+            CalculateParameters(input);
 
-            int length = data.Length;
-            int width = data[0].Length;
+            int length = input.Length;
+            int width = input.Width;
 
             double[][] patchedData = new double[length][];
 
@@ -57,14 +59,14 @@ namespace EasyRegression.Core.Preprocessing.DataPatching
 
                 for (int iw = 0; iw < width; iw++)
                 {
-                    var value = data[il][iw];
+                    var value = input.Data[il][iw];
 
                     patchedData[il][iw] = value.IsValidDouble() ?
                         value : _parameters[iw];
                 }
             }
 
-            return patchedData;
+            return new Matrix<double>(patchedData);
         }
 
         public double[] RePatch(double?[] data)

@@ -1,3 +1,4 @@
+using EasyRegression.Core.Common;
 using EasyRegression.Core.Preprocessing.DataExpansion;
 using EasyRegression.Core.Preprocessing.DataPatching;
 using EasyRegression.Core.Preprocessing.DataSmoothing;
@@ -13,8 +14,8 @@ namespace EasyRegression.Core.Preprocessing
 
 
         // Preprocess training data
-        double[][] Preprocess(double[][] input);
-        double[][] Preprocess(double?[][] input);
+        Matrix<double> Preprocess(Matrix<double> input);
+        Matrix<double> Preprocess(Matrix<double?> input);
 
         // Process testing/predictino data using same parameters
         double[] Reprocess(double[] input);

@@ -1,10 +1,12 @@
+using EasyRegression.Core.Common;
+
 namespace EasyRegression.Core.Preprocessing.DataSmoothing
 {
     public class BlankDataSmoother : BaseDataSmoother
     {
-        public override double[][] Smooth(double[][] data)
+        public override Matrix<double> Smooth(Matrix<double> input)
         {
-            return data;
+            return input;
         }
 
         public override double[] ReSmooth(double[] data)

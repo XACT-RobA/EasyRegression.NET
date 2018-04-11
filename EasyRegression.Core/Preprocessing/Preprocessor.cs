@@ -1,3 +1,4 @@
+using EasyRegression.Core.Common;
 using EasyRegression.Core.Definitions;
 using EasyRegression.Core.Preprocessing.DataExpansion;
 using EasyRegression.Core.Preprocessing.DataPatching;
@@ -33,7 +34,7 @@ namespace EasyRegression.Core.Preprocessing
             _dataSmoother = dataSmoother ?? _dataSmoother;
         }
 
-        public double[][] Preprocess(double[][] input)
+        public Matrix<double> Preprocess(Matrix<double> input)
         {
             var output = input;
             output = _dataPatcher.Patch(output);
@@ -42,7 +43,7 @@ namespace EasyRegression.Core.Preprocessing
             return output;
         }
 
-        public double[][] Preprocess(double?[][] input)
+        public Matrix<double> Preprocess(Matrix<double?> input)
         {
             var output = _dataPatcher.Patch(input);
             output = _dataExpander.Expand(output);

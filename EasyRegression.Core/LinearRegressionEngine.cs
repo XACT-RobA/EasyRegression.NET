@@ -1,4 +1,5 @@
 using System;
+using EasyRegression.Core.Common;
 using EasyRegression.Core.Optimisation;
 using EasyRegression.Core.Preprocessing;
 
@@ -6,23 +7,32 @@ namespace EasyRegression.Core
 {
     public class LinearRegressionEngine
     {
-        private readonly IPreprocessor _preprocessor;
-        private readonly IOptimiser _optimiser;
+        private IPreprocessor _preprocessor;
+        private IOptimiser _optimiser;
 
-        public LinearRegressionEngine(IPreprocessor preprocessor = null,
-            IOptimiser optimiser = null)
+        public LinearRegressionEngine()
         {
-            _preprocessor = preprocessor ?? new Preprocessor();
-            _optimiser = optimiser ?? new BatchGradientDescentOptimiser();
+            _preprocessor = new Preprocessor();
+            _optimiser = new BatchGradientDescentOptimiser();
         }
 
-        public void Train(double[][] x, double[] y)
+        public void SetPreprocessor(IPreprocessor preprocessor)
+        {
+            _preprocessor = preprocessor ?? _preprocessor;
+        }
+
+        public void SetOptimiser(IOptimiser optimiser)
+        {
+            _optimiser = optimiser ?? _optimiser;
+        }
+
+        public void Train(Matrix<double> x, double[] y)
         {
             var preprocessedData = _preprocessor.Preprocess(x);
             _optimiser.Train(preprocessedData, y);
         }
 
-        public void Train(double?[][] x, double[] y)
+        public void Train(Matrix<double?> x, double[] y)
         {
             var preprocessedData = _preprocessor.Preprocess(x);
             _optimiser.Train(preprocessedData, y);

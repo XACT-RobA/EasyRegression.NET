@@ -1,10 +1,12 @@
+using EasyRegression.Core.Common;
+
 namespace EasyRegression.Core.Preprocessing.DataPatching
 {
     public interface IDataPatcher : IPreprocessingPlugin
     {
         // Patch null or invalid data for training
-        double[][] Patch(double?[][] data);
-        double[][] Patch(double[][] data);
+        Matrix<double> Patch(Matrix<double?> input);
+        Matrix<double> Patch(Matrix<double> input);
 
         // Patch null or invalid data for predictions/testing
         double[] RePatch(double?[] data);

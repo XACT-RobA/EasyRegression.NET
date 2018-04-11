@@ -12,18 +12,18 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
             _order = order;
         }
 
-        public override double[][] Expand(double[][] input)
+        public override Matrix<double> Expand(Matrix<double> input)
         {
             int length = input.Length;
             var expandedData = new double[length][];
 
             for (int il = 0; il < length; il++)
             {
-                var tree = new PolynomialTree(_order, input[il]);
+                var tree = new PolynomialTree(_order, input.Data[il]);
                 expandedData[il] = tree.GetExpandedData();
             }
 
-            return expandedData;
+            return new Matrix<double>(expandedData);;
         }
 
         public override double[] ReExpand(double[] input)

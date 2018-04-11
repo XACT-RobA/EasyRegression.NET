@@ -1,10 +1,12 @@
+using EasyRegression.Core.Common;
+
 namespace EasyRegression.Core.Preprocessing.DataExpansion
 {
     public abstract class BaseDataExpander : IDataExpander
     {
-        public virtual double[][] Expand(double[][] data)
+        public virtual Matrix<double> Expand(Matrix<double> input)
         {
-            return data;
+            return input;
         }
 
         public virtual double[] ReExpand(double[] data)

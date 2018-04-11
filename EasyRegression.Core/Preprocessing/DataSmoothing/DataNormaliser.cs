@@ -5,15 +5,15 @@ namespace EasyRegression.Core.Preprocessing.DataSmoothing
 {
     public class DataNormaliser : BaseDataSmoother
     {
-        protected override void CalculateParameters(double[][] data)
+        protected override void CalculateParameters(Matrix<double> input)
         {
-            int width = data[0].Length;
+            int width = input.Width;
 
             _subtractors = new double[width];
             _divisors = new double[width];
 
-            var mins = data.ColumnMinimums();
-            var maxes = data.ColumnMaximums();
+            var mins = input.Data.ColumnMinimums();
+            var maxes = input.Data.ColumnMaximums();
 
             for (int iw = 0; iw < width; iw++)
             {

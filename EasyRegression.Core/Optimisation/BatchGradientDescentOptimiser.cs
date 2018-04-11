@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using EasyRegression.Core.Common;
 using EasyRegression.Core.Common.Maths;
 
 namespace EasyRegression.Core.Optimisation
@@ -35,7 +36,7 @@ namespace EasyRegression.Core.Optimisation
             _converged = false;
         }
 
-        public override void Train(double[][] x, double[] y)
+        public override void Train(Matrix<double> x, double[] y)
         {
             Initialise(x, y);
 
@@ -52,12 +53,12 @@ namespace EasyRegression.Core.Optimisation
             return x.DotProduct(_params);
         }
 
-        private void Initialise(double[][] x, double[] y)
+        private void Initialise(Matrix<double> x, double[] y)
         {
             _length = x.Length;
-            _width = x[0].Length;
+            _width = x.Width;
 
-            _x = x;
+            _x = x.Data;
             _y = y;
 
             _params = new double[_width];

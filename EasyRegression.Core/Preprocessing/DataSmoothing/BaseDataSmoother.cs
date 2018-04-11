@@ -1,3 +1,5 @@
+using EasyRegression.Core.Common;
+
 namespace EasyRegression.Core.Preprocessing.DataSmoothing
 {
     public abstract class BaseDataSmoother : IDataSmoother
@@ -5,17 +7,17 @@ namespace EasyRegression.Core.Preprocessing.DataSmoothing
         protected double[] _subtractors;
         protected double[] _divisors;
 
-        protected virtual void CalculateParameters(double[][] data)
+        protected virtual void CalculateParameters(Matrix<double> data)
         {
             throw new System.NotImplementedException();
         }
 
-        public virtual double[][] Smooth(double[][] data)
+        public virtual Matrix<double> Smooth(Matrix<double> input)
         {
-            CalculateParameters(data);
+            CalculateParameters(input);
 
-            int length = data.Length;
-            int width = data[0].Length;
+            int length = input.Length;
+            int width = input.Width;
 
             double[][] smoothedData = new double[length][];
 
@@ -25,12 +27,12 @@ namespace EasyRegression.Core.Preprocessing.DataSmoothing
 
                 for (int iw = 0; iw < width; iw++)
                 {
-                    smoothedData[il][iw] = (data[il][iw] - _subtractors[iw])
+                    smoothedData[il][iw] = (input.Data[il][iw] - _subtractors[iw])
                         / _divisors[iw];
                 }
             }
 
-            return smoothedData;
+            return new Matrix<double>(smoothedData);
         }
 
         public virtual double[] ReSmooth(double[] data)

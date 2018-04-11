@@ -1,9 +1,11 @@
+using EasyRegression.Core.Common;
+
 namespace EasyRegression.Core.Preprocessing.DataFiltering
 {
     public interface IDataFilter : IPreprocessingPlugin
     {
-        void CalculateOutliers(double[][] data);
+        void CalculateOutliers(Matrix<double> input);
 
-        double[][] Filter();
+        Matrix<double> Filter();
     }
 }

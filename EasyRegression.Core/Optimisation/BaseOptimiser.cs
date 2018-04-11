@@ -1,8 +1,10 @@
+using EasyRegression.Core.Common;
+
 namespace EasyRegression.Core.Optimisation
 {
     public class BaseOptimiser : IOptimiser
     {
-        public virtual void Train(double[][] x, double[] y)
+        public virtual void Train(Matrix<double> x, double[] y)
         {
             throw new System.NotImplementedException();
         }
