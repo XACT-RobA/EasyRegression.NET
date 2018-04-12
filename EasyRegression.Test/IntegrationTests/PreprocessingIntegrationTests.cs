@@ -11,7 +11,7 @@ namespace EasyRegression.Test.Integration
 
         private static double[][] TestData()
         {
-            return new double[][]
+            return new[]
             {
                 new[] { 1.0, double.NaN },
                 new[] { 2.0, 3.0 },
@@ -22,7 +22,7 @@ namespace EasyRegression.Test.Integration
 
         private static double[][] ExpectedDefaultTestData()
         {
-            return new double[][]
+            return new[]
             {
                 new[] { -1.41421356, 0.0         },
                 new[] { 0.0        , 1.41421356  },
@@ -45,9 +45,9 @@ namespace EasyRegression.Test.Integration
 
             for (int i = 0; i < expected.Length; i++)
             {
-                for (int j = 0; j < expected.Data[0].Length; j++)
+                for (int j = 0; j < expected.Width; j++)
                 {
-                    Assert.Equal(expected.Data[i][j], output.Data[i][j], _places);
+                    Assert.Equal(expected[i][j], output[i][j], _places);
                 }
             }
         }

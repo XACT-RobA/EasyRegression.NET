@@ -28,6 +28,12 @@ namespace EasyRegression.Core.Common
             Data = data;
         }
 
+        public T[] this[int index]
+        {
+            get { return Data[index]; }
+            set { Data[index] = value; }
+        }
+
         public T[][] Data { get; set; }
 
         public int Length { get; set; }

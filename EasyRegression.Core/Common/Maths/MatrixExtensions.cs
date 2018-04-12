@@ -22,7 +22,7 @@ namespace EasyRegression.Core.Common.Maths
                 double sum = 0.0;
                 for (int column = 0; column < width; column++)
                 {
-                    sum += matrix.Data[row][column] * vector[column];
+                    sum += matrix[row][column] * vector[column];
                 }
                 output[row] = sum;
             }

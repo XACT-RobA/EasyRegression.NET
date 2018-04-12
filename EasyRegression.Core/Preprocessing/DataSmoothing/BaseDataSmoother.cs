@@ -27,7 +27,7 @@ namespace EasyRegression.Core.Preprocessing.DataSmoothing
 
                 for (int iw = 0; iw < width; iw++)
                 {
-                    smoothedData[il][iw] = (input.Data[il][iw] - _subtractors[iw])
+                    smoothedData[il][iw] = (input[il][iw] - _subtractors[iw])
                         / _divisors[iw];
                 }
             }

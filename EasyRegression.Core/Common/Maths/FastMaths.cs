@@ -30,7 +30,7 @@ namespace EasyRegression.Core.Common.Maths
             double sum = 0.0;
             for (int i = 0; i < length; i++)
             {
-               sum += input.Data[i][column];
+               sum += input[i][column];
             }
 
             return sum / length;
@@ -52,7 +52,7 @@ namespace EasyRegression.Core.Common.Maths
             {
                 for (int j = 0; j < width; j++)
                 {
-                    means[j] += input.Data[i][j];
+                    means[j] += input[i][j];
                 }
             }
 

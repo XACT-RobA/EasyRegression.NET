@@ -68,7 +68,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestColumnMean()
         {
-            var data = new double[][]
+            var data = new[]
             { 
                 new[] { 1.0, 2.0 },
                 new[] { 3.0, 4.0 },
@@ -81,7 +81,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestNullableColumnMean()
         {
-            var data = new double?[][]
+            var data = new[]
             {
                 new double?[] { 1.0, null },
                 new double?[] { null, 2.0 },
@@ -95,7 +95,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestColumnMeans()
         {
-            var data = new double[][]
+            var data = new[]
             { 
                 new[] { 1.0, 2.0 },
                 new[] { 3.0, 4.0 },
@@ -113,7 +113,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestNullableColumnMeans()
         {
-            var data = new double?[][]
+            var data = new[]
             {
                 new double?[] { 1.0, null },
                 new double?[] { null, 2.0 },
@@ -152,7 +152,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestColumnMedian()
         {
-            var data = new double[][]
+            var data = new[]
             { 
                 new[] { 1.0, 2.0 },
                 new[] { 3.0, 4.0 },
@@ -166,7 +166,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestNullableColumnMedian()
         {
-            var data = new double?[][]
+            var data = new[]
             {
                 new double?[] { 1.0, null },
                 new double?[] { null, 2.0 },
@@ -181,7 +181,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestColumnMedians()
         {
-            var data = new double[][]
+            var data = new[]
             { 
                 new[] { 1.0, 2.0 },
                 new[] { 3.0, 4.0 },
@@ -200,7 +200,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestNullableColumnMedians()
         {
-            var data = new double?[][]
+            var data = new[]
             {
                 new double?[] { 1.0, null },
                 new double?[] { null, 2.0 },
@@ -222,7 +222,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestColumnMinimum()
         {
-            var data = new double[][]
+            var data = new[]
             { 
                 new[] { 1.0, 2.0       ,  3.0 },
                 new[] { 3.0, 4.0       , -2.0 },
@@ -237,7 +237,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestColumnMinimums()
         {
-            var data = new double[][]
+            var data = new[]
             { 
                 new[] { 1.0, 2.0       ,  3.0 },
                 new[] { 3.0, 4.0       , -2.0 },
@@ -258,7 +258,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestColumnMaximum()
         {
-            var data = new double[][]
+            var data = new[]
             { 
                 new[] { 1.0, 2.0       ,  3.0 },
                 new[] { 3.0, 4.0       , -2.0 },
@@ -273,7 +273,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestColumnMaximums()
         {
-            var data = new double[][]
+            var data = new[]
             { 
                 new[] { 1.0, 2.0       ,  3.0 },
                 new[] { 3.0, 4.0       , -2.0 },
@@ -304,7 +304,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestColumnVariance()
         {
-            var data = new double[][]
+            var data = new[]
             { 
                 new[] { 1.0, 2.0 },
                 new[] { 2.0, 4.0 },
@@ -318,7 +318,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestColumnVariances()
         {
-            var data = new double[][]
+            var data = new[]
             { 
                 new[] { 1.0, 2.0 },
                 new[] { 2.0, 4.0 },
@@ -349,7 +349,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestColumnStandardDeviation()
         {
-            var data = new double[][]
+            var data = new[]
             { 
                 new[] { 1.0, 2.0 },
                 new[] { 2.0, 4.0 },
@@ -363,7 +363,7 @@ namespace EasyRegression.Test.Common.Maths
         [Fact]
         public void TestColumnStandardDeviations()
         {
-            var data = new double[][]
+            var data = new[]
             { 
                 new[] { 1.0, 2.0 },
                 new[] { 2.0, 4.0 },

@@ -24,8 +24,6 @@ namespace EasyRegression.Core.Preprocessing.DataPatching
             int length = input.Length;
             int width = input.Width;
 
-            var data = input.Data;
-
             double[][] patchedData = new double[length][];
 
             for (int il = 0; il < length; il++)
@@ -34,7 +32,7 @@ namespace EasyRegression.Core.Preprocessing.DataPatching
 
                 for (int iw = 0; iw < width; iw++)
                 {
-                    var value = data[il][iw];
+                    var value = input[il][iw];
 
                     patchedData[il][iw] = value.IsValidDouble() ?
                         value.Value : _parameters[iw];
@@ -59,7 +57,7 @@ namespace EasyRegression.Core.Preprocessing.DataPatching
 
                 for (int iw = 0; iw < width; iw++)
                 {
-                    var value = input.Data[il][iw];
+                    var value = input[il][iw];
 
                     patchedData[il][iw] = value.IsValidDouble() ?
                         value : _parameters[iw];

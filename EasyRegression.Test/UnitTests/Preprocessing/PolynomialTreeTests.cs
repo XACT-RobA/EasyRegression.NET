@@ -4,7 +4,7 @@ using Xunit;
 using EasyRegression.Core.Common;
 using System.Linq;
 
-namespace EasyRegression.Test.Common
+namespace EasyRegression.Test.Common.Preprocessing
 {
     public class PolynomialTreeTests
     {
