@@ -1,4 +1,4 @@
-using EasyRegression.Core.Common;
+using EasyRegression.Core.Common.Models;
 using EasyRegression.Core.Common.Maths;
 
 namespace EasyRegression.Core.Preprocessing.DataPatching

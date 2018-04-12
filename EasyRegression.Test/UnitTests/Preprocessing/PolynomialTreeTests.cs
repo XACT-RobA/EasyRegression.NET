@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Xunit;
-using EasyRegression.Core.Common;
-using System.Linq;
+using EasyRegression.Core.Common.Models;
 
 namespace EasyRegression.Test.Common.Preprocessing
 {

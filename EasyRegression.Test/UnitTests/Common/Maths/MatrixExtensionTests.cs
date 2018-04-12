@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 using EasyRegression.Core.Common.Maths;
-using EasyRegression.Core.Common;
+using EasyRegression.Core.Common.Models;
 
 namespace EasyRegression.Test.Common.Maths
 {

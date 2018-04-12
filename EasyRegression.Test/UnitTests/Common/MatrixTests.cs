@@ -1,5 +1,5 @@
 using System;
-using EasyRegression.Core.Common;
+using EasyRegression.Core.Common.Models;
 using Xunit;
 
 namespace EasyRegression.Test.Common

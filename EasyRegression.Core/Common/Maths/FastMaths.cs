@@ -1,3 +1,5 @@
+using EasyRegression.Core.Common.Models;
+
 namespace EasyRegression.Core.Common.Maths
 {
     public static class FastMaths

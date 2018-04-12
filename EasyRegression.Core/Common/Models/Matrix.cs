@@ -1,6 +1,6 @@
 using System;
 
-namespace EasyRegression.Core.Common
+namespace EasyRegression.Core.Common.Models
 {
     public class Matrix<T>
     {

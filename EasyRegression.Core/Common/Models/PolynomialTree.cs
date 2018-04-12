@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EasyRegression.Core.Common
+namespace EasyRegression.Core.Common.Models
 {
     public class PolynomialTree
     {

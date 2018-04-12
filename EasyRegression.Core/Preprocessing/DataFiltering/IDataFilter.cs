@@ -1,4 +1,4 @@
-using EasyRegression.Core.Common;
+using EasyRegression.Core.Common.Models;
 
 namespace EasyRegression.Core.Preprocessing.DataFiltering
 {

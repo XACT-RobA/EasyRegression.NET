@@ -1,5 +1,5 @@
 using System;
-using EasyRegression.Core.Common;
+using EasyRegression.Core.Common.Models;
 using EasyRegression.Core.Preprocessing;
 using Xunit;
 

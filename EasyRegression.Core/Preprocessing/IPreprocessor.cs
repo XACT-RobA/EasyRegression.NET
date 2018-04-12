@@ -1,4 +1,4 @@
-using EasyRegression.Core.Common;
+using EasyRegression.Core.Common.Models;
 using EasyRegression.Core.Preprocessing.DataExpansion;
 using EasyRegression.Core.Preprocessing.DataPatching;
 using EasyRegression.Core.Preprocessing.DataSmoothing;
