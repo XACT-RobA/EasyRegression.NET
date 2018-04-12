@@ -14,26 +14,41 @@ namespace EasyRegression.Core.Optimisation
         private double[] _y;
 
         private double _learn;
-        private double[] _errors;
         private double _limit;
         private int _iter;
         private int _maxIter;
         private bool _converged;
-
+        private readonly double[] _errors;
+        
         private double[] _params;
         private double[] _diffs;
         private double[] _grads;
 
-        public BatchGradientDescentOptimiser(double learningRate = 0.1,
-            int maxIterations = 1000,
-            double convergenceLimit = 1e-9)
+        public BatchGradientDescentOptimiser()
         {
             _iter = 0;
-            _maxIter = maxIterations;
-            _learn = learningRate;
-            _errors = new double[maxIterations];
-            _limit = convergenceLimit;
+            _maxIter = 1000;
+            _learn = 0.1;
+            _limit = 1e-9;
             _converged = false;
+            _errors = new double[_maxIter];
+        }
+
+        public void SetLearningRate(double learningRate)
+        {
+            if (learningRate.IsValidDouble() &&
+                learningRate > 0) { _learn = learningRate; }
+        }
+
+        public void SetMaxIterations(int maxIterations)
+        {
+            if (maxIterations > 0) { _maxIter = maxIterations; }
+        }
+
+        public void SetConvergenceLimit(double convergenceLimit)
+        {
+            if (convergenceLimit.IsValidDouble() &&
+                convergenceLimit >= 0.0) { _limit = convergenceLimit; }
         }
 
         public override void Train(Matrix<double> x, double[] y)

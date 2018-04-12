@@ -5,7 +5,7 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
 {
     public class PolynomialDataExpander : BaseDataExpander
     {
-        private int _order;
+        private readonly int _order;
 
         public PolynomialDataExpander(int order)
         {

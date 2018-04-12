@@ -1,13 +1,13 @@
-namespace EasyRegression.Core.Common
+namespace EasyRegression.Core.Common.Maths
 {
-    public class FastMaths
+    public static class FastMaths
     {
         public static double Mean(double[] input)
         {
             int length = input.Length;
             if (length == 0)
             {
-                return 0.0;
+                return double.NaN;
             }
 
             double sum = 0.0;
@@ -19,32 +19,32 @@ namespace EasyRegression.Core.Common
             return sum / length;
         }
 
-        public static double ColumnMean(double[][] input, int column)
+        public static double ColumnMean(Matrix<double> input, int column)
         {
             int length = input.Length;
             if (length == 0)
             {
-                return 0.0;
+                return double.NaN;
             }
 
             double sum = 0.0;
             for (int i = 0; i < length; i++)
             {
-               sum += input[i][column];
+               sum += input.Data[i][column];
             }
 
             return sum / length;
         }
 
-        public static double[] ColumnMeans(double[][] input)
+        public static double[] ColumnMeans(Matrix<double> input)
         {
             int length = input.Length;
             if (length == 0)
             {
-                return new[] { 0.0 };
+                return new[] { double.NaN };
             }
 
-            int width = input[0].Length;
+            int width = input.Width;
 
             double[] means = new double[width];
 
@@ -52,7 +52,7 @@ namespace EasyRegression.Core.Common
             {
                 for (int j = 0; j < width; j++)
                 {
-                    means[j] += input[i][j];
+                    means[j] += input.Data[i][j];
                 }
             }
 

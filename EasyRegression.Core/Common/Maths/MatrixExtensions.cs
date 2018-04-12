@@ -12,27 +12,28 @@ namespace EasyRegression.Core.Common.Maths
             return output;
         }
 
-        public static void DotProduct(this double[][] matrix, double[] vector, ref double[] output)
+        public static double[] DotProduct(this Matrix<double> matrix, double[] vector, double[] output)
         {
             int length = matrix.Length;
-            int width = vector.Length;
+            int width = matrix.Width;
 
             for (int row = 0; row < length; row++)
             {
                 double sum = 0.0;
                 for (int column = 0; column < width; column++)
                 {
-                    sum += matrix[row][column] * vector[column];
+                    sum += matrix.Data[row][column] * vector[column];
                 }
                 output[row] = sum;
             }
+
+            return output;
         }
 
-        public static double[] DotProduct(this double[][] matrix, double[] vector)
+        public static double[] DotProduct(this Matrix<double> matrix, double[] vector)
         {
-            var output = new double[vector.Length];
-            DotProduct(matrix, vector, ref output);
-            return output;
+            var output = new double[matrix.Width];
+            return DotProduct(matrix, vector, output);
         }
     }
 }
