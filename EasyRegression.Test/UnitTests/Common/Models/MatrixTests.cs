@@ -2,7 +2,7 @@ using System;
 using EasyRegression.Core.Common.Models;
 using Xunit;
 
-namespace EasyRegression.Test.Common
+namespace EasyRegression.Test.Common.Models
 {
     public class MatrixTests
     {

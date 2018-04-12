@@ -5,18 +5,19 @@ using Xunit;
 
 namespace EasyRegression.Test.Integration
 {
-    public class PreprocessingIntegrationTests
+    public class PreprocessorIntegrationTests
     {
-        private readonly int _places = 6;
+        private const int _places = 6;
+        private const double _nan = double.NaN;
 
         private static double[][] TestData()
         {
             return new[]
             {
-                new[] { 1.0, double.NaN },
+                new[] { 1.0, _nan },
                 new[] { 2.0, 3.0 },
                 new[] { 3.0, 1.0 },
-                new[] { double.NaN, 2.0 },
+                new[] { _nan, 2.0 },
             };
         }
 

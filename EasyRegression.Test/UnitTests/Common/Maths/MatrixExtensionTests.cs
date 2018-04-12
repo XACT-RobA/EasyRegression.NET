@@ -7,7 +7,7 @@ namespace EasyRegression.Test.Common.Maths
 {
     public class MatrixExtensionTests
     {
-        private readonly int _places = 6;
+        private const int _places = 6;
 
         [Fact]
         public void TestVectorDotProduct()

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using Xunit;
 using EasyRegression.Core.Common.Models;
 
-namespace EasyRegression.Test.Common.Preprocessing
+namespace EasyRegression.Test.Common.Models
 {
     public class PolynomialTreeTests
     {
-        private readonly int _places = 6;
+        private const int _places = 6;
 
         private static IEnumerable<object[]> TestData()
         {
