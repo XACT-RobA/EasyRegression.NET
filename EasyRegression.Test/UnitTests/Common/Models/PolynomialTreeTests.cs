@@ -16,7 +16,7 @@ namespace EasyRegression.Test.Common.Models
         }
 
         [Theory, MemberData(nameof(TestData))]
-        public void Test(double[] input, int order, double[] expected)
+        public static void Test(double[] input, int order, double[] expected)
         {
             var tree = new PolynomialTree(order, input);
             var output = tree.GetExpandedData();

@@ -10,7 +10,7 @@ namespace EasyRegression.Test.Common.Maths
         private const int _places = 6;
 
         [Fact]
-        public void TestVectorDotProduct()
+        public static void TestVectorDotProduct()
         {
             var a = new[] { 1.0, 2.0 };
             var b = new[] { 3.0, 4.0 };
@@ -20,7 +20,7 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestMatrixVectorDotProduct()
+        public static void TestMatrixVectorDotProduct()
         {
             var data = new[]
             {

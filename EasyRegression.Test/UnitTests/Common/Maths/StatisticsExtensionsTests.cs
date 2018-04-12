@@ -15,12 +15,12 @@ namespace EasyRegression.Test.Common.Maths
         private const double _nan = double.NaN;
         private const double _pInf = double.PositiveInfinity;
         private const double _nInf = double.NegativeInfinity;
-        private readonly double? _null = null;
+        private static readonly double? _null = null;
 
         // Numeric validation
 
         [Fact]
-        public void TestValidDouble()
+        public static void TestValidDouble()
         {
             Assert.Equal(true, 1.0.IsValidDouble());
             Assert.Equal(true, (-1.0).IsValidDouble());
@@ -34,7 +34,7 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestValidNullableDouble()
+        public static void TestValidNullableDouble()
         {
             Assert.Equal(_null.IsValidDouble(), false);
         }
@@ -42,7 +42,7 @@ namespace EasyRegression.Test.Common.Maths
         // Middle
 
         [Fact]
-        public void TestMiddle()
+        public static void TestMiddle()
         {
             Assert.Equal(2.0, (new[] { 1.0, 2.0, 3.0 }).Middle(), _places);
             Assert.Equal(3.0, (new[] { 1.0, 3.0, 2.0 }).Middle(), _places);
@@ -55,7 +55,7 @@ namespace EasyRegression.Test.Common.Maths
         // Mean
 
         [Fact]
-        public void TestMean()
+        public static void TestMean()
         {
             Assert.Equal(2.0, (new[] { 1.0, 2.0, 3.0 }).Mean(), _places);
             Assert.Equal(2.0, (new[] { 2.0 }).Mean(), _places);
@@ -65,14 +65,14 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestNullableMean()
+        public static void TestNullableMean()
         {
             Assert.Equal(2.0, (new double?[] { 2.0, null }).Mean(), _places);
             Assert.Equal(_nan, (new double?[] { null }).Mean(), _places);
         }
 
         [Fact]
-        public void TestColumnMean()
+        public static void TestColumnMean()
         {
             var data = new[]
             { 
@@ -85,7 +85,7 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestNullableColumnMean()
+        public static void TestNullableColumnMean()
         {
             var data = new[]
             {
@@ -99,7 +99,7 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestColumnMeans()
+        public static void TestColumnMeans()
         {
             var data = new[]
             { 
@@ -117,7 +117,7 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestNullableColumnMeans()
+        public static void TestNullableColumnMeans()
         {
             var data = new[]
             {
@@ -138,7 +138,7 @@ namespace EasyRegression.Test.Common.Maths
         // Median
 
         [Fact]
-        public void TestMedian()
+        public static void TestMedian()
         {
             Assert.Equal(2.0, (new[] { 1.0, 3.0, 2.0 }).Median(), _places);
             Assert.Equal(2.0, (new[] { 2.0 }).Median(), _places);
@@ -149,14 +149,14 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestNullableMedian()
+        public static void TestNullableMedian()
         {
             Assert.Equal(2.0, (new double?[] { 2.0, null }).Median(), _places);
             Assert.Equal(_nan, (new double?[] { null }).Median(), _places);
         }
 
         [Fact]
-        public void TestColumnMedian()
+        public static void TestColumnMedian()
         {
             var data = new[]
             { 
@@ -170,7 +170,7 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestNullableColumnMedian()
+        public static void TestNullableColumnMedian()
         {
             var data = new[]
             {
@@ -185,7 +185,7 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestColumnMedians()
+        public static void TestColumnMedians()
         {
             var data = new[]
             { 
@@ -204,7 +204,7 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestNullableColumnMedians()
+        public static void TestNullableColumnMedians()
         {
             var data = new[]
             {
@@ -226,7 +226,7 @@ namespace EasyRegression.Test.Common.Maths
         // Minimum
 
         [Fact]
-        public void TestColumnMinimum()
+        public static void TestColumnMinimum()
         {
             var data = new[]
             { 
@@ -241,7 +241,7 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestColumnMinimums()
+        public static void TestColumnMinimums()
         {
             var data = new[]
             { 
@@ -262,7 +262,7 @@ namespace EasyRegression.Test.Common.Maths
         // Maximum
 
         [Fact]
-        public void TestColumnMaximum()
+        public static void TestColumnMaximum()
         {
             var data = new[]
             { 
@@ -277,7 +277,7 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestColumnMaximums()
+        public static void TestColumnMaximums()
         {
             var data = new[]
             { 
@@ -298,7 +298,7 @@ namespace EasyRegression.Test.Common.Maths
         // Variance
 
         [Fact]
-        public void TestVariance()
+        public static void TestVariance()
         {
             Assert.Equal(2.0 / 3.0, (new[] { 1.0, 2.0, 3.0 }).Variance(), _places);
             Assert.Equal(0.0, (new[] { 2.0 }).Variance(), _places);
@@ -308,7 +308,7 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestColumnVariance()
+        public static void TestColumnVariance()
         {
             var data = new[]
             { 
@@ -322,7 +322,7 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestColumnVariances()
+        public static void TestColumnVariances()
         {
             var data = new[]
             { 
@@ -343,7 +343,7 @@ namespace EasyRegression.Test.Common.Maths
         // Standard deviation
 
         [Fact]
-        public void TestStandardDeviation()
+        public static void TestStandardDeviation()
         {
             Assert.Equal(0.81649658, (new[] { 1.0, 2.0, 3.0 }).StandardDeviation(), _places);
             Assert.Equal(0.0, (new[] { 2.0 }).StandardDeviation(), _places);
@@ -353,7 +353,7 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestColumnStandardDeviation()
+        public static void TestColumnStandardDeviation()
         {
             var data = new[]
             { 
@@ -367,7 +367,7 @@ namespace EasyRegression.Test.Common.Maths
         }
 
         [Fact]
-        public void TestColumnStandardDeviations()
+        public static void TestColumnStandardDeviations()
         {
             var data = new[]
             { 

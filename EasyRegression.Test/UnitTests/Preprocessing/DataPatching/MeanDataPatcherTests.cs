@@ -7,13 +7,13 @@ namespace EasyRegression.Test.Preprocessing.DataPatching
 {
     public class MeanDataPatcherTests
     {
-        private readonly int _places = 6;
-        private readonly double _nan = double.NaN;
-        private readonly double _pInf = double.PositiveInfinity;
-        private readonly double _nInf = double.NegativeInfinity;
+        private const int _places = 6;
+        private const double _nan = double.NaN;
+        private const double _pInf = double.PositiveInfinity;
+        private const double _nInf = double.NegativeInfinity;
 
         [Fact]
-        public void TestPatch()
+        public static void TestPatch()
         {
             var data = new[]
             {
@@ -48,7 +48,7 @@ namespace EasyRegression.Test.Preprocessing.DataPatching
         }
 
         [Fact]
-        public void TestNullablePatch()
+        public static void TestNullablePatch()
         {
             var meanPatcher = new MeanDataPatcher();
 
@@ -85,7 +85,7 @@ namespace EasyRegression.Test.Preprocessing.DataPatching
         }
 
         [Fact]
-        public void TestRePatch()
+        public static void TestRePatch()
         {
             var meanPatcher = new MeanDataPatcher();
 
@@ -112,7 +112,7 @@ namespace EasyRegression.Test.Preprocessing.DataPatching
         }
 
         [Fact]
-        public void TestNullableRePatch()
+        public static void TestNullableRePatch()
         {
             var meanPatcher = new MeanDataPatcher();
 

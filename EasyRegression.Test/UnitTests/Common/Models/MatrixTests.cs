@@ -7,7 +7,7 @@ namespace EasyRegression.Test.Common.Models
     public class MatrixTests
     {
         [Fact]
-        public void TestValidMatrix()
+        public static void TestValidMatrix()
         {
             var data = new[]
             {
@@ -31,7 +31,7 @@ namespace EasyRegression.Test.Common.Models
         }
 
         [Fact]
-        public void TestZeroLengthMatrix()
+        public static void TestZeroLengthMatrix()
         {
             var data = new double[0][];
 
@@ -39,7 +39,7 @@ namespace EasyRegression.Test.Common.Models
         }
 
         [Fact]
-        public void TestZeroWidthMatrix()
+        public static void TestZeroWidthMatrix()
         {
             var data = new[] { new double[0] };
 
@@ -47,7 +47,7 @@ namespace EasyRegression.Test.Common.Models
         }
 
         [Fact]
-        public void TestUnevenMatrix()
+        public static void TestUnevenMatrix()
         {
             var data = new[]
             {

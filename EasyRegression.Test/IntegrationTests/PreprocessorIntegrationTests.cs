@@ -33,7 +33,7 @@ namespace EasyRegression.Test.Integration
         }
 
         [Fact]
-        public void TestDefault()
+        public static void TestDefault()
         {
             var input = new Matrix<double>(TestData());
             var expected = new Matrix<double>(ExpectedDefaultTestData());
