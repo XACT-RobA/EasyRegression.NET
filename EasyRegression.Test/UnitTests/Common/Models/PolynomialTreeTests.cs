@@ -5,7 +5,7 @@ using EasyRegression.Core.Common.Models;
 
 namespace EasyRegression.Test.Common.Models
 {
-    public class PolynomialTreeTests
+    public static class PolynomialTreeTests
     {
         private const int _places = 6;
 

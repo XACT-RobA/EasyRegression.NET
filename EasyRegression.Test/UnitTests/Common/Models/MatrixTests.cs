@@ -4,7 +4,7 @@ using Xunit;
 
 namespace EasyRegression.Test.Common.Models
 {
-    public class MatrixTests
+    public static class MatrixTests
     {
         [Fact]
         public static void TestValidMatrix()

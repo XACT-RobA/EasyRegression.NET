@@ -5,7 +5,7 @@ using EasyRegression.Core.Common.Models;
 
 namespace EasyRegression.Test.Common.Maths
 {
-    public class MatrixExtensionTests
+    public static class MatrixExtensionTests
     {
         private const int _places = 6;
 

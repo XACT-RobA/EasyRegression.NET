@@ -5,7 +5,7 @@ using Xunit;
 
 namespace EasyRegression.Test.Integration
 {
-    public class PreprocessorIntegrationTests
+    public static class PreprocessorIntegrationTests
     {
         private const int _places = 6;
         private const double _nan = double.NaN;

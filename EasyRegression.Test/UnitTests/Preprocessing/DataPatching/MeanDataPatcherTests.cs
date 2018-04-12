@@ -5,7 +5,7 @@ using EasyRegression.Core.Common.Models;
 
 namespace EasyRegression.Test.Preprocessing.DataPatching
 {
-    public class MeanDataPatcherTests
+    public static class MeanDataPatcherTests
     {
         private const int _places = 6;
         private const double _nan = double.NaN;

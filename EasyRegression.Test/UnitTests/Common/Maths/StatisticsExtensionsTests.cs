@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace EasyRegression.Test.Common.Maths
 {
-    public class StatisticsExtensionsTests
+    public static class StatisticsExtensionsTests
     {
         private const int _places = 6;
         private const double _max = double.MaxValue;
