@@ -3,7 +3,7 @@ using EasyRegression.Core.Common.Maths;
 
 namespace EasyRegression.Core.Preprocessing.DataPatching
 {
-    public class MedianDatapatcher : BaseDataPatcher
+    public class MedianDataPatcher : BaseDataPatcher
     {
         protected override void CalculateParameters(Matrix<double?> input)
         {
