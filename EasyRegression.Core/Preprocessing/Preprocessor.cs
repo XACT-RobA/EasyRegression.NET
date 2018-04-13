@@ -1,8 +1,10 @@
+using System;
 using EasyRegression.Core.Common.Models;
 using EasyRegression.Core.Definitions;
 using EasyRegression.Core.Preprocessing.DataExpansion;
 using EasyRegression.Core.Preprocessing.DataPatching;
 using EasyRegression.Core.Preprocessing.DataSmoothing;
+using Newtonsoft.Json;
 
 namespace EasyRegression.Core.Preprocessing
 {
@@ -66,6 +68,21 @@ namespace EasyRegression.Core.Preprocessing
             output = _dataExpander.ReExpand(output);
             output = _dataSmoother.ReSmooth(output);
             return output;
+        }
+
+        public string Serialise()
+        {
+            var patcherData = _dataPatcher.Serialise();
+            var expanderData = _dataExpander.Serialise();
+            var smootherData = _dataSmoother.Serialise();
+
+            var data = new { preprocessingData = new[] { patcherData, expanderData, smootherData } };
+            return JsonConvert.SerializeObject(data);
+        }
+
+        public static IPreprocessor Deserialise(string data)
+        {
+            throw new NotImplementedException();
         }
     }
 }

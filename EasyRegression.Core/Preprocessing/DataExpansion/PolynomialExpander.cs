@@ -1,5 +1,6 @@
 using System;
 using EasyRegression.Core.Common.Models;
+using Newtonsoft.Json;
 
 namespace EasyRegression.Core.Preprocessing.DataExpansion
 {
@@ -30,6 +31,12 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
         {
             var tree = new PolynomialTree(_order, input);
             return tree.GetExpandedData();
+        }
+
+        public override string Serialise()
+        {
+            var data = new { expandData = _order };
+            return JsonConvert.SerializeObject(data);
         }
     }
 }

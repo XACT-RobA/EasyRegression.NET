@@ -35,7 +35,7 @@ double y0 = regressionEngine.Predict(x0);
 
 By default, the regression engine will include a preprocessor that will fill any invalid data (null, nan, infinite) with the mean of that feature across the dataset. It will then "smooth" the data using standardisation.
 
-To change this functionality, a preprocessor instance can be passed into the constructor of the LinearRegressionEngine.
+To change this functionality, a preprocessor instance can be passed into the LinearRegressionEngine using Set methods.
 
 ```cs
 // Create a set of preprocessing plugins to configure the preprocessor
@@ -53,7 +53,7 @@ preprocessor.SetDataSmoother(normalise);
 var regression = new LinearRegressionEngine(preprocessor: preprocessor);
 ```
 
-The preprocessor comprises of a data patcher, a data smoother, a data expander, and a data filter.
+The preprocessor comprises of a data patcher, a data expander, a data smoother, and a data filter.
 
 For the data patcher, the user currently has the choice of patching invalid data with the feature mean, feature median, or zero. If the user doesn't want to use any of these data patchers, and instead wants any data rows containing invalid data to be removed, there will also be a DeletingDataPatcher.
 
@@ -124,7 +124,7 @@ preprocessor.SetDataSmoother(normaliser);
 Item | Completed | Tested
 -----|-----------|-------
 **Data patching** | |
-Mean patching | ✓ | -
+Mean patching | ✓ | ✓
 Median pathing | ✓ | -
 Zero patching | ✓ | -
 **Data smoothing** | |

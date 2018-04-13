@@ -1,5 +1,6 @@
 using EasyRegression.Core.Common.Models;
 using EasyRegression.Core.Common.Maths;
+using Newtonsoft.Json;
 
 namespace EasyRegression.Core.Preprocessing.DataPatching
 {
@@ -101,12 +102,13 @@ namespace EasyRegression.Core.Preprocessing.DataPatching
             return patchedData;
         }
 
-        public void StoreParameters(string filepath)
+        public virtual string Serialise()
         {
-            throw new System.NotImplementedException();
+            var data = new { patchData = _parameters };
+            return JsonConvert.SerializeObject(data);
         }
 
-        public void LoadParameters(string filepath)
+        public static IDataPatcher Deserialise(string data)
         {
             throw new System.NotImplementedException();
         }

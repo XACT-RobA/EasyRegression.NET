@@ -1,4 +1,5 @@
 using EasyRegression.Core.Common.Models;
+using Newtonsoft.Json;
 
 namespace EasyRegression.Core.Preprocessing.DataSmoothing
 {
@@ -49,12 +50,13 @@ namespace EasyRegression.Core.Preprocessing.DataSmoothing
             return smoothedData;
         }
 
-        public void StoreParameters(string filepath)
+        public virtual string Serialise()
         {
-            throw new System.NotImplementedException();
+            var data = new { smoothData = new { subtractors = _subtractors, divisors = _divisors } };
+            return JsonConvert.SerializeObject(data);
         }
 
-        public void LoadParameters(string filepath)
+        public static IDataSmoother Deserialise(string data)
         {
             throw new System.NotImplementedException();
         }

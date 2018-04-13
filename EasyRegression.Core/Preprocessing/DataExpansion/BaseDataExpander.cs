@@ -14,12 +14,12 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
             return data;
         }
 
-        public virtual void StoreParameters(string filepath)
+        public virtual string Serialise()
         {
             throw new System.NotImplementedException();
         }
 
-        public virtual void LoadParameters(string filepath)
+        public static IDataExpander Deserialise(string data)
         {
             throw new System.NotImplementedException();
         }
