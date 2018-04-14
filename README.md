@@ -125,8 +125,8 @@ Item | Completed | Tested
 -----|-----------|-------
 **Data patching** | |
 Mean patching | ✓ | ✓
-Median pathing | ✓ | -
-Zero patching | ✓ | -
+Median pathing | ✓ | ✓
+Zero patching | ✓ | ✓
 **Data smoothing** | |
 Normalisation | ✓ | -
 Standardisation | ✓ | -
