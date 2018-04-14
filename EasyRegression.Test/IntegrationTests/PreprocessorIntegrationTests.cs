@@ -25,10 +25,10 @@ namespace EasyRegression.Test.Integration
         {
             return new[]
             {
-                new[] { -1.41421356, 0.0         },
-                new[] { 0.0        , 1.41421356  },
-                new[] { 1.41421356 , -1.41421356 },
-                new[] { 0.0        , 0.0         },
+                new[] { 1.0, -1.41421356, 0.0         },
+                new[] { 1.0, 0.0        , 1.41421356  },
+                new[] { 1.0, 1.41421356 , -1.41421356 },
+                new[] { 1.0, 0.0        , 0.0         },
             };
         }
 
@@ -39,16 +39,16 @@ namespace EasyRegression.Test.Integration
             var expected = new Matrix<double>(ExpectedDefaultTestData());
 
             var preprocessor = new Preprocessor();
-            var output = preprocessor.Preprocess(input);
+            var actual = preprocessor.Preprocess(input);
 
-            Assert.Equal(expected.Length, output.Length);
-            Assert.Equal(expected.Width, output.Width);
+            Assert.Equal(expected.Length, actual.Length);
+            Assert.Equal(expected.Width, actual.Width);
 
             for (int i = 0; i < expected.Length; i++)
             {
                 for (int j = 0; j < expected.Width; j++)
                 {
-                    Assert.Equal(expected[i][j], output[i][j], _places);
+                    Assert.Equal(expected[i][j], actual[i][j], _places);
                 }
             }
         }

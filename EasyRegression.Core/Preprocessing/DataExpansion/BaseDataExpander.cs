@@ -13,6 +13,11 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
         {
             return data;
         }
+        
+        public virtual bool HasIntercept()
+        {
+            return false;
+        }
 
         public virtual string Serialise()
         {

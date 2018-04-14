@@ -5,7 +5,7 @@ using EasyRegression.Core.Common.Models;
 
 namespace EasyRegression.Test.Preprocessing.DataSmoothing
 {
-    public class NormalisationTests
+    public static class NormalisationTests
     {
         private const int _places = 6;
 

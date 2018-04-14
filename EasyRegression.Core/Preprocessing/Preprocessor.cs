@@ -17,7 +17,7 @@ namespace EasyRegression.Core.Preprocessing
         public Preprocessor()
         {
             _dataPatcher =  new MeanDataPatcher();
-            _dataExpander =  new BlankDataExpander();
+            _dataExpander =  new InterceptDataExpander();
             _dataSmoother =  new DataStandardiser();
         }
 
@@ -38,6 +38,8 @@ namespace EasyRegression.Core.Preprocessing
 
         public Matrix<double> Preprocess(Matrix<double> input)
         {
+            _dataSmoother.SetHasIntercept(_dataExpander.HasIntercept());
+
             var output = input;
             output = _dataPatcher.Patch(output);
             output = _dataExpander.Expand(output);
@@ -47,6 +49,8 @@ namespace EasyRegression.Core.Preprocessing
 
         public Matrix<double> Preprocess(Matrix<double?> input)
         {
+            _dataSmoother.SetHasIntercept(_dataExpander.HasIntercept());
+
             var output = _dataPatcher.Patch(input);
             output = _dataExpander.Expand(output);
             output = _dataSmoother.Smooth(output);
@@ -55,6 +59,8 @@ namespace EasyRegression.Core.Preprocessing
 
         public double[] Reprocess(double[] input)
         {
+            _dataSmoother.SetHasIntercept(_dataExpander.HasIntercept());
+
             var output = input;
             output = _dataPatcher.RePatch(output);
             output = _dataExpander.ReExpand(output);
@@ -64,6 +70,8 @@ namespace EasyRegression.Core.Preprocessing
 
         public double[] Reprocess(double?[] input)
         {
+            _dataSmoother.SetHasIntercept(_dataExpander.HasIntercept());
+
             var output = _dataPatcher.RePatch(input);
             output = _dataExpander.ReExpand(output);
             output = _dataSmoother.ReSmooth(output);

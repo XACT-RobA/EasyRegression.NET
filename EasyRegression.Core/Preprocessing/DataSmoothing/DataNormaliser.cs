@@ -15,7 +15,16 @@ namespace EasyRegression.Core.Preprocessing.DataSmoothing
             var mins = input.Data.ColumnMinimums();
             var maxes = input.Data.ColumnMaximums();
 
-            for (int iw = 0; iw < width; iw++)
+            int start = 0;
+
+            if (_hasIntercept)
+            {
+                _subtractors[0] = 0.0;
+                _divisors[0] = 1.0;
+                start++;
+            }
+
+            for (int iw = start; iw < width; iw++)
             {
                 _subtractors[iw] = mins[iw];
                 _divisors[iw] = maxes[iw] - mins[iw];

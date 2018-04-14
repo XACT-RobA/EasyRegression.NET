@@ -9,5 +9,8 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
 
         // Expand testing/prediction data
         double[] ReExpand(double[] data);
+
+        // Has expander added an intercept column to the data
+        bool HasIntercept();
     }
 }

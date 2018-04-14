@@ -12,6 +12,7 @@
 - Useful progress logging
 - Unit test all calculation based methods
 - Solid integration tests
+- Minimal dependancies
 
 ## Usage
 
@@ -75,13 +76,16 @@ IPreprocessor preprocessor = new Preprocessor();
 preprocessor.SetDataPatcher(meanPatcher);
 ```
 
-The only non-blank data expander currently implemented is the PolynomialExpander, which expands the number of columns in a dataset to a polynomial power, using each input as a variable to be expanded.
-This is not enabled by default, as it's use cases are quite specific, and it has the effect of expanding exponentially large with more columns and higher polynomial orders.
+The default data expander is InterceptExpander, which currently just adds an intercet column of value 1.0, that doesn't get smoothed like the rest of the data. There is also the PolynominalExpander, which has the effect of raising each variable to every power up to the input order, and then creates products of all of the polynomial powers. This expands data exponentially as columns and order increase.
 
 ```cs
 // Create polynomial expander with polynomial order 1
 // [x0, x1] => [1, x1, x0, x0x1]
 IDataExpander polynomialExpander = new PolynomialDataExpander(order: 1);
+
+// Create intercept expander
+// [x0, x1] => [1, x0, x1]
+IDataExpander interceptExpander = new InterceptExpander();
 
 // Expand a double[][] of data
 // This expander creates huge amounts of data as data.Length and order increase
@@ -121,35 +125,40 @@ preprocessor.SetDataSmoother(normaliser);
 
 ### Preprocessing
 
-Item | Completed | Tested
------|-----------|-------
-**Data patching** | |
-Mean patching | ✓ | ✓
-Median pathing | ✓ | ✓
-Zero patching | ✓ | ✓
-**Data smoothing** | |
-Normalisation | ✓ | ✓
-Standardisation | ✓ | ✓
-**Data expansion** | |
-Polynomial expansion | ✓ | -
-**Outlier filtering** | |
-IQR multiple from median | - | -
-Stdev multiple from mean | - | -
+Item | Completed | Tested | Logged
+-----|-----------|--------|-------
+**Data patching** | | |
+Mean patching | ✓ | ✓ | -
+Median pathing | ✓ | ✓ | -
+Zero patching | ✓ | ✓ | -
+**Data smoothing** | | |
+Normalisation | ✓ | ✓ | -
+Standardisation | ✓ | ✓ | -
+**Data expansion** | | |
+Polynomial expansion | ✓ | - | -
+Intercept expansion | ✓ | - | -
+**Outlier filtering** | | |
+IQR multiple from median | - | - | -
+Stdev multiple from mean | - | - | -
+
 
 ### Optimisation
 
-Item | Completed | Tested
------|-----------|-------
-**Linear regression** | |
-Batch gradient descent | ✓ | -
-Stochastci gradient descent | - | -
-Mini-batch descent | - | -
-Multi threaded BGD | - | -
+Item | Completed | Tested | Logged
+-----|-----------|--------|-------
+**Linear regression** | | |
+Batch gradient descent | ✓ | - | -
+Stochastci gradient descent | - | - | -
+Mini-batch descent | - | - | -
+Multi threaded BGD | - | - | -
 
 ### Prediction
-Item | Completed | Tested
------|-----------|-------
-Data prediction | ✓ | -
+Item | Completed | Tested | Logged
+-----|-----------|--------|-------
+Data prediction | ✓ | - | -
+**Reproducible predictions** | | |
+Config saving | - | - | -
+Config loading | - | - | -
 
 ### Integration Testing
 Item | Completed

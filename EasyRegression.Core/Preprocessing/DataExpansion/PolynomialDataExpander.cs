@@ -33,6 +33,11 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
             return tree.GetExpandedData();
         }
 
+        public override bool HasIntercept()
+        {
+            return true;
+        }
+
         public override string Serialise()
         {
             var data = new { expandData = _order };

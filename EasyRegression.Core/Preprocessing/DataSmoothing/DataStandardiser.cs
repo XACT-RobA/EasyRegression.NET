@@ -9,6 +9,12 @@ namespace EasyRegression.Core.Preprocessing.DataSmoothing
         {
             _subtractors = input.Data.ColumnMeans();
             _divisors = input.Data.ColumnStandardDeviations();
+
+            if (_hasIntercept)
+            {
+                _subtractors[0] = 0.0;
+                _divisors[0] = 1.0;
+            }
         }
     }
 }
