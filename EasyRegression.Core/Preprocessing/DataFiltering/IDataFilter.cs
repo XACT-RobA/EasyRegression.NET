@@ -4,8 +4,6 @@ namespace EasyRegression.Core.Preprocessing.DataFiltering
 {
     public interface IDataFilter : IPreprocessingPlugin
     {
-        void CalculateOutliers(Matrix<double> input);
-
-        Matrix<double> Filter();
+        Matrix<double> Filter(Matrix<double> input);
     }
 }

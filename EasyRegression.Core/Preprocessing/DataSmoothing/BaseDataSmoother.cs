@@ -7,7 +7,7 @@ namespace EasyRegression.Core.Preprocessing.DataSmoothing
     {
         protected double[] _subtractors;
         protected double[] _divisors;
-        protected bool _hasIntercept = false;
+        protected bool _hasIntercept;
 
         public virtual void SetHasIntercept(bool hasIntercept)
         {

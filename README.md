@@ -135,11 +135,11 @@ Zero patching | ✓ | ✓ | -
 Normalisation | ✓ | ✓ | -
 Standardisation | ✓ | ✓ | -
 **Data expansion** | | |
-Polynomial expansion | ✓ | - | -
+Polynomial product expansion | ✓ | - | -
 Intercept expansion | ✓ | - | -
 **Outlier filtering** | | |
 IQR multiple from median | - | - | -
-Stdev multiple from mean | - | - | -
+Stdev multiple from mean | ✓ | - | -
 
 
 ### Optimisation
