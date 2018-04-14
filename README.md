@@ -128,8 +128,8 @@ Mean patching | ✓ | ✓
 Median pathing | ✓ | ✓
 Zero patching | ✓ | ✓
 **Data smoothing** | |
-Normalisation | ✓ | -
-Standardisation | ✓ | -
+Normalisation | ✓ | ✓
+Standardisation | ✓ | ✓
 **Data expansion** | |
 Polynomial expansion | ✓ | -
 **Outlier filtering** | |
