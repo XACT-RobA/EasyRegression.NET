@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EasyRegression.Core.Common.Models;
 
 namespace EasyRegression.Core.Common.Maths
 {
@@ -214,6 +215,61 @@ namespace EasyRegression.Core.Common.Maths
         {
             return input.ColumnVariances()
                         .Select(x => Math.Sqrt(x))
+                        .ToArray();
+        }
+
+        // Quartiles
+
+        public static Range<double> Quartile(this IEnumerable<double> input)
+        {
+            var valids = input.Where(x => x.IsValidDouble());
+            if (!valids.Any())
+            {
+                return new Range<double>(double.NaN, double.NaN);
+            }
+
+            var sorted = valids.OrderBy(x => x);
+
+            var length = sorted.Count();
+            var half = length / 2;
+
+            IEnumerable<double> first;
+            IEnumerable<double> second;
+
+            if (length % 2 == 0)
+            {
+                first = sorted.Take(half);
+                second = sorted.Skip(half).Take(half);
+            }
+            else
+            {
+                first = sorted.Take(half + 1);
+                second = sorted.Skip(half).Take(half + 1);
+            }
+
+            return new Range<double>(second.Median(), first.Median());
+        }
+
+        public static Range<double> ColumnQuartile(this IEnumerable<double[]> input, int column)
+        {
+            if (!input.Any())
+            {
+                return new Range<double>(double.NaN, double.NaN);
+            }
+            
+            return input.Select(arr => arr[column])
+                        .Quartile();
+        }
+
+        public static Range<double>[] ColumnQuartiles(this IEnumerable<double[]> input)
+        {
+            if (!input.Any())
+            {
+                return new[] { new Range<double>(double.NaN, double.NaN) };
+            }
+            
+            return input.First()
+                        .Select((x, i) => input.ColumnQuartile(i))
                         .ToArray();
         }
     }

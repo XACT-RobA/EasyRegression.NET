@@ -141,7 +141,6 @@ Intercept expansion | ✓ | - | -
 IQR multiple from median | - | - | -
 Stdev multiple from mean | ✓ | - | -
 
-
 ### Optimisation
 
 Item | Completed | Tested | Logged

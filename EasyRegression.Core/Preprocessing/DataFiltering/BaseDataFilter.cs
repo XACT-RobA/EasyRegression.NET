@@ -23,9 +23,10 @@ namespace EasyRegression.Core.Preprocessing.DataFiltering
             return true;
         }
 
-        public Matrix<double> Filter(Matrix<double> input)
+        public virtual Matrix<double> Filter(Matrix<double> input)
         {
             var limits = CalculateLimits(input);
+            var max = input.Data.Select(arr => arr[0]).Max();
             var data = input.Data.Where(row => IsWithinLimits(row, limits))
                                  .ToArray();
             return new Matrix<double>(data);
@@ -36,7 +37,7 @@ namespace EasyRegression.Core.Preprocessing.DataFiltering
             throw new System.NotImplementedException();
         }
 
-        public IDataFilter Deserialise(string data)
+        public static IDataFilter Deserialise(string data)
         {
             throw new System.NotImplementedException();
         }

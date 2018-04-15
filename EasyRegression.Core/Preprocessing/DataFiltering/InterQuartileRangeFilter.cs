@@ -4,16 +4,16 @@ using EasyRegression.Core.Common.Models;
 
 namespace EasyRegression.Core.Preprocessing.DataFiltering
 {
-    public class StandardDeviationFilter : BaseDataFilter
+    public class InterQuartileRangeFilter : BaseDataFilter
     {
         private double _multiple;
 
-        public StandardDeviationFilter()
+        public InterQuartileRangeFilter()
         {
-            _multiple = 3.0;
+            _multiple = 1.5;
         }
 
-        public void SetStandardDeviationMultiple(double multiple)
+        public void SetInterQuartileRangeMultiple(double multiple)
         {
             if (multiple > 0)
             {
@@ -23,13 +23,12 @@ namespace EasyRegression.Core.Preprocessing.DataFiltering
 
         protected override Range<double>[] CalculateLimits(Matrix<double> input)
         {
-            var means = input.Data.ColumnMeans();
-            var stdevs = input.Data.ColumnStandardDeviations();
+            var quartiles = input.Data.ColumnQuartiles();
 
-            return means.Select((mean, i) =>
+            return quartiles.Select(x =>
             {
-                return new Range<double>(mean + (_multiple * stdevs[i]),
-                    mean - (_multiple * stdevs[i]));
+                var range = (x.Upper - x.Lower) * _multiple;
+                return new Range<double>(x.Upper + range, x.Lower - range);
             }).ToArray();
         }
     }

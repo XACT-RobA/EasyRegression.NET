@@ -2,6 +2,7 @@ using System;
 using Xunit;
 using EasyRegression.Core;
 using EasyRegression.Core.Common.Models;
+using EasyRegression.Core.Optimisation;
 
 namespace EasyRegression.Test.Integration
 {
@@ -92,6 +93,7 @@ namespace EasyRegression.Test.Integration
         public static void TestDefault()
         {
             var xData = new Matrix<double>(trainingXData);
+
             var engine = new LinearRegressionEngine();
             engine.Train(xData, trainingYData);
 
@@ -100,7 +102,28 @@ namespace EasyRegression.Test.Integration
 
             var actual = engine.Predict(testing);
 
-            Assert.InRange(actual, expected * 0.99, expected * 1.01);
+            Assert.InRange(actual, expected, expected + 1.0);
+        }
+
+        [Fact]
+        public static void TestHigherLearning()
+        {
+            var xData = new Matrix<double>(trainingXData);
+
+            var optimiser = new BatchGradientDescentOptimiser();
+            optimiser.SetLearningRate(1.0);
+
+            var engine = new LinearRegressionEngine();
+            engine.SetOptimiser(optimiser);
+            
+            engine.Train(xData, trainingYData);
+
+            var testing = new[] { 1650.0, 3.0 };
+            var expected = 293081.0;
+
+            var actual = engine.Predict(testing);
+
+            Assert.InRange(actual, expected, expected + 1.0);
         }
     }
 }
