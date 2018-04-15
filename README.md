@@ -138,7 +138,7 @@ Standardisation | ✓ | ✓ | -
 Polynomial product expansion | ✓ | - | -
 Intercept expansion | ✓ | - | -
 **Outlier filtering** | | |
-IQR multiple from median | - | - | -
+IQR multiple from median | ✓ | - | -
 Stdev multiple from mean | ✓ | - | -
 
 ### Optimisation
@@ -147,7 +147,7 @@ Item | Completed | Tested | Logged
 -----|-----------|--------|-------
 **Linear regression** | | |
 Batch gradient descent | ✓ | - | -
-Stochastci gradient descent | - | - | -
+Stochastic gradient descent | - | - | -
 Mini-batch descent | - | - | -
 Multi threaded BGD | - | - | -
 

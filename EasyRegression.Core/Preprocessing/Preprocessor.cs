@@ -6,6 +6,7 @@ using EasyRegression.Core.Preprocessing.DataFiltering;
 using EasyRegression.Core.Preprocessing.DataPatching;
 using EasyRegression.Core.Preprocessing.DataSmoothing;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace EasyRegression.Core.Preprocessing
 {
@@ -90,17 +91,37 @@ namespace EasyRegression.Core.Preprocessing
 
         public string Serialise()
         {
-            var patcherData = _dataPatcher.Serialise();
-            var expanderData = _dataExpander.Serialise();
-            var smootherData = _dataSmoother.Serialise();
-
-            var data = new { preprocessingData = new[] { patcherData, expanderData, smootherData } };
+            var data = new
+            {
+                patcher = _dataPatcher.Serialise(),
+                filter = _dataFilter.Serialise(),
+                expander = _dataExpander.Serialise(),
+                smoother = _dataSmoother.Serialise(),
+            };
             return JsonConvert.SerializeObject(data);
         }
 
         public static IPreprocessor Deserialise(string data)
         {
-            throw new NotImplementedException();
+            var json = JObject.Parse(data);
+
+            var patcherData = json["patcher"].ToString();
+            var filterData = json["filter"].ToString();
+            var expanderData = json["expander"].ToString();
+            var smootherData = json["smoother"].ToString();
+
+            var patcher = BaseDataPatcher.Deserialise(patcherData);
+            var filter = BaseDataFilter.Deserialise(filterData);
+            var expander = BaseDataExpander.Deserialise(expanderData);
+            var smoother = BaseDataSmoother.Deserialise(smootherData);
+
+            var preprocessor = new Preprocessor();
+            preprocessor.SetDataPatcher(patcher);
+            preprocessor.SetDataFilter(filter);
+            preprocessor.SetDataExpander(expander);
+            preprocessor.SetDataSmoother(smoother);
+
+            return preprocessor;
         }
     }
 }

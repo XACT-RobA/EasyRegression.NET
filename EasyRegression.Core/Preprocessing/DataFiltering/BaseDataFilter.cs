@@ -1,5 +1,7 @@
 using System.Linq;
 using EasyRegression.Core.Common.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace EasyRegression.Core.Preprocessing.DataFiltering
 {
@@ -38,7 +40,21 @@ namespace EasyRegression.Core.Preprocessing.DataFiltering
 
         public static IDataFilter Deserialise(string data)
         {
-            throw new System.NotImplementedException();
+            var json = JObject.Parse(data);
+
+            var type = json["filterType"].ToObject<string>();
+
+            switch (type)
+            {
+                case nameof(BlankDataFilter):
+                    return new BlankDataFilter();
+                case nameof(StandardDeviationFilter):
+                    return new StandardDeviationFilter(json["multiple"].ToObject<double>());
+                case nameof(InterQuartileRangeFilter):
+                    return new InterQuartileRangeFilter(json["multiple"].ToObject<double>());
+                default:
+                    return null;
+            }
         }
     }
 }

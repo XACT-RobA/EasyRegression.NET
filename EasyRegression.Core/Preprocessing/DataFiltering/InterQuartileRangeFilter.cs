@@ -1,6 +1,7 @@
 using System.Linq;
 using EasyRegression.Core.Common.Maths;
 using EasyRegression.Core.Common.Models;
+using Newtonsoft.Json;
 
 namespace EasyRegression.Core.Preprocessing.DataFiltering
 {
@@ -11,6 +12,11 @@ namespace EasyRegression.Core.Preprocessing.DataFiltering
         public InterQuartileRangeFilter()
         {
             _multiple = 1.5;
+        }
+
+        internal InterQuartileRangeFilter(double multiple)
+        {
+            SetInterQuartileRangeMultiple(multiple);
         }
 
         public void SetInterQuartileRangeMultiple(double multiple)
@@ -30,6 +36,16 @@ namespace EasyRegression.Core.Preprocessing.DataFiltering
                 var range = (x.Upper - x.Lower) * _multiple;
                 return new Range<double>(x.Upper + range, x.Lower - range);
             }).ToArray();
+        }
+
+        public override string Serialise()
+        {
+            var data = new
+            {
+                filterType = GetPluginType(),
+                multiple = _multiple,
+            };
+            return JsonConvert.SerializeObject(data);
         }
     }
 }

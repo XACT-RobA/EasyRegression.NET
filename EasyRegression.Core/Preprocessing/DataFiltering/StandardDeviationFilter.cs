@@ -1,6 +1,7 @@
 using System.Linq;
 using EasyRegression.Core.Common.Maths;
 using EasyRegression.Core.Common.Models;
+using Newtonsoft.Json;
 
 namespace EasyRegression.Core.Preprocessing.DataFiltering
 {
@@ -11,6 +12,11 @@ namespace EasyRegression.Core.Preprocessing.DataFiltering
         public StandardDeviationFilter()
         {
             _multiple = 3.0;
+        }
+
+        internal StandardDeviationFilter(double multiple)
+        {
+            SetStandardDeviationMultiple(multiple);
         }
 
         public void SetStandardDeviationMultiple(double multiple)
@@ -31,6 +37,16 @@ namespace EasyRegression.Core.Preprocessing.DataFiltering
                 return new Range<double>(mean + (_multiple * stdevs[i]),
                     mean - (_multiple * stdevs[i]));
             }).ToArray();
+        }
+
+        public override string Serialise()
+        {
+            var data = new
+            {
+                filterType = GetPluginType(),
+                multiple = _multiple,
+            };
+            return JsonConvert.SerializeObject(data);
         }
     }
 }
