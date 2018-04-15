@@ -19,11 +19,6 @@ namespace EasyRegression.Core.Preprocessing.DataPatching
             _parameters = new double[input.Width];
         }
 
-        public void SetParameters(double[] parameters)
-        {
-            _parameters = parameters;
-        }
-
         public Matrix<double> Patch(Matrix<double?> input)
         {
             CalculateParameters(input);
@@ -110,21 +105,20 @@ namespace EasyRegression.Core.Preprocessing.DataPatching
 
         public override string Serialise()
         {
-            var type = GetPluginType();
             var data = new
             {
-                pluginType = GetPluginType(),
+                patcherType = GetPluginType(),
                 parameters = _parameters,
             };
             return JsonConvert.SerializeObject(data);
         }
 
-        public static IDataPatcher Deserialise(string json)
+        public static IDataPatcher Deserialise(string data)
         {
-            var jObj = JObject.Parse(json);
+            var json = JObject.Parse(data);
 
-            var type = (string)jObj["pluginType"];
-            var parameters = ((JArray)jObj["parameters"]).ToObject<double[]>();
+            var type = json["patcherType"].ToObject<string>();
+            var parameters = ((JArray)json["parameters"]).ToObject<double[]>();
 
             switch (type)
             {
@@ -135,7 +129,7 @@ namespace EasyRegression.Core.Preprocessing.DataPatching
                 case nameof(ZeroDataPatcher):
                     return new ZeroDataPatcher(parameters);
                 default:
-                    throw new System.ArgumentException();
+                    return null;
             }
         }
     }

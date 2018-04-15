@@ -1,11 +1,10 @@
-using System;
-using Xunit;
-using EasyRegression.Core.Preprocessing.DataSmoothing;
 using EasyRegression.Core.Common.Models;
+using EasyRegression.Core.Preprocessing.DataSmoothing;
+using Xunit;
 
 namespace EasyRegression.Test.Preprocessing.DataSmoothing
 {
-    public static class StandardisationTests
+    public static class BlankDataSmootherTests
     {
         private const int _places = 6;
 
@@ -25,18 +24,11 @@ namespace EasyRegression.Test.Preprocessing.DataSmoothing
         [Fact]
         public static void TestSmooth()
         {
-            var standardiser = new DataStandardiser();
-
-            var expectedData = new[]
-            {
-                new[] {  0.70710678, -1.22474487, 0.98058068 },
-                new[] {  0.70710678,  0.0,        0.39223227 },
-                new[] { -1.41421356, 1.22474487, -1.37281295 },
-            };
+            var blankSmoother = new BlankDataSmoother();
 
             var matrix = new Matrix<double>(trainingData);
-            var expected = new Matrix<double>(expectedData);
-            var actual = standardiser.Smooth(matrix);
+            var expected = new Matrix<double>(trainingData);
+            var actual = blankSmoother.Smooth(matrix);
 
             Assert.Equal(expected.Length, actual.Length);
             Assert.Equal(expected.Width, actual.Width);
@@ -51,34 +43,15 @@ namespace EasyRegression.Test.Preprocessing.DataSmoothing
         }
 
         [Fact]
-        public static void TestReSmoothInRange()
+        public static void TestReSmooth()
         {
             var matrix = new Matrix<double>(trainingData);
-            var standardiser = new DataStandardiser();
-            standardiser.Smooth(matrix);
+            var blankSmoother = new BlankDataSmoother();
+            blankSmoother.Smooth(matrix);
 
             var testing = new[] { 0.5, 2.5, 2.0 };
-            var expected = new[] { 0.17677670, -0.61237244, -0.78446454 };
-            var actual = standardiser.ReSmooth(testing);
-
-            Assert.Equal(expected.Length, actual.Length);
-
-            for (int i = 0; i < expected.Length; i++)
-            {
-                Assert.Equal(expected[i], actual[i], _places);
-            }
-        }
-
-        [Fact]
-        public static void TestReSmoothOutOfRange()
-        {
-            var matrix = new Matrix<double>(trainingData);
-            var standardiser = new DataStandardiser();
-            standardiser.Smooth(matrix);
-
-            var testing = new[] { 2.0, 1.0, -1.0 };
-            var expected = new[] { 1.76776695, -2.44948974, -2.54950975 };
-            var actual = standardiser.ReSmooth(testing);
+            var expected = new[] { 0.5, 2.5, 2.0 };
+            var actual = blankSmoother.ReSmooth(testing);
 
             Assert.Equal(expected.Length, actual.Length);
 
@@ -91,14 +64,14 @@ namespace EasyRegression.Test.Preprocessing.DataSmoothing
         [Fact]
         public static void TestSerialise()
         {
-            var standardiser = new DataStandardiser();
-            standardiser.Smooth(new Matrix<double>(trainingData));
+            var blankSmoother = new BlankDataSmoother();
+            blankSmoother.Smooth(new Matrix<double>(trainingData));
 
-            var serialised = standardiser.Serialise();
+            var serialised = blankSmoother.Serialise();
             var deserialised = BaseDataSmoother.Deserialise(serialised);
 
             var testing = new[] { 0.5, 2.5, 2.0 };
-            var expected = new[] { 0.17677670, -0.61237244, -0.78446454 };
+            var expected = new[] { 0.5, 2.5, 2.0 };
             var actual = deserialised.ReSmooth(testing);
 
             Assert.Equal(expected.Length, actual.Length);

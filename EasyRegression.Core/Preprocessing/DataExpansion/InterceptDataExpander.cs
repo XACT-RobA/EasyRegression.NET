@@ -1,5 +1,6 @@
 using System.Linq;
 using EasyRegression.Core.Common.Models;
+using Newtonsoft.Json;
 
 namespace EasyRegression.Core.Preprocessing.DataExpansion
 {
@@ -39,6 +40,15 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
         public override bool HasIntercept()
         {
             return true;
+        }
+
+        public override string Serialise()
+        {
+            var data = new
+            {
+                expanderType = GetPluginType(),
+            };
+            return JsonConvert.SerializeObject(data);
         }
     }
 }

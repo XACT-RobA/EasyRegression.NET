@@ -5,6 +5,14 @@ namespace EasyRegression.Core.Preprocessing.DataSmoothing
 {
     public class DataNormaliser : BaseDataSmoother
     {
+        public DataNormaliser() { }
+
+        internal DataNormaliser(double[] subtractors, double[] divisors)
+        {
+            _subtractors = subtractors;
+            _divisors = divisors;
+        }
+
         protected override void CalculateParameters(Matrix<double> input)
         {
             int width = input.Width;

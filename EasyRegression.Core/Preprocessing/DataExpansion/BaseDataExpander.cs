@@ -1,4 +1,5 @@
 using EasyRegression.Core.Common.Models;
+using Newtonsoft.Json.Linq;
 
 namespace EasyRegression.Core.Preprocessing.DataExpansion
 {
@@ -26,7 +27,22 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
 
         public static IDataExpander Deserialise(string data)
         {
-            throw new System.NotImplementedException();
+            var json = JObject.Parse(data);
+
+            var type = json["expanderType"].ToObject<string>();
+
+            switch (type)
+            {
+                case nameof(BlankDataExpander):
+                    return new BlankDataExpander();
+                case nameof(InterceptDataExpander):
+                    return new InterceptDataExpander();
+                case nameof(PolynomialDataExpander):
+                    var order = json["order"].ToObject<int>();
+                    return new PolynomialDataExpander(order);
+                default:
+                    return null;
+            }
         }
     }
 }

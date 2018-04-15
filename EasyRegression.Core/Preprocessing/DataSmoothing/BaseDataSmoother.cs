@@ -1,5 +1,6 @@
 using EasyRegression.Core.Common.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace EasyRegression.Core.Preprocessing.DataSmoothing
 {
@@ -58,13 +59,34 @@ namespace EasyRegression.Core.Preprocessing.DataSmoothing
 
         public override string Serialise()
         {
-            var data = new { smoothData = new { subtractors = _subtractors, divisors = _divisors } };
+            var data = new
+            {
+                smootherType = GetPluginType(),
+                subtractors = _subtractors,
+                divisors = _divisors,
+            };
             return JsonConvert.SerializeObject(data);
         }
 
         public static IDataSmoother Deserialise(string data)
         {
-            throw new System.NotImplementedException();
+            var json = JObject.Parse(data);
+
+            var type = json["smootherType"].ToObject<string>();
+            var subtractors = ((JArray)json["subtractors"]).ToObject<double[]>();
+            var divisors = ((JArray)json["divisors"]).ToObject<double[]>();
+
+            switch (type)
+            {
+                case nameof(BlankDataSmoother):
+                    return new BlankDataSmoother();
+                case nameof(DataNormaliser):
+                    return new DataNormaliser(subtractors, divisors);
+                case nameof(DataStandardiser):
+                    return new DataStandardiser(subtractors, divisors);
+                default:
+                    return null;
+            }
         }
     }
 }

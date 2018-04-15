@@ -87,5 +87,26 @@ namespace EasyRegression.Test.Preprocessing.DataSmoothing
                 Assert.Equal(expected[i], actual[i], _places);
             }
         }
+
+        [Fact]
+        public static void TestSerialise()
+        {
+            var normaliser = new DataNormaliser();
+            normaliser.Smooth(new Matrix<double>(trainingData));
+
+            var serialised = normaliser.Serialise();
+            var deserialised = BaseDataSmoother.Deserialise(serialised);
+
+            var testing = new[] { 0.5, 2.5, 2.0 };
+            var expected = new[] { 0.75, 0.25, 0.25 };
+            var actual = deserialised.ReSmooth(testing);
+
+            Assert.Equal(expected.Length, actual.Length);
+
+            for (int i = 0; i < expected.Length; i++)
+            {
+                Assert.Equal(expected[i], actual[i], _places);
+            }
+        }
     }
 }

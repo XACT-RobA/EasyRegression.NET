@@ -40,7 +40,11 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
 
         public override string Serialise()
         {
-            var data = new { expandData = _order };
+            var data = new
+            {
+                expanderType = GetPluginType(),
+                order = _order,
+            };
             return JsonConvert.SerializeObject(data);
         }
     }
