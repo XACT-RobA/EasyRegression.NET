@@ -4,6 +4,7 @@ using Xunit;
 using Xunit.Extensions;
 using EasyRegression.Core.Common.Maths;
 using System.Linq;
+using EasyRegression.Core.Common.Models;
 
 namespace EasyRegression.Test.Common.Maths
 {
@@ -382,6 +383,72 @@ namespace EasyRegression.Test.Common.Maths
             for (int i = 0; i < expected.Length; i++)
             {
                 Assert.Equal(expected[i], actual[i], _places);
+            }
+        }
+
+        // Quartiles
+
+        [Fact]
+        public static void TestQuartile()
+        {
+            var data = new[] { 3.0, 1.0, 4.0, 2.0, 6.0, 5.0, _nan };
+            var expected = new Range<double>(5.0, 2.0);
+            Assert.Equal(expected, data.Quartile());
+
+            data = new[] { 3.0, 4.0, 1.0, 6.0, _pInf };
+            Assert.Equal(expected, data.Quartile());
+
+            data = new[] { 3.0, 1.0, 2.0, 6.0, 5.0, _nInf };
+            Assert.Equal(expected, data.Quartile());
+
+            data = new[] { 3.0, 7.0, 4.0, 4.0, 1.0, 6.0, 1.0, _nInf };
+            Assert.Equal(expected, data.Quartile());
+        }
+
+        [Fact]
+        public static void TestColumnQuartile()
+        {
+            var data = new[]
+            {
+                new[] { 3.0,  3.0,   3.0,   3.0 },
+                new[] { 1.0,  4.0,   1.0,   7.0 },
+                new[] { 4.0,  1.0,   2.0,   4.0 },
+                new[] { 2.0,  6.0,   6.0,   4.0 },
+                new[] { 6.0,  _nan,  5.0,   1.0 },
+                new[] { 5.0,  _pInf, _nan,  6.0 },
+                new[] { _nan, _nInf, _pInf, 1.0 },
+            };
+
+            var expected = new Range<double>(5.0, 2.0);
+
+            Assert.Equal(expected, data.ColumnQuartile(0));
+            Assert.Equal(expected, data.ColumnQuartile(1));
+            Assert.Equal(expected, data.ColumnQuartile(2));
+            Assert.Equal(expected, data.ColumnQuartile(3));
+        }
+
+        [Fact]
+        public static void TestColumnQuartiles()
+        {
+            var data = new[]
+            {
+                new[] { 3.0,  3.0,   3.0,   3.0 },
+                new[] { 1.0,  4.0,   1.0,   7.0 },
+                new[] { 4.0,  1.0,   2.0,   4.0 },
+                new[] { 2.0,  6.0,   6.0,   4.0 },
+                new[] { 6.0,  _nan,  5.0,   1.0 },
+                new[] { 5.0,  _pInf, _nan,  6.0 },
+                new[] { _nan, _nInf, _pInf, 1.0 },
+            };
+
+            var expected = new Range<double>(5.0, 2.0);
+            var actual = data.ColumnQuartiles();
+
+            Assert.Equal(4, actual.Length);
+
+            for (int i = 0; i < actual.Length; i++)
+            {
+                Assert.Equal(expected, actual[i]);
             }
         }
     }

@@ -18,5 +18,10 @@ namespace EasyRegression.Core.Common.Models
             return other.Upper.Equals(Upper) &&
                 other.Lower.Equals(Lower);
         }
+
+        public override string ToString()
+        {
+            return $"[ {Upper.ToString()}, {Lower.ToString()} ]";
+        }
     }
 }
