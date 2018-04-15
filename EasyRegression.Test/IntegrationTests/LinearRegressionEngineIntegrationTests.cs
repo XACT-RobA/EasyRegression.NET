@@ -99,7 +99,6 @@ namespace EasyRegression.Test.Integration
 
             var testing = new[] { 1650.0, 3.0 };
             var expected = 293081.0;
-
             var actual = engine.Predict(testing);
 
             Assert.InRange(actual, expected, expected + 1.0);
@@ -120,8 +119,25 @@ namespace EasyRegression.Test.Integration
 
             var testing = new[] { 1650.0, 3.0 };
             var expected = 293081.0;
-
             var actual = engine.Predict(testing);
+
+            Assert.InRange(actual, expected, expected + 1.0);
+        }
+
+        [Fact]
+        public static void TestSerialise()
+        {
+            var xData = new Matrix<double>(trainingXData);
+
+            var engine = new LinearRegressionEngine();
+            engine.Train(xData, trainingYData);
+
+            var serialised = engine.Serialise();
+            var deserialised = (LinearRegressionEngine)BaseRegressionEngine.Deserialise(serialised);
+
+            var testing = new[] { 1650.0, 3.0 };
+            var expected = 293081.0;
+            var actual = deserialised.Predict(testing);
 
             Assert.InRange(actual, expected, expected + 1.0);
         }

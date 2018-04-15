@@ -154,10 +154,10 @@ Multi threaded BGD | - | - | -
 ### Prediction
 Item | Completed | Tested | Logged
 -----|-----------|--------|-------
-Data prediction | ✓ | - | -
+Data prediction | ✓ | ✓ | -
 **Reproducible predictions** | | |
-Config saving | - | - | -
-Config loading | - | - | -
+Config saving | ✓ | ✓ | -
+Config loading | ✓ | ✓ | -
 
 ### Integration Testing
 Item | Completed

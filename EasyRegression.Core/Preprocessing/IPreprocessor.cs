@@ -20,5 +20,7 @@ namespace EasyRegression.Core.Preprocessing
         // Process testing/predictino data using same parameters
         double[] Reprocess(double[] input);
         double[] Reprocess(double?[] input);
+
+        string Serialise();
     }
 }

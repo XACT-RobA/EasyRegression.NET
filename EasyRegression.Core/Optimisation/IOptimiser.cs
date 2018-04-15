@@ -7,5 +7,9 @@ namespace EasyRegression.Core.Optimisation
         void Train(Matrix<double> x, double[] y);
 
         double Predict(double[] x);
+
+        string Serialise();
+
+        string GetOptimiserType();
     }
 }

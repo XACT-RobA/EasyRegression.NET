@@ -116,10 +116,10 @@ namespace EasyRegression.Core.Preprocessing
             var smoother = BaseDataSmoother.Deserialise(smootherData);
 
             var preprocessor = new Preprocessor();
-            preprocessor.SetDataPatcher(patcher);
-            preprocessor.SetDataFilter(filter);
-            preprocessor.SetDataExpander(expander);
-            preprocessor.SetDataSmoother(smoother);
+            if (patcher != null) { preprocessor.SetDataPatcher(patcher); }
+            if (filter != null) { preprocessor.SetDataFilter(filter); }
+            if (expander != null) { preprocessor.SetDataExpander(expander); }
+            if (smoother != null) { preprocessor.SetDataSmoother(smoother); }
 
             return preprocessor;
         }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using EasyRegression.Core.Common.Models;
 using EasyRegression.Core.Common.Maths;
+using Newtonsoft.Json;
 
 namespace EasyRegression.Core.Optimisation
 {
@@ -32,6 +33,12 @@ namespace EasyRegression.Core.Optimisation
             _limit = 1e-9;
             _converged = false;
             _errors = new double[_maxIter];
+        }
+
+        internal BatchGradientDescentOptimiser(double[] parameters)
+            : this()
+        {
+            _params = parameters;
         }
 
         public void SetLearningRate(double learningRate)
@@ -115,6 +122,16 @@ namespace EasyRegression.Core.Optimisation
                     _converged = true;
                 }
             }
+        }
+
+        public override string Serialise()
+        {
+            var data = new
+            {
+                optimiserType = GetOptimiserType(),
+                parameters = _params,
+            };
+            return JsonConvert.SerializeObject(data);
         }
     }
 }

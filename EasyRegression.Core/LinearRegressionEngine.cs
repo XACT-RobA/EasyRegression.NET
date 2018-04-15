@@ -2,10 +2,11 @@ using System;
 using EasyRegression.Core.Common.Models;
 using EasyRegression.Core.Optimisation;
 using EasyRegression.Core.Preprocessing;
+using Newtonsoft.Json;
 
 namespace EasyRegression.Core
 {
-    public class LinearRegressionEngine
+    public class LinearRegressionEngine : BaseRegressionEngine
     {
         private IPreprocessor _preprocessor;
         private IOptimiser _optimiser;
@@ -48,6 +49,17 @@ namespace EasyRegression.Core
         {
             var preprocessedData = _preprocessor.Reprocess(input);
             return _optimiser.Predict(preprocessedData);
+        }
+
+        public override string Serialise()
+        {
+            var data = new
+            {
+                regressionType = GetRegressionType(),
+                preprocessor = _preprocessor.Serialise(),
+                optimiser = _optimiser.Serialise(),
+            };
+            return JsonConvert.SerializeObject(data);
         }
     }
 }
