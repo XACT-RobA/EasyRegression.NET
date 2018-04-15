@@ -3,6 +3,7 @@ using EasyRegression.Core.Common.Models;
 using EasyRegression.Core.Optimisation;
 using EasyRegression.Core.Preprocessing;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace EasyRegression.Core
 {
@@ -60,6 +61,26 @@ namespace EasyRegression.Core
                 optimiser = _optimiser.Serialise(),
             };
             return JsonConvert.SerializeObject(data);
+        }
+
+        public static LinearRegressionEngine Deserialise(string data)
+        {
+            var json = JObject.Parse(data);
+
+            var type = json["regressionType"].ToObject<string>();
+
+            if (type != nameof(LinearRegressionEngine)) { return null; }
+
+            var preprocessorData = json["preprocessor"].ToString();
+            var optimiserData = json["optimiser"].ToString();
+
+            var preprocessor = Preprocessor.Deserialise(preprocessorData);
+            var optimiser = BaseOptimiser.Deserialise(optimiserData);
+
+            var regression = new LinearRegressionEngine();
+            regression.SetPreprocessor(preprocessor);
+            regression.SetOptimiser(optimiser);
+            return regression;
         }
     }
 }

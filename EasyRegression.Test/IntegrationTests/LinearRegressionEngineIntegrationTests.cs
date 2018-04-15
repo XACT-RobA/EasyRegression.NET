@@ -133,7 +133,7 @@ namespace EasyRegression.Test.Integration
             engine.Train(xData, trainingYData);
 
             var serialised = engine.Serialise();
-            var deserialised = (LinearRegressionEngine)BaseRegressionEngine.Deserialise(serialised);
+            var deserialised = LinearRegressionEngine.Deserialise(serialised);
 
             var testing = new[] { 1650.0, 3.0 };
             var expected = 293081.0;
