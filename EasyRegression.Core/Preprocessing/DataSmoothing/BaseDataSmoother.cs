@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace EasyRegression.Core.Preprocessing.DataSmoothing
 {
-    public abstract class BaseDataSmoother : IDataSmoother
+    public abstract class BaseDataSmoother : BasePreprocessingPlugin, IDataSmoother
     {
         protected double[] _subtractors;
         protected double[] _divisors;
@@ -56,7 +56,7 @@ namespace EasyRegression.Core.Preprocessing.DataSmoothing
             return smoothedData;
         }
 
-        public virtual string Serialise()
+        public override string Serialise()
         {
             var data = new { smoothData = new { subtractors = _subtractors, divisors = _divisors } };
             return JsonConvert.SerializeObject(data);

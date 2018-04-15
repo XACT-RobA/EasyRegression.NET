@@ -2,7 +2,7 @@ using EasyRegression.Core.Common.Models;
 
 namespace EasyRegression.Core.Preprocessing.DataExpansion
 {
-    public abstract class BaseDataExpander : IDataExpander
+    public abstract class BaseDataExpander : BasePreprocessingPlugin, IDataExpander
     {
         public virtual Matrix<double> Expand(Matrix<double> input)
         {
@@ -19,7 +19,7 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
             return false;
         }
 
-        public virtual string Serialise()
+        public override string Serialise()
         {
             throw new System.NotImplementedException();
         }

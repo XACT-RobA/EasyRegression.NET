@@ -4,5 +4,7 @@ namespace EasyRegression.Core.Preprocessing
     {
         // Stores preprocessing parameters to json
         string Serialise();
+
+        string GetPluginType();
     }
 }

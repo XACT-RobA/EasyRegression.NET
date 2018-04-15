@@ -138,5 +138,33 @@ namespace EasyRegression.Test.Preprocessing.DataPatching
                 Assert.Equal(expectedData[i], actual[i], _places);
             }
         }
+
+        [Fact]
+        public static void TestSerialise()
+        {
+            var data = new[]
+            {
+                new[] { 1.0,   3.0,   _nan },
+                new[] { 3.0,   _pInf, 3.0  },
+                new[] { _nInf, 1.0,   1.0  },
+            };
+
+            var meanPatcher = new MeanDataPatcher();
+            meanPatcher.Patch(new Matrix<double>(data));
+
+            var serialised = meanPatcher.Serialise();
+            var deserialised = BaseDataPatcher.Deserialise(serialised);
+
+            var testingData = new[] { _nan, _pInf, _nInf };
+            var expectedData = new[] { 2.0, 2.0, 2.0 };
+            var actual = deserialised.RePatch(testingData);
+
+            Assert.Equal(expectedData.Length, actual.Length);
+
+            for (int i = 0; i < expectedData.Length; i++)
+            {
+                Assert.Equal(expectedData[i], actual[i], _places);
+            }
+        }
     }
 }

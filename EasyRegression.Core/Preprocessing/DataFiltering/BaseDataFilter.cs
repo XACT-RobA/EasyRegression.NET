@@ -3,7 +3,7 @@ using EasyRegression.Core.Common.Models;
 
 namespace EasyRegression.Core.Preprocessing.DataFiltering
 {
-    public class BaseDataFilter : IDataFilter
+    public abstract class BaseDataFilter : BasePreprocessingPlugin, IDataFilter
     {
         protected virtual Range<double>[] CalculateLimits(Matrix<double> input)
         {
@@ -26,13 +26,12 @@ namespace EasyRegression.Core.Preprocessing.DataFiltering
         public virtual Matrix<double> Filter(Matrix<double> input)
         {
             var limits = CalculateLimits(input);
-            var max = input.Data.Select(arr => arr[0]).Max();
             var data = input.Data.Where(row => IsWithinLimits(row, limits))
                                  .ToArray();
             return new Matrix<double>(data);
         }
 
-        public string Serialise()
+        public override string Serialise()
         {
             throw new System.NotImplementedException();
         }

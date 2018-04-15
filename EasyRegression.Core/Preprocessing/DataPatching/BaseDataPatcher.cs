@@ -1,10 +1,11 @@
 using EasyRegression.Core.Common.Models;
 using EasyRegression.Core.Common.Maths;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace EasyRegression.Core.Preprocessing.DataPatching
 {
-    public abstract class BaseDataPatcher : IDataPatcher
+    public abstract class BaseDataPatcher : BasePreprocessingPlugin, IDataPatcher
     {
         protected double[] _parameters;
 
@@ -16,6 +17,11 @@ namespace EasyRegression.Core.Preprocessing.DataPatching
         protected virtual void CalculateParameters(Matrix<double> input)
         {
             _parameters = new double[input.Width];
+        }
+
+        public void SetParameters(double[] parameters)
+        {
+            _parameters = parameters;
         }
 
         public Matrix<double> Patch(Matrix<double?> input)
@@ -102,15 +108,35 @@ namespace EasyRegression.Core.Preprocessing.DataPatching
             return patchedData;
         }
 
-        public virtual string Serialise()
+        public override string Serialise()
         {
-            var data = new { patchData = _parameters };
+            var type = GetPluginType();
+            var data = new
+            {
+                pluginType = GetPluginType(),
+                parameters = _parameters,
+            };
             return JsonConvert.SerializeObject(data);
         }
 
-        public static IDataPatcher Deserialise(string data)
+        public static IDataPatcher Deserialise(string json)
         {
-            throw new System.NotImplementedException();
+            var jObj = JObject.Parse(json);
+
+            var type = (string)jObj["pluginType"];
+            var parameters = ((JArray)jObj["parameters"]).ToObject<double[]>();
+
+            switch (type)
+            {
+                case nameof(MeanDataPatcher):
+                    return new MeanDataPatcher(parameters);
+                case nameof(MedianDataPatcher):
+                    return new MedianDataPatcher(parameters);
+                case nameof(ZeroDataPatcher):
+                    return new ZeroDataPatcher(parameters);
+                default:
+                    throw new System.ArgumentException();
+            }
         }
     }
 }

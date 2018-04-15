@@ -52,5 +52,16 @@ namespace EasyRegression.Test.Integration
                 }
             }
         }
+
+        // [Fact]
+        public static void TestSerialise()
+        {
+            var preprocessor = new Preprocessor();
+            preprocessor.Preprocess(new Matrix<double>(TestData()));
+
+            var serialised = preprocessor.Serialise();
+
+            Assert.Equal(string.Empty, serialised);
+        }
     }
 }
