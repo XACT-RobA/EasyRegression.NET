@@ -12,7 +12,7 @@
 - Useful progress logging
 - Unit test all calculation based methods
 - Solid integration tests
-- Minimal dependancies
+- Minimal dependancies (currently just Newtonsoft.Json)
 
 ## Usage
 
@@ -32,6 +32,16 @@ regressionEngine.Train(x, y);
 // Predict y0 value based on input x0 where x0 is double[] or double?[]
 // x0 will be preprocessed before the prediction is made
 double y0 = regressionEngine.Predict(x0);
+```
+
+Serialising a trained regression engine allows the user to re-use the same preprocessing parameters and trained regression model for predictions without further training in the future. The `Serialise` method outputs a json version of the current trained setup as a string, which can then be stored in a file or database for later use.
+
+It is however recommended to train the engine from scratch as new batches of data are added to keep the model as correct and up to data as possible.
+
+```cs
+// Create and train a linear regression engine as in the previous example
+var regression = new LinearRegressionEngine();
+regression.Train(x, y);
 
 // Store the trained regression parameters as json
 string json = regressionEngine.Serialise();
@@ -43,10 +53,6 @@ var newRegressionEngine = LinearRegressionEngine.Deserialise(json);
 // x1 will be preprocessed the same as x0 was before predicting
 double y1 = newRegressionEngine.Predict(x1);
 ```
-
-Serialising a trained regression engine allows the user to re-use the same preprocessing parameters and trained regression model for predictions without further training in the future. The `Serialise` method outputs a json version of the current trained setup as a string, which can then be stored in a file or database for later use.
-
-It is however recommended to train the engine from scratch as new batches of data are added to keep the model as correct and up to data as possible.
 
 By default, the regression engine will include a preprocessor that will fill any invalid data (null, nan, infinite) with the mean of that feature across the dataset. It will then "smooth" the data using standardisation.
 
