@@ -12,7 +12,7 @@ namespace EasyRegression.Core.Preprocessing.DataFiltering
 
         public MedianAbsoluteDeviationFilter()
         {
-            _multiple = 3.0;
+            _multiple = 4.5;
         }
 
         internal MedianAbsoluteDeviationFilter(double multiple)
