@@ -19,10 +19,10 @@ namespace EasyRegression.Core.Preprocessing
 
         public Preprocessor()
         {
-            _dataPatcher =  new MeanDataPatcher();
-            _dataFilter = new BlankDataFilter();
-            _dataExpander =  new InterceptDataExpander();
-            _dataSmoother =  new DataStandardiser();
+            SetDataPatcher(new MeanDataPatcher());
+            SetDataFilter(new BlankDataFilter());
+            SetDataExpander(new InterceptDataExpander());
+            SetDataSmoother(new DataStandardiser());
         }
 
         public void SetDataPatcher(IDataPatcher dataPatcher)
@@ -38,17 +38,26 @@ namespace EasyRegression.Core.Preprocessing
         public void SetDataExpander(IDataExpander dataExpander)
         {
             _dataExpander = dataExpander;
+            SetHasIntercept();
         }
 
         public void SetDataSmoother(IDataSmoother dataSmoother)
         {
             _dataSmoother = dataSmoother;
+            SetHasIntercept();
+        }
+
+        private void SetHasIntercept()
+        {
+            if (_dataSmoother != null &&
+                _dataExpander != null)
+            {
+                _dataSmoother.SetHasIntercept(_dataExpander.HasIntercept());
+            }
         }
 
         public Matrix<double> Preprocess(Matrix<double> input)
         {
-            _dataSmoother.SetHasIntercept(_dataExpander.HasIntercept());
-
             var output = input;
             output = _dataPatcher.Patch(output);
             output = _dataFilter.Filter(output);
@@ -59,8 +68,6 @@ namespace EasyRegression.Core.Preprocessing
 
         public Matrix<double> Preprocess(Matrix<double?> input)
         {
-            _dataSmoother.SetHasIntercept(_dataExpander.HasIntercept());
-
             var output = _dataPatcher.Patch(input);
             output = _dataFilter.Filter(output);
             output = _dataExpander.Expand(output);
@@ -70,8 +77,6 @@ namespace EasyRegression.Core.Preprocessing
 
         public double[] Reprocess(double[] input)
         {
-            _dataSmoother.SetHasIntercept(_dataExpander.HasIntercept());
-
             var output = input;
             output = _dataPatcher.RePatch(output);
             output = _dataExpander.ReExpand(output);
@@ -81,8 +86,6 @@ namespace EasyRegression.Core.Preprocessing
 
         public double[] Reprocess(double?[] input)
         {
-            _dataSmoother.SetHasIntercept(_dataExpander.HasIntercept());
-
             var output = _dataPatcher.RePatch(input);
             output = _dataExpander.ReExpand(output);
             output = _dataSmoother.ReSmooth(output);

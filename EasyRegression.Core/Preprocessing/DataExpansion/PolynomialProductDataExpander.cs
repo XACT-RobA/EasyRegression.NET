@@ -1,14 +1,14 @@
-using System;
+﻿using System;
 using EasyRegression.Core.Common.Models;
 using Newtonsoft.Json;
 
 namespace EasyRegression.Core.Preprocessing.DataExpansion
 {
-    public class PolynomialDataExpander : BaseDataExpander
+    public class PolynomialProductDataExpander : BaseDataExpander
     {
         private readonly int _order;
 
-        public PolynomialDataExpander(int order)
+        public PolynomialProductDataExpander(int order)
         {
             _order = order;
         }

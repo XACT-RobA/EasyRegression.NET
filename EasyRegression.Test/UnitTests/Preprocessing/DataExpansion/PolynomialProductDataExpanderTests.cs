@@ -5,32 +5,40 @@ using Xunit;
 
 namespace EasyRegression.Test.Preprocessing.DataExpansion
 {
-    public static class InterceptDataExpanderTests
+    public static class PolynomialProductDataExpanderTests
     {
+        // More tests of Polynomial product expansion in PolynomialTreeTests.cs
+
         [Fact]
         public static void TestExpand()
         {
             var data = new[]
             {
-                new[] { 1.0, 2.0, 3.0 },
-                new[] { 2.0, 3.0, 1.0 },
-                new[] { 3.0, 1.0, 2.0 },
+                new[] { 1.0, 2.0 },
+                new[] { 2.0, 3.0 },
+                new[] { 3.0, 1.0 },
             };
 
-            // [x0, x1] => [1.0, x0, x1]
-            var expander = new InterceptDataExpander();
+            var expected = new[]
+            {
+                new[] { 1.0, 2.0, 1.0, 2.0 },
+                new[] { 1.0, 3.0, 2.0, 6.0 },
+                new[] { 1.0, 1.0, 3.0, 3.0 },
+            };
+
+            // [x0, x1] => [1.0, x1, x0, x0x1]
+            var expander = new PolynomialProductDataExpander(order: 1);
             var expanded = expander.Expand(new Matrix<double>(data));
 
-            Assert.Equal(data.Length, expanded.Length);
+            Assert.Equal(expected.Length, expanded.Length);
 
-            for (int i = 0; i < data.Length; i++)
+            for (int i = 0; i < expected.Length; i++)
             {
-                Assert.Equal(data[i].Length + 1, expanded[i].Length);
-                Assert.Equal(expanded[i][0], 1.0);
+                Assert.Equal(expected[i].Length, expanded[i].Length);
 
-                for (int j = 0; j < data[i].Length; j++)
+                for (int j = 0; j < expected[i].Length; j++)
                 {
-                    Assert.Equal(data[i][j], expanded[i][j + 1]);
+                    Assert.Equal(expected[i][j], expanded[i][j]);
                 }
             }
         }
@@ -40,17 +48,17 @@ namespace EasyRegression.Test.Preprocessing.DataExpansion
         {
             var data = new[]
             {
-                new[] { 1.0, 2.0, 3.0 },
-                new[] { 2.0, 3.0, 1.0 },
-                new[] { 3.0, 1.0, 2.0 },
+                new[] { 1.0, 2.0 },
+                new[] { 2.0, 3.0 },
+                new[] { 3.0, 1.0 },
             };
 
-            // [x0, x1] => [1.0, x0, x1]
-            var expander = new InterceptDataExpander();
+            // [x0, x1] => [1.0, x1, x0, x0x1]
+            var expander = new PolynomialProductDataExpander(order: 1);
             expander.Expand(new Matrix<double>(data));
 
-            var testing = new[] { 3.0, 2.0, 1.0 };
-            var expected = new[] { 1.0, 3.0, 2.0, 1.0 };
+            var testing = new[] { 4.0, 5.0 };
+            var expected = new[] { 1.0, 5.0, 4.0, 20.0 };
             var actual = expander.ReExpand(testing);
 
             Assert.Equal(expected.Length, actual.Length);
@@ -66,13 +74,13 @@ namespace EasyRegression.Test.Preprocessing.DataExpansion
         {
             var data = new[]
             {
-                new[] { 1.0, 2.0, 3.0 },
-                new[] { 2.0, 3.0, 1.0 },
-                new[] { 3.0, 1.0, 2.0 },
+                new[] { 1.0, 2.0 },
+                new[] { 2.0, 3.0 },
+                new[] { 3.0, 1.0 },
             };
 
-            // [x0, x1] => [1.0, x0, x1]
-            var expander = new InterceptDataExpander();
+            // [x0, x1] => [1.0, x1, x0, x0x1]
+            var expander = new PolynomialProductDataExpander(order: 1);
             var expanded = expander.Expand(new Matrix<double>(data));
 
             var smoother = new DataStandardiser();

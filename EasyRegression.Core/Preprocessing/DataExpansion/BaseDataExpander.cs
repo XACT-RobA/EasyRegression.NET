@@ -37,9 +37,9 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
                     return new BlankDataExpander();
                 case nameof(InterceptDataExpander):
                     return new InterceptDataExpander();
-                case nameof(PolynomialDataExpander):
+                case nameof(PolynomialProductDataExpander):
                     var order = json["order"].ToObject<int>();
-                    return new PolynomialDataExpander(order);
+                    return new PolynomialProductDataExpander(order);
                 default:
                     return null;
             }
