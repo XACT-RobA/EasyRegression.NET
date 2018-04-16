@@ -160,12 +160,16 @@ Zero patching | ✓ | ✓ | -
 **Data smoothing** | | |
 Normalisation | ✓ | ✓ | -
 Standardisation | ✓ | ✓ | -
+Blank smoother | ✓ | ✓ | -
 **Data expansion** | | |
-Polynomial product expansion | ✓ | - | -
-Intercept expansion | ✓ | - | -
+Polynomial product expansion | ✓ | ✓ | -
+Intercept expansion | ✓ | ✓ | -
+Blank expander | ✓ | ✓ -
 **Outlier filtering** | | |
 IQR multiple from median | ✓ | - | -
 Stdev multiple from mean | ✓ | - | -
+Median absolute deviation | ✓ | - | -
+Blank filter | ✓ | - | -
 
 ### Optimisation
 

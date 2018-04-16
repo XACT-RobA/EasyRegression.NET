@@ -52,6 +52,8 @@ namespace EasyRegression.Core.Preprocessing.DataFiltering
                     return new StandardDeviationFilter(json["multiple"].ToObject<double>());
                 case nameof(InterQuartileRangeFilter):
                     return new InterQuartileRangeFilter(json["multiple"].ToObject<double>());
+                case nameof(MedianAbsoluteDeviationFilter):
+                    return new MedianAbsoluteDeviationFilter(json["multiple"].ToObject<double>());
                 default:
                     return null;
             }
