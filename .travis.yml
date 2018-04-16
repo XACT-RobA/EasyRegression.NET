@@ -7,3 +7,6 @@ install:
 script:
  - dotnet build
  - dotnet test ./*.Test/
+branches:
+  only:
+   - master
