@@ -20,14 +20,20 @@ EasyRegression requires a jagged double array of input values `x` and a double a
 The `x` values can be nullable doubles, for cases where there is missing data, as these values will be filled during preprocessing.
 
 ```cs
+// x is either double[][] or double?[][]
+// y is double[]
+// x will be preprocessed before training begins
+double[][] x;
+double[] y;
+
+// Create a matrix from the x data
+var xData = new Matrix<double>(x);
+
 // Create an instance of the LinearRegressionEngine class with no parameters
 var regression = new LinearRegressionEngine();
 
 // Train the linear regression engine using real data
-// x is either double[][] or double?[][]
-// y is double[]
-// x will be preprocessed before training begins
-regressionEngine.Train(x, y);
+regressionEngine.Train(xData, y);
 
 // Predict y0 value based on input x0 where x0 is double[] or double?[]
 // x0 will be preprocessed before the prediction is made
@@ -99,12 +105,38 @@ IPreprocessor preprocessor = new Preprocessor();
 preprocessor.SetDataPatcher(meanPatcher);
 ```
 
-The default data expander is InterceptExpander, which currently just adds an intercet column of value 1.0, that doesn't get smoothed like the rest of the data. There is also the PolynominalExpander, which has the effect of raising each variable to every power up to the input order, and then creates products of all of the polynomial powers. This expands data exponentially as columns and order increase. Finally, in cases where the user does not want to add an intercept to their data, there is the BlankDataExpander, though this is not recommended.
+The next step in preprocessing the data is filtering. Here any outliers that match the user's criteria are removed form the dataset. The default is for no data to be filtered, as (for now) the assumption is made that all data is real recorded data, and is valid. If however, the user wished to remove outliers from their data, they currently have the choice of filtering data a multiple of standard deviations away from the column mean, a multiple of the inter quartile range from the upper and lower quartiles, and a multiple of the median absolute deviation of a column of data.
+
+```cs
+// Create std dev data filter
+IDataFilter standardDeviationFilter = new StandardDeviationFilter();
+// Set std dev multiple to 2.5 (default 3.0)
+standardDeviationFilter.SetStandardDeviationMultiple(2.5);
+
+// Create iqr data filter
+IDataFilter interQuartileRangeFilter = new InterQuartileRangeFilter();
+// Set iqr multiple to 2.0 (default 1.5)
+interQuartileRangeFilter.SetInterQuartileRangeMultiple(2.0);
+
+// Create mad data filter
+IDataFilter medianAbsoluteFilter = new MedianAbsoluteDeviationFilter();
+// Set mad multiple to 4.0 (default 4.5)
+medianAbsoluteFilter.SetMedianDeviationMultiple(4.0);
+
+// Create blank data filter
+IDataFilter blankFilter = new BlankDataFilter();
+
+// Pass a specific data filter into a Preprocessor
+IPreprocessor preprocessor = new Preprocessor();
+preprocessor.SetDataFilter(standardDeviationFilter);
+```
+
+The default data expander is InterceptExpander, which currently just adds an intercet column of value 1.0 which doesn't get smoothed like the rest of the data. There is also a PolynominalProductDataExpander, which has the effect of raising each variable to every power up to the input order, and then creates products of all of the polynomial powers. This expands data exponentially as columns and order increase. Finally, in cases where the user does not want to add an intercept to their data, there is the BlankDataExpander, though this is not recommended.
 
 ```cs
 // Create polynomial expander with polynomial order 1
 // [x0, x1] => [1, x1, x0, x0x1]
-IDataExpander polynomialExpander = new PolynomialDataExpander(order: 1);
+IDataExpander polynomialProductExpander = new PolynomialProductDataExpander(order: 1);
 
 // Create intercept expander
 // [x0, x1] => [1, x0, x1]
@@ -166,10 +198,10 @@ Polynomial product expansion | ✓ | ✓ | -
 Intercept expansion | ✓ | ✓ | -
 Blank expander | ✓ | ✓ -
 **Outlier filtering** | | |
-IQR multiple from median | ✓ | - | -
-Stdev multiple from mean | ✓ | - | -
-Median absolute deviation | ✓ | - | -
-Blank filter | ✓ | - | -
+IQR multiple from median | ✓ | ✓ | -
+Stdev multiple from mean | ✓ | ✓ | -
+Median absolute deviation | ✓ | ✓ | -
+Blank filter | ✓ | ✓ | -
 
 ### Optimisation
 
