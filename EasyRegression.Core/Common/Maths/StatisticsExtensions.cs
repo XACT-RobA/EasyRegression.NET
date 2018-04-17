@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EasyRegression.Core.Common.Models;
+using EasyRegression.Core.Common.Exceptions;
 
 namespace EasyRegression.Core.Common.Maths
 {
@@ -21,7 +22,7 @@ namespace EasyRegression.Core.Common.Maths
         // Middle
         public static double Middle(this IEnumerable<double> input)
         {
-            if (!input.Any()) { return double.NaN; }
+            if (!input.Any()) { throw new NoValidDataException(); }
 
             var array = input.ToArray();
             int length = array.Length;
@@ -38,7 +39,9 @@ namespace EasyRegression.Core.Common.Maths
         {
             var valids = input.Where(x => x.IsValidDouble());
 
-            return valids.Any() ? valids.Average() : double.NaN;
+            if (!valids.Any()) { throw new NoValidDataException(); }
+
+            return valids.Average();
         }
 
         public static double Mean(this IEnumerable<double?> input)
@@ -46,7 +49,9 @@ namespace EasyRegression.Core.Common.Maths
             var valids = input.Where(x => x.IsValidDouble())
                               .Select(x => x.Value);
 
-            return valids.Any() ? valids.Average() : double.NaN;
+            if (!valids.Any()) { throw new NoValidDataException(); }
+
+            return valids.Average();
         }
 
         public static double ColumnMean(this IEnumerable<double[]> input, int column)
@@ -63,7 +68,7 @@ namespace EasyRegression.Core.Common.Maths
 
         public static double[] ColumnMeans(this IEnumerable<double[]> input)
         {
-            if (!input.Any()) { return new[] { double.NaN }; }
+            if (!input.Any()) { throw new NoValidDataException(); }
 
             return input.First()
                         .Select((x, i) => input.ColumnMean(i))
@@ -72,7 +77,7 @@ namespace EasyRegression.Core.Common.Maths
 
         public static double[] ColumnMeans(this IEnumerable<double?[]> input)
         {
-            if (!input.Any()) { return new[] { double.NaN }; }
+            if (!input.Any()) { throw new NoValidDataException(); }
 
             return input.First()
                         .Select((x, i) => input.ColumnMean(i))
@@ -85,7 +90,9 @@ namespace EasyRegression.Core.Common.Maths
             var valids = input.Where(x => x.IsValidDouble())
                               .OrderBy(x => x);
 
-            return valids.Any() ? valids.Middle() : double.NaN;
+            if (!valids.Any()) { throw new NoValidDataException(); }
+
+            return valids.Middle();
         }
 
         public static double Median(this IEnumerable<double?> input)
@@ -94,7 +101,9 @@ namespace EasyRegression.Core.Common.Maths
                               .Select(x => x.Value)
                               .OrderBy(x => x);
 
-            return valids.Any() ? valids.Middle() : double.NaN;
+            if (!valids.Any()) { throw new NoValidDataException(); }
+
+            return valids.Middle();
         }
 
         public static double ColumnMedian(this IEnumerable<double[]> input, int column)
@@ -111,7 +120,7 @@ namespace EasyRegression.Core.Common.Maths
 
         public static double[] ColumnMedians(this IEnumerable<double[]> input)
         {
-            if (!input.Any()) { return new[] { double.NaN }; }
+            if (!input.Any()) { throw new NoValidDataException(); }
 
             return input.First()
                         .Select((x, i) => input.ColumnMedian(i))
@@ -120,7 +129,7 @@ namespace EasyRegression.Core.Common.Maths
 
         public static double[] ColumnMedians(this IEnumerable<double?[]> input)
         {
-            if (!input.Any()) { return new[] { double.NaN }; }
+            if (!input.Any()) { throw new NoValidDataException(); }
 
             return input.First()
                         .Select((x, i) => input.ColumnMedian(i))
@@ -131,7 +140,7 @@ namespace EasyRegression.Core.Common.Maths
 
         public static double ColumnMinimum(this IEnumerable<double[]> input, int column)
         {
-            if (!input.Any()) { return double.NaN; }
+            if (!input.Any()) { throw new NoValidDataException(); }
 
             return input.Select(arr => arr[column])
                         .Where(x => x.IsValidDouble())
@@ -140,7 +149,7 @@ namespace EasyRegression.Core.Common.Maths
 
         public static double[] ColumnMinimums(this IEnumerable<double[]> input)
         {
-            if (!input.Any()) { return new[] { double.NaN }; }
+            if (!input.Any()) { throw new NoValidDataException(); }
 
             return input.First()
                         .Select((x, i) => input.ColumnMinimum(i))
@@ -151,7 +160,7 @@ namespace EasyRegression.Core.Common.Maths
 
         public static double ColumnMaximum(this IEnumerable<double[]> input, int column)
         {
-            if (!input.Any()) { return double.NaN; }
+            if (!input.Any()) { throw new NoValidDataException(); }
 
             var valids = input.Select(arr => arr[column])
                               .Where(x => x.IsValidDouble());
@@ -161,7 +170,7 @@ namespace EasyRegression.Core.Common.Maths
 
         public static double[] ColumnMaximums(this IEnumerable<double[]> input)
         {
-            if (!input.Any()) { return new[] { double.NaN }; }
+            if (!input.Any()) { throw new NoValidDataException(); }
 
             return input.First()
                         .Select((x, i) => input.ColumnMaximum(i))
@@ -174,7 +183,7 @@ namespace EasyRegression.Core.Common.Maths
         {
             var valids = input.Where(x => x.IsValidDouble());
 
-            if (!valids.Any()) { return double.NaN; }
+            if (!valids.Any()) { throw new NoValidDataException(); }
 
             var mean = valids.Mean();
             return valids.Select(x => x - mean)
@@ -184,7 +193,7 @@ namespace EasyRegression.Core.Common.Maths
 
         public static double ColumnVariance(this IEnumerable<double[]> input, int column)
         {
-            if (!input.Any()) { return double.NaN; }
+            if (!input.Any()) { throw new NoValidDataException(); }
             
             return input.Select(arr => arr[column])
                         .Variance();
@@ -192,7 +201,7 @@ namespace EasyRegression.Core.Common.Maths
 
         public static double[] ColumnVariances(this IEnumerable<double[]> input)
         {
-            if (!input.Any()) { return new[] { double.NaN }; }
+            if (!input.Any()) { throw new NoValidDataException(); }
             
             return input.First()
                         .Select((x, i) => input.ColumnVariance(i))
@@ -223,10 +232,7 @@ namespace EasyRegression.Core.Common.Maths
         public static Range<double> Quartile(this IEnumerable<double> input)
         {
             var valids = input.Where(x => x.IsValidDouble());
-            if (!valids.Any())
-            {
-                return new Range<double>(double.NaN, double.NaN);
-            }
+            if (!valids.Any()) { throw new NoValidDataException(); }
 
             var sorted = valids.OrderBy(x => x);
 
@@ -252,10 +258,7 @@ namespace EasyRegression.Core.Common.Maths
 
         public static Range<double> ColumnQuartile(this IEnumerable<double[]> input, int column)
         {
-            if (!input.Any())
-            {
-                return new Range<double>(double.NaN, double.NaN);
-            }
+            if (!input.Any()) { throw new NoValidDataException(); }
             
             return input.Select(arr => arr[column])
                         .Quartile();
@@ -263,10 +266,7 @@ namespace EasyRegression.Core.Common.Maths
 
         public static Range<double>[] ColumnQuartiles(this IEnumerable<double[]> input)
         {
-            if (!input.Any())
-            {
-                return new[] { new Range<double>(double.NaN, double.NaN) };
-            }
+            if (!input.Any()) { throw new NoValidDataException(); }
             
             return input.First()
                         .Select((x, i) => input.ColumnQuartile(i))

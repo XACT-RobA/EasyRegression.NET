@@ -5,6 +5,7 @@ using Xunit.Extensions;
 using EasyRegression.Core.Common.Maths;
 using System.Linq;
 using EasyRegression.Core.Common.Models;
+using EasyRegression.Core.Common.Exceptions;
 
 namespace EasyRegression.Test.Common.Maths
 {
@@ -49,7 +50,7 @@ namespace EasyRegression.Test.Common.Maths
             Assert.Equal(3.0, (new[] { 1.0, 3.0, 2.0 }).Middle(), _places);
             Assert.Equal(2.0, (new[] { 1.0, 3.0 }).Middle(), _places);
             Assert.Equal(2.0, (new[] { 2.0 }).Middle(), _places);
-            Assert.Equal(_nan, (new double[0]).Middle(), _places);
+            Assert.Throws<NoValidDataException>(() => (new double[0]).Middle());
         }
 
         // Statistics
@@ -61,15 +62,15 @@ namespace EasyRegression.Test.Common.Maths
             Assert.Equal(2.0, (new[] { 1.0, 2.0, 3.0 }).Mean(), _places);
             Assert.Equal(2.0, (new[] { 2.0 }).Mean(), _places);
             Assert.Equal(2.0, (new[] { 1.0, 3.0, _pInf }).Mean(), _places);
-            Assert.Equal(_nan, (new[] { _nan }).Mean(), _places);
-            Assert.Equal(_nan, (new double[0]).Mean(), _places);
+            Assert.Throws<NoValidDataException>(() => (new[] { _nan }).Mean());
+            Assert.Throws<NoValidDataException>(() => (new double[0]).Mean());
         }
 
         [Fact]
         public static void TestNullableMean()
         {
             Assert.Equal(2.0, (new double?[] { 2.0, null }).Mean(), _places);
-            Assert.Equal(_nan, (new double?[] { null }).Mean(), _places);
+            Assert.Throws<NoValidDataException>(() => (new double?[] { null }.Mean()));
         }
 
         [Fact]
@@ -145,15 +146,15 @@ namespace EasyRegression.Test.Common.Maths
             Assert.Equal(2.0, (new[] { 2.0 }).Median(), _places);
             Assert.Equal(2.0, (new[] { 2.0, _pInf }).Median(), _places);
             Assert.Equal(2.0, (new[] { 1.0, 3.0, _nInf }).Median(), _places);
-            Assert.Equal(_nan, (new[] { _nan }).Median(), _places);
-            Assert.Equal(_nan, (new double[0]).Median(), _places);
+            Assert.Throws<NoValidDataException>(() => (new[] { _nan }).Median());
+            Assert.Throws<NoValidDataException>(() => (new double[0]).Median());
         }
 
         [Fact]
         public static void TestNullableMedian()
         {
             Assert.Equal(2.0, (new double?[] { 2.0, null }).Median(), _places);
-            Assert.Equal(_nan, (new double?[] { null }).Median(), _places);
+            Assert.Throws<NoValidDataException>(() => (new double?[] { null }.Median()));
         }
 
         [Fact]
@@ -304,8 +305,8 @@ namespace EasyRegression.Test.Common.Maths
             Assert.Equal(2.0 / 3.0, (new[] { 1.0, 2.0, 3.0 }).Variance(), _places);
             Assert.Equal(0.0, (new[] { 2.0 }).Variance(), _places);
             Assert.Equal(1.0, (new[] { 1.0, 3.0, _pInf }).Variance(), _places);
-            Assert.Equal(_nan, (new[] { _nan }).Variance(), _places);
-            Assert.Equal(_nan, (new double[0]).Variance(), _places);
+            Assert.Throws<NoValidDataException>(() => (new[] { _nan }).Variance());
+            Assert.Throws<NoValidDataException>(() => (new double[0]).Variance());
         }
 
         [Fact]
@@ -349,8 +350,8 @@ namespace EasyRegression.Test.Common.Maths
             Assert.Equal(0.81649658, (new[] { 1.0, 2.0, 3.0 }).StandardDeviation(), _places);
             Assert.Equal(0.0, (new[] { 2.0 }).StandardDeviation(), _places);
             Assert.Equal(1.0, (new[] { 1.0, 3.0, _pInf }).StandardDeviation(), _places);
-            Assert.Equal(_nan, (new[] { _nan }).StandardDeviation(), _places);
-            Assert.Equal(_nan, (new double[0]).StandardDeviation(), _places);
+            Assert.Throws<NoValidDataException>(() => (new[] { _nan }).StandardDeviation());
+            Assert.Throws<NoValidDataException>(() => (new double[0]).StandardDeviation());
         }
 
         [Fact]

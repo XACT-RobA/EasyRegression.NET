@@ -14,6 +14,21 @@
 - Solid integration tests
 - Minimal dependancies (currently just Newtonsoft.Json)
 
+## Installation
+
+### From Source
+- Clone this repository: `git clone https://github.com/XACT-RobA/EasyRegression.NET.git`
+- Restore dependancies: `dotnet restore`
+- Build source: `dotnet build`
+- Run tests: `dotnet test EasyResression.Test/`
+
+#### To create a release version with dependancies:
+- `dotnet publish EasyRegression.Core -c Release`
+- The release dll will then be in ./EasyRegression.Core/bin/
+
+### From Nuget
+- Coming soon
+
 ## Usage
 
 EasyRegression requires a jagged double array of input values `x` and a double array of output values `y`.
@@ -196,7 +211,7 @@ Blank smoother | ✓ | ✓ | -
 **Data expansion** | | |
 Polynomial product expansion | ✓ | ✓ | -
 Intercept expansion | ✓ | ✓ | -
-Blank expander | ✓ | ✓ -
+Blank expander | ✓ | ✓ | -
 **Outlier filtering** | | |
 IQR multiple from median | ✓ | ✓ | -
 Stdev multiple from mean | ✓ | ✓ | -
