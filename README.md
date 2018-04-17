@@ -1,4 +1,5 @@
 # EasyRegression.NET
+## v1.0.0
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Build Status](https://travis-ci.org/XACT-RobA/EasyRegression.NET.svg?branch=master)](https://travis-ci.org/XACT-RobA/EasyRegression.NET) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/38176ef1f92440199875caf61eb70121)](https://www.codacy.com/app/XACT-RobA/EasyRegression.NET?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=XACT-RobA/EasyRegression.NET&amp;utm_campaign=Badge_Grade)
 
@@ -24,7 +25,7 @@
 
 #### To create a release version with dependancies:
 - `dotnet publish EasyRegression.Core -c Release`
-- The release dll will then be in ./EasyRegression.Core/bin/
+- The release dll will then be in ./EasyRegression.Core/bin/Release/netstandard2.0/publish
 
 ### From Nuget
 - Coming soon
