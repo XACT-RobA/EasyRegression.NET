@@ -17,6 +17,9 @@
 
 ## Installation
 
+### From Nuget
+- `dotnet add package EasyRegression.NET`
+
 ### From Source
 - Clone this repository: `git clone https://github.com/XACT-RobA/EasyRegression.NET.git`
 - Restore dependancies: `dotnet restore`
@@ -27,15 +30,16 @@
 - `dotnet publish EasyRegression.Core -c Release`
 - The release dll will then be in ./EasyRegression.Core/bin/Release/netstandard2.0/publish
 
-### From Nuget
-- Coming soon
-
 ## Usage
 
 EasyRegression requires a jagged double array of input values `x` and a double array of output values `y`.
 The `x` values can be nullable doubles, for cases where there is missing data, as these values will be filled during preprocessing.
 
 ```cs
+using EasyRegression.Core;
+
+...
+
 // x is either double[][] or double?[][]
 // y is double[]
 // x will be preprocessed before training begins
