@@ -10,6 +10,11 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
 
         public PolynomialProductDataExpander(int order)
         {
+            if (order < 1) 
+            {
+                throw new ArgumentOutOfRangeException("Polynonial order must be greater than 0");
+            }
+
             _order = order;
         }
 

@@ -1,3 +1,4 @@
+using System;
 using EasyRegression.Core.Common.Models;
 using Newtonsoft.Json.Linq;
 
@@ -38,8 +39,11 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
                 case nameof(InterceptDataExpander):
                     return new InterceptDataExpander();
                 case nameof(PolynomialProductDataExpander):
-                    var order = json["order"].ToObject<int>();
-                    return new PolynomialProductDataExpander(order);
+                    return new PolynomialProductDataExpander(json["order"].ToObject<int>());
+                case nameof(PolynomialDataExpander):
+                    return new PolynomialDataExpander(json["order"].ToObject<int>());
+                case nameof(FunctionDataExpander):
+                    return new FunctionDataExpander(((JArray)json["functions"]).ToObject<string[]>());
                 default:
                     return null;
             }

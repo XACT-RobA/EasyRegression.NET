@@ -151,12 +151,24 @@ IPreprocessor preprocessor = new Preprocessor();
 preprocessor.SetDataFilter(standardDeviationFilter);
 ```
 
-The default data expander is InterceptExpander, which currently just adds an intercet column of value 1.0 which doesn't get smoothed like the rest of the data. There is also a PolynominalProductDataExpander, which has the effect of raising each variable to every power up to the input order, and then creates products of all of the polynomial powers. This expands data exponentially as columns and order increase. Finally, in cases where the user does not want to add an intercept to their data, there is the BlankDataExpander, though this is not recommended.
+The default data expander is InterceptExpander, which currently just adds an intercet column of value 1.0 which doesn't get smoothed like the rest of the data. There is also a PolynominalProductDataExpander, which has the effect of raising each variable to every power up to the input order, and then creates products of all of the polynomial powers. This expands data exponentially as columns and order increase. Similar to the PolynomialProductDataExpander is the PolynomialDataExpander, which expands all values in a row separately up to a specified power. For more customisablility, there is a FunctionDataExpander, that allows a user to choose what functions to use to expand the values in a row of data. Finally, in cases where the user does not want to add an intercept to their data, there is the BlankDataExpander, though this is not recommended.
 
 ```cs
-// Create polynomial expander with polynomial order 1
+// Create polynomial product expander with polynomial order 1
 // [x0, x1] => [1, x1, x0, x0x1]
 IDataExpander polynomialProductExpander = new PolynomialProductDataExpander(order: 1);
+
+// Create polynomial expander with order 2
+// [x0, x1] => [1, x0, x0x0, x1, x1x1]
+IDataExpander polynomialExpander = new PolynomialDataExpander(order: 2);
+
+//Add custom function to function definitions
+PreprocessingDefinitions.DataFunctions.Add("test", x => x + 2);
+// Create function expander with custom function, sqrt, and log
+// FunctionDataExpander takes an array of strings
+// To see all available strings, look at PreprocessingDefinitions.DataFunctions.Keys
+// [x0, x1] => [1, x0, x0+2, sqrt(x0), log(x0), x1, x1+2, sqrt(x1), log(x1)]
+IDataExpander functionExpander = new FunctionDataExpander(new[] { "test", "sqrt", "log" });
 
 // Create intercept expander
 // [x0, x1] => [1, x0, x1]
@@ -215,6 +227,8 @@ Standardisation | ✓ | ✓ | -
 Blank smoother | ✓ | ✓ | -
 **Data expansion** | | |
 Polynomial product expansion | ✓ | ✓ | -
+Polynomial expansion | ✓ | ✓ | -
+Function expansion | ✓ | ✓ | - 
 Intercept expansion | ✓ | ✓ | -
 Blank expander | ✓ | ✓ | -
 **Outlier filtering** | | |

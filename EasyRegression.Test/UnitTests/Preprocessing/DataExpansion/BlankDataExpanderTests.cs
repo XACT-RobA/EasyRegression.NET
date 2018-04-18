@@ -7,16 +7,16 @@ namespace EasyRegression.Test.Preprocessing.DataExpansion
 {
     public static class BlankDataExpanderTests
     {
+        private static double[][] data =
+        {
+            new[] { 1.0, 2.0, 3.0 },
+            new[] { 2.0, 3.0, 1.0 },
+            new[] { 3.0, 1.0, 2.0 },
+        };
+
         [Fact]
         public static void TestExpand()
         {
-            var data = new[]
-            {
-                new[] { 1.0, 2.0, 3.0 },
-                new[] { 2.0, 3.0, 1.0 },
-                new[] { 3.0, 1.0, 2.0 },
-            };
-
             // [x0, x1] => [x0, x1]
             var expander = new BlankDataExpander();
             var expanded = expander.Expand(new Matrix<double>(data));
@@ -37,13 +37,6 @@ namespace EasyRegression.Test.Preprocessing.DataExpansion
         [Fact]
         public static void TestReExpand()
         {
-            var data = new[]
-            {
-                new[] { 1.0, 2.0, 3.0 },
-                new[] { 2.0, 3.0, 1.0 },
-                new[] { 3.0, 1.0, 2.0 },
-            };
-
             // [x0, x1] => [x0, x1]
             var expander = new BlankDataExpander();
             expander.Expand(new Matrix<double>(data));
@@ -51,6 +44,27 @@ namespace EasyRegression.Test.Preprocessing.DataExpansion
             var testing = new[] { 3.0, 2.0, 1.0 };
             var expected = new[] { 3.0, 2.0, 1.0 };
             var actual = expander.ReExpand(testing);
+
+            Assert.Equal(expected.Length, actual.Length);
+
+            for (int i = 0; i < expected.Length; i++)
+            {
+                Assert.Equal(expected[i], actual[i]);
+            }
+        }
+
+        [Fact]
+        public static void TestSerialise()
+        {
+            var expander = new BlankDataExpander();
+            expander.Expand(new Matrix<double>(data));
+
+            var serialised = expander.Serialise();
+            var deserialised = BaseDataExpander.Deserialise(serialised);
+
+            var testing = new[] { 3.0, 2.0, 1.0 };
+            var expected = new[] { 3.0, 2.0, 1.0 };
+            var actual = deserialised.ReExpand(testing);
 
             Assert.Equal(expected.Length, actual.Length);
 
