@@ -11,14 +11,10 @@ namespace EasyRegression.Core.Preprocessing.DataExpansion
     {
         private readonly string[] _functions;
 
-        private double Evaluate(string function, double value)
+        private static double Evaluate(string function, double value)
         {
-            if (PreprocessingDefinitions.DataFunctions.ContainsKey(function))
-            {
-                return PreprocessingDefinitions.DataFunctions[function](value);
-            }
-
-            throw new ArgumentException("Expander function doesn't exist");
+            var func = PreprocessingDefinitions.GetDataFunction(function);
+            return func(value);
         }
 
         public FunctionDataExpander(string[] functions)

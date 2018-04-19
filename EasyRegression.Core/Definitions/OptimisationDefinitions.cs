@@ -1,6 +1,6 @@
 namespace EasyRegression.Core.Definitions
 {
-    public class Optimisationdefinitions
+    public static class Optimisationdefinitions
     {
         
     }

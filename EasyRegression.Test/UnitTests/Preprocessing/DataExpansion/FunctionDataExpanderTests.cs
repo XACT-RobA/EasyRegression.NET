@@ -82,7 +82,7 @@ namespace EasyRegression.Test.Preprocessing.DataExpansion
                     3.0, Math.Sqrt(3.0), 1.0 / 3.0, 9.0, },
             };
 
-            PreprocessingDefinitions.DataFunctions.Add("test", x => x * x);
+            PreprocessingDefinitions.AddDataFunction("test", x => x * x);
 
             var expander = new FunctionDataExpander(new[] { "sqrt", "inv", "test" });
             var expanded = expander.Expand(new Matrix<double>(data));
