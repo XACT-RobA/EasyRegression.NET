@@ -10,3 +10,4 @@ script:
 branches:
   only:
    - master
+   - v1.0.2

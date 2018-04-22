@@ -4,6 +4,6 @@ namespace EasyRegression.Core.Preprocessing.DataFiltering
 {
     public interface IDataFilter : IPreprocessingPlugin
     {
-        Matrix<double> Filter(Matrix<double> input);
+        TrainingModel<double> Filter(TrainingModel<double> input);
     }
 }

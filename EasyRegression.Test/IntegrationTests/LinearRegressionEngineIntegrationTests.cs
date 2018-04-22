@@ -92,10 +92,10 @@ namespace EasyRegression.Test.Integration
         [Fact]
         public static void TestDefault()
         {
-            var xData = new Matrix<double>(trainingXData);
+            var trainingData = new TrainingModel<double>(trainingXData, trainingYData);
 
             var engine = new LinearRegressionEngine();
-            engine.Train(xData, trainingYData);
+            engine.Train(trainingData);
 
             var testing = new[] { 1650.0, 3.0 };
             var expected = 293081.0;
@@ -107,7 +107,7 @@ namespace EasyRegression.Test.Integration
         [Fact]
         public static void TestHigherLearning()
         {
-            var xData = new Matrix<double>(trainingXData);
+            var trainingData = new TrainingModel<double>(trainingXData, trainingYData);
 
             var optimiser = new BatchGradientDescentOptimiser();
             optimiser.SetLearningRate(1.0);
@@ -115,7 +115,7 @@ namespace EasyRegression.Test.Integration
             var engine = new LinearRegressionEngine();
             engine.SetOptimiser(optimiser);
             
-            engine.Train(xData, trainingYData);
+            engine.Train(trainingData);
 
             var testing = new[] { 1650.0, 3.0 };
             var expected = 293081.0;
@@ -127,10 +127,10 @@ namespace EasyRegression.Test.Integration
         [Fact]
         public static void TestSerialise()
         {
-            var xData = new Matrix<double>(trainingXData);
+            var trainingData = new TrainingModel<double>(trainingXData, trainingYData);
 
             var engine = new LinearRegressionEngine();
-            engine.Train(xData, trainingYData);
+            engine.Train(trainingData);
 
             var serialised = engine.Serialise();
             var deserialised = LinearRegressionEngine.Deserialise(serialised);

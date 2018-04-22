@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Xunit;
+using EasyRegression.Core;
 using EasyRegression.Core.Preprocessing.DataFiltering;
 using EasyRegression.Core.Common.Models;
 
@@ -20,18 +21,21 @@ namespace EasyRegression.Test.Preprocessing.DataFiltering
             var data = arr.Select(x => new[] {x})
                           .ToArray();
 
+            var y = arr.Select((x, i) => (double)i)
+                       .ToArray();
+
             var expected = data.Where(x => x[0] < 10.0)
                                .ToArray();
 
             var filter = new MedianAbsoluteDeviationFilter();
-            var filtered = filter.Filter(new Matrix<double>(data));
+            var filtered = filter.Filter(new TrainingModel<double>(data, y));
 
             Assert.Equal(expected.Length, filtered.Length);
 
             for (int i = 0; i < expected.Length; i++)
             {
-                Assert.Equal(expected[i].Length, filtered[i].Length);
-                Assert.Equal(expected[i][0], filtered[i][0]);
+                Assert.Equal(expected[i].Length, filtered.X[i].Length);
+                Assert.Equal(expected[i][0], filtered.X[i][0]);
             }
         }
     }

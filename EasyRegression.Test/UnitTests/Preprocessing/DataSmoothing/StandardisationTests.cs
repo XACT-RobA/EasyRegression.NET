@@ -1,5 +1,6 @@
 using System;
 using Xunit;
+using EasyRegression.Core;
 using EasyRegression.Core.Preprocessing.DataSmoothing;
 using EasyRegression.Core.Common.Models;
 

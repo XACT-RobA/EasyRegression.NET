@@ -5,7 +5,7 @@ namespace EasyRegression.Core.Preprocessing.DataFiltering
 {
     public class BlankDataFilter : BaseDataFilter
     {
-        public override Matrix<double> Filter(Matrix<double> input)
+        public override TrainingModel<double> Filter(TrainingModel<double> input)
         {
             return input;
         }

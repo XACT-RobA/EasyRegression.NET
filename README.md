@@ -1,5 +1,5 @@
 # EasyRegression.NET
-## v1.0.1
+## v1.0.2
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Build Status](https://travis-ci.org/XACT-RobA/EasyRegression.NET.svg?branch=master)](https://travis-ci.org/XACT-RobA/EasyRegression.NET) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/38176ef1f92440199875caf61eb70121)](https://www.codacy.com/app/XACT-RobA/EasyRegression.NET?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=XACT-RobA/EasyRegression.NET&amp;utm_campaign=Badge_Grade)
 
@@ -46,14 +46,14 @@ using EasyRegression.Core;
 double[][] x;
 double[] y;
 
-// Create a matrix from the x data
-var xData = new Matrix<double>(x);
+// Create a training data model from the x and y data
+var trainingData = new TrainingModel<double>(x, y);
 
 // Create an instance of the LinearRegressionEngine class with no parameters
 var regression = new LinearRegressionEngine();
 
 // Train the linear regression engine using real data
-regressionEngine.Train(xData, y);
+regressionEngine.Train(trainingData);
 
 // Predict y0 value based on input x0 where x0 is double[] or double?[]
 // x0 will be preprocessed before the prediction is made
@@ -67,7 +67,7 @@ It is however recommended to train the engine from scratch as new batches of dat
 ```cs
 // Create and train a linear regression engine as in the previous example
 var regression = new LinearRegressionEngine();
-regression.Train(x, y);
+regression.Train(trainingData);
 
 // Store the trained regression parameters as json
 string json = regressionEngine.Serialise();
@@ -117,8 +117,8 @@ IDataPatcher medianPatcher = new MedianDataPatcher();
 // Create zero data patcher
 IDataPatcher zeroPatcher = new ZeroDataPatcher();
 
-// Patch input data where data is either double[][] or double?[][]
-double[][] patchedData = meanPatcher.Patch(data);
+// Patch input data where data is either Matrix<double> or Matrix<double?>
+Matrix<double> patchedData = meanPatcher.Patch(data);
 
 // Pass a specific data patcher into a Preprocessor
 IPreprocessor preprocessor = new Preprocessor();
@@ -145,6 +145,11 @@ medianAbsoluteFilter.SetMedianDeviationMultiple(4.0);
 
 // Create blank data filter
 IDataFilter blankFilter = new BlankDataFilter();
+
+// Create training model from Matrix<double> or double[][] x and double[] y
+TrainingModel<double> trainingData = new TrainingModel(x, y);
+// Filter input data where data is TrainingModel<double>
+TrainingModel<double> filteredData = standardDeviationFilter.Filter(trainingData);
 
 // Pass a specific data filter into a Preprocessor
 IPreprocessor preprocessor = new Preprocessor();
@@ -178,10 +183,10 @@ IDataExpander interceptExpander = new InterceptDataExpander();
 // [x0, x1] => [x0, x1]
 IDataExpander blankExpander = new BlankDataExpander();
 
-// Expand a double[][] of data
+// Expand a Matrix<double> of data
 // This expander creates huge amounts of data as data.Length and order increase
 // Creates Math.Pow(order + 1, data.Length) features
-double[][] expandedData = polynomialExpander.Expand(data);
+Matrix<double> expandedData = polynomialExpander.Expand(data);
 
 // Pass an expander into a preprocessor
 IPreprocessor preprocessor = new Preprocessor();
@@ -203,8 +208,8 @@ IDataSmoother standardiser = new DataStandardiser();
 // X := x
 IDataSmoother blankSmoother = new BlankDataSmoother();
 
-// Smooth input data where data is double[][]
-double[][] smoothedData = standardiser.Smooth(data);
+// Smooth input data where data is Matrix<double>
+Matrix<double> smoothedData = standardiser.Smooth(data);
 
 // Pass a specific data smoother into a Preprocessor
 IPreprocessor preprocessor = new Preprocessor();

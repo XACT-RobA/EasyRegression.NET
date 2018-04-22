@@ -28,16 +28,16 @@ namespace EasyRegression.Core
             _optimiser = optimiser ?? _optimiser;
         }
 
-        public void Train(Matrix<double> x, double[] y)
+        public void Train(TrainingModel<double> trainingModel)
         {
-            var preprocessedData = _preprocessor.Preprocess(x);
-            _optimiser.Train(preprocessedData, y);
+            var preprocessedData = _preprocessor.Preprocess(trainingModel);
+            _optimiser.Train(preprocessedData.X, preprocessedData.Y);
         }
 
-        public void Train(Matrix<double?> x, double[] y)
+        public void Train(TrainingModel<double?> trainingModel)
         {
-            var preprocessedData = _preprocessor.Preprocess(x);
-            _optimiser.Train(preprocessedData, y);
+            var preprocessedData = _preprocessor.Preprocess(trainingModel);
+            _optimiser.Train(preprocessedData.X, preprocessedData.Y);
         }
 
         public double Predict(double[] input)

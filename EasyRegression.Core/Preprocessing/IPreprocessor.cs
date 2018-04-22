@@ -14,8 +14,8 @@ namespace EasyRegression.Core.Preprocessing
 
 
         // Preprocess training data
-        Matrix<double> Preprocess(Matrix<double> input);
-        Matrix<double> Preprocess(Matrix<double?> input);
+        TrainingModel<double> Preprocess(TrainingModel<double> input);
+        TrainingModel<double> Preprocess(TrainingModel<double?> input);
 
         // Process testing/predictino data using same parameters
         double[] Reprocess(double[] input);

@@ -1,4 +1,5 @@
 using System;
+using EasyRegression.Core;
 using EasyRegression.Core.Common.Models;
 using Xunit;
 

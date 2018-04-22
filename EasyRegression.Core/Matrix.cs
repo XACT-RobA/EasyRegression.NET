@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace EasyRegression.Core.Common.Models
+namespace EasyRegression.Core
 {
     public class Matrix<T>
     {

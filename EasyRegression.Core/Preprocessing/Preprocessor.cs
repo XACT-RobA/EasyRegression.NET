@@ -55,22 +55,22 @@ namespace EasyRegression.Core.Preprocessing
             }
         }
 
-        public Matrix<double> Preprocess(Matrix<double> input)
+        public TrainingModel<double> Preprocess(TrainingModel<double> input)
         {
             var output = input;
-            output = _dataPatcher.Patch(output);
+            output.UpdateX(_dataPatcher.Patch(output.X));
             output = _dataFilter.Filter(output);
-            output = _dataExpander.Expand(output);
-            output = _dataSmoother.Smooth(output);
+            output.UpdateX(_dataExpander.Expand(output.X));
+            output.UpdateX(_dataSmoother.Smooth(output.X));
             return output;
         }
 
-        public Matrix<double> Preprocess(Matrix<double?> input)
+        public TrainingModel<double> Preprocess(TrainingModel<double?> input)
         {
-            var output = _dataPatcher.Patch(input);
+            var output = new TrainingModel<double>(_dataPatcher.Patch(input.X), input.Y);
             output = _dataFilter.Filter(output);
-            output = _dataExpander.Expand(output);
-            output = _dataSmoother.Smooth(output);
+            output.UpdateX(_dataExpander.Expand(output.X));
+            output.UpdateX(_dataSmoother.Smooth(output.X));
             return output;
         }
 

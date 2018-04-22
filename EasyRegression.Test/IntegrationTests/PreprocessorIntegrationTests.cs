@@ -1,4 +1,5 @@
 using System;
+using EasyRegression.Core;
 using EasyRegression.Core.Common.Models;
 using EasyRegression.Core.Preprocessing;
 using Xunit;
@@ -41,20 +42,19 @@ namespace EasyRegression.Test.Integration
         [Fact]
         public static void TestDefault()
         {
-            var input = new Matrix<double>(data);
             var expected = new Matrix<double>(expectedData);
 
             var preprocessor = new Preprocessor();
-            var actual = preprocessor.Preprocess(input);
+            var actual = preprocessor.Preprocess(new TrainingModel<double>(data, new double[data.Length]));
 
-            Assert.Equal(expected.Length, actual.Length);
-            Assert.Equal(expected.Width, actual.Width);
+            Assert.Equal(expected.Length, actual.X.Length);
+            Assert.Equal(expected.Width, actual.X.Width);
 
             for (int i = 0; i < expected.Length; i++)
             {
                 for (int j = 0; j < expected.Width; j++)
                 {
-                    Assert.Equal(expected[i][j], actual[i][j], _places);
+                    Assert.Equal(expected[i][j], actual.X[i][j], _places);
                 }
             }
         }
@@ -63,7 +63,7 @@ namespace EasyRegression.Test.Integration
         public static void TestSerialise()
         {
             var preprocessor = new Preprocessor();
-            preprocessor.Preprocess(new Matrix<double>(data));
+            preprocessor.Preprocess(new TrainingModel<double>(data, new double[data.Length]));
 
             var serialised = preprocessor.Serialise();
             var deserialised = Preprocessor.Deserialise(serialised);

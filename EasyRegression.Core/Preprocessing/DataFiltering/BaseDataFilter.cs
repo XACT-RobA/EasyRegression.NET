@@ -25,12 +25,22 @@ namespace EasyRegression.Core.Preprocessing.DataFiltering
             return true;
         }
 
-        public virtual Matrix<double> Filter(Matrix<double> input)
+        private bool IsOutsideLimits(double[] row, Range<double>[] limits)
         {
-            var limits = CalculateLimits(input);
-            var data = input.Data.Where(row => IsWithinLimits(row, limits))
-                                 .ToArray();
-            return new Matrix<double>(data);
+            return !IsWithinLimits(row, limits);
+        }
+
+        public virtual TrainingModel<double> Filter(TrainingModel<double> input)
+        {
+            var output = new TrainingModel<double>(input.X, input.Y);
+
+            var limits = CalculateLimits(input.X);
+            var filterIndexes = input.X.Data.Select((x, i) => i)
+                                            .Where(i => IsOutsideLimits(input.X[i], limits))
+                                            .ToArray();
+
+            output.Filter(filterIndexes);
+            return output;
         }
 
         public override string Serialise()
