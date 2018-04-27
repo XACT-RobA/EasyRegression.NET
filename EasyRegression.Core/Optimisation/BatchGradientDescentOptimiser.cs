@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using EasyRegression.Core.Common.Models;
 using EasyRegression.Core.Common.Maths;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace EasyRegression.Core.Optimisation
 {
@@ -19,6 +20,7 @@ namespace EasyRegression.Core.Optimisation
         private int _iter;
         private int _maxIter;
         private bool _converged;
+        private bool _diverged;
         private readonly double[] _errors;
         
         private double[] _params;
@@ -32,6 +34,7 @@ namespace EasyRegression.Core.Optimisation
             _learn = 0.1;
             _limit = 1e-9;
             _converged = false;
+            _diverged = false;
             _errors = new double[_maxIter];
         }
 
@@ -43,26 +46,43 @@ namespace EasyRegression.Core.Optimisation
 
         public void SetLearningRate(double learningRate)
         {
-            if (learningRate.IsValidDouble() &&
-                learningRate > 0) { _learn = learningRate; }
+            if (learningRate <= 0 ||
+                !learningRate.IsValidDouble())
+            {
+                throw new ArgumentException("Learning rate must be greater than 0");
+            };
+
+            _learn = learningRate;
         }
 
         public void SetMaxIterations(int maxIterations)
         {
-            if (maxIterations > 0) { _maxIter = maxIterations; }
+            if (maxIterations <= 0)
+            {
+                throw new ArgumentException("Maximum iterations must be greater than 0");
+            };
+
+            _maxIter = maxIterations;
         }
 
         public void SetConvergenceLimit(double convergenceLimit)
         {
-            if (convergenceLimit.IsValidDouble() &&
-                convergenceLimit >= 0.0) { _limit = convergenceLimit; }
+            if (convergenceLimit <= 0 ||
+                !convergenceLimit.IsValidDouble())
+            {
+                throw new ArgumentException("Convergence limit must be greater than 0");
+            };
+
+            _limit = convergenceLimit;
         }
 
         public override void Train(Matrix<double> x, double[] y)
         {
             Initialise(x, y);
 
-            while(_iter < _maxIter && !_converged)
+            while(_iter < _maxIter &&
+                !_converged &&
+                !_diverged)
             {
                 UpdateParameters();
                 UpdateError();
@@ -73,6 +93,22 @@ namespace EasyRegression.Core.Optimisation
         public override double Predict(double[] x)
         {
             return x.DotProduct(_params);
+        }
+
+        public bool HasConverged
+        {
+            get { return _converged; }
+        }
+
+        public bool HasDiverged
+        {
+            get { return _diverged; }
+        }
+
+        public double[] GetCostProgression()
+        {
+            return _errors.Take(_iter)
+                          .ToArray();
         }
 
         private void Initialise(Matrix<double> x, double[] y)
@@ -117,6 +153,13 @@ namespace EasyRegression.Core.Optimisation
             if (_iter > 0)
             {
                 var diff = Math.Abs(_errors[_iter] - _errors[_iter - 1]);
+
+                if (!diff.IsValidDouble())
+                {
+                    _diverged = true;
+                    return;
+                }
+
                 if (diff <= _limit)
                 {
                     _converged = true;
