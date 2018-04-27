@@ -1,11 +1,15 @@
 using System;
 using Xunit;
 using EasyRegression.Core;
+using System.Linq;
 
 namespace EasyRegression.Test.Common.Models
 {
     public static class TrainingModelTests
     {
+        public const int _places = 6;
+        public const double _error = 1e-6;
+
         [Fact]
         public static void TestValid()
         {
@@ -144,19 +148,83 @@ namespace EasyRegression.Test.Common.Models
             Assert.Throws<ArgumentException>(() => model.UpdateY(newY));
         }
 
+        [Fact]
         public static void TestUpdateXAndY()
         {
+            var x = new[] { new[] { 1.0, 2.0 } };
+            var newX = new[] { new[] { 3.0, 4.0 } };
+            var y = new[] { 1.5 };
+            var newY = new[] { 3.5 };
 
+            var model = new TrainingModel<double>(x, y);
+
+            model.UpdateXAndY(new Matrix<double>(newX), newY);
+
+            Assert.Equal(newX.Length, model.Length);
+            Assert.Equal(newY.Length, model.Length);
+
+            for (int il = 0; il < newX.Length; il++)
+            {
+                Assert.Equal(newY[il], model.Y[il]);
+                Assert.Equal(newX[il].Length, model[il].Length);
+                Assert.Equal(newX[il].Length, model.X.Width);
+
+                for (int iw = 0; iw < newX[il].Length; iw++)
+                {
+                    Assert.Equal(newX[il][iw], model[il][iw]);
+                }
+            }
         }
 
+        [Fact]
         public static void TestInvalidUpdateXAndY()
         {
+            var x = new[] { new[] { 1.0, 2.0 } };
+            var newX = new[] { new[] { 3.0, 4.0 } };
+            var y = new[] { 1.5 };
+            var newY = new[] { 3.5, 4.5 };
 
+            var model = new TrainingModel<double>(x, y);
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                model.UpdateXAndY(new Matrix<double>(newX), newY);
+            });
         }
 
+        [Fact]
         public static void TestFilter()
         {
+            var arr = new[]
+            {
+                1.0, 2.0, 2.0, 2.25, 2.5, 2.5,
+                2.75, 3.0, 3.5, 4.0, 5.0, 1000.0,
+            };
+            
+            var x = arr.Select(a => new[] {a})
+                          .ToArray();
 
+            var y = arr.Select((a, i) => (double)i)
+                       .ToArray();
+
+            // filter anything greater than 10,
+            // and anything not evenly divisible by 1
+            var expected = x.Where(a => a[0] < 10.0)
+                            .Where(a => Math.Abs(a[0] % 1.0) < _error )
+                            .ToArray();
+
+            var toFilter = new[] { 3, 4, 5, 6, 8, 11 };
+
+            var model = new TrainingModel<double>(x, y);
+
+            model.Filter(toFilter);
+
+            Assert.Equal(expected.Length, model.Length);
+
+            for (int i = 0; i < expected.Length; i++)
+            {
+                Assert.Equal(expected[i][0], model[i][0]);
+            }
         }
     }
 }
