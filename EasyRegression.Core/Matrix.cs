@@ -9,20 +9,18 @@ namespace EasyRegression.Core
     {
         public Matrix(T[][] data)
         {
-            Length = data.Length;
-            if (Length < 1)
+            if (data.Length < 1)
             { 
                 throw new ArgumentException("Matrix cannot have zero length");
             }
 
-            Width = data[0].Length;
-            if (Width < 1)
+            if (data[0].Length < 1)
             {
                 throw new ArgumentException("Matrix cannot have zero width");
             }
-            for (int i = 1; i < Length; i++)
+            for (int i = 1; i < data.Length; i++)
             {
-                if (data[i].Length != Width)
+                if (data[i].Length != data[0].Length)
                 {
                     throw new ArgumentException("Matrix is not rectangular");
                 }
@@ -34,13 +32,24 @@ namespace EasyRegression.Core
         public T[] this[int index]
         {
             get { return Data[index]; }
-            set { Data[index] = value; }
         }
 
-        public T[][] Data { get; set; }
+        public T[][] Data { get; }
 
-        public int Length { get; set; }
+        public int Length
+        {
+            get
+            {
+                return Data.Length;
+            }
+        }
 
-        public int Width { get; set; }
+        public int Width
+        {
+            get
+            {
+                return Data[0].Length;
+            }
+        }
     }
 }
