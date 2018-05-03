@@ -7,8 +7,8 @@ namespace EasyRegression.Test.Common.Models
 {
     public static class TrainingModelTests
     {
-        public const int _places = 6;
-        public const double _error = 1e-6;
+        public static readonly int _places = 6;
+        public static readonly double _error = 1e-6;
 
         [Fact]
         public static void TestValid()

@@ -50,7 +50,7 @@ namespace EasyRegression.Core.Optimisation
                 !learningRate.IsValidDouble())
             {
                 throw new ArgumentException("Learning rate must be greater than 0");
-            };
+            }
 
             _learn = learningRate;
         }

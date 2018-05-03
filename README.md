@@ -10,7 +10,6 @@
 - Flexible data preprocessing
 - Fast single/multi threaded optimisation
 - Reliable data prediction
-- Useful progress logging
 - Unit test all calculation based methods
 - Solid integration tests
 - Minimal dependancies (currently just Newtonsoft.Json)
@@ -220,45 +219,45 @@ preprocessor.SetDataSmoother(normaliser);
 
 ### Preprocessing
 
-Item | Completed | Tested | Logged
------|-----------|--------|-------
-**Data patching** | | |
-Mean patching | ✓ | ✓ | -
-Median pathing | ✓ | ✓ | -
-Zero patching | ✓ | ✓ | -
-**Data smoothing** | | |
-Normalisation | ✓ | ✓ | -
-Standardisation | ✓ | ✓ | -
-Blank smoother | ✓ | ✓ | -
-**Data expansion** | | |
-Polynomial product expansion | ✓ | ✓ | -
-Polynomial expansion | ✓ | ✓ | -
-Function expansion | ✓ | ✓ | - 
-Intercept expansion | ✓ | ✓ | -
-Blank expander | ✓ | ✓ | -
-**Outlier filtering** | | |
-IQR multiple from median | ✓ | ✓ | -
-Stdev multiple from mean | ✓ | ✓ | -
-Median absolute deviation | ✓ | ✓ | -
-Blank filter | ✓ | ✓ | -
+Item | Completed | Tested
+-----|-----------|-------
+**Data patching** | |
+Mean patching | ✓ | ✓
+Median pathing | ✓ | ✓
+Zero patching | ✓ | ✓
+**Data smoothing** | |
+Normalisation | ✓ | ✓
+Standardisation | ✓ | ✓
+Blank smoother | ✓ | ✓
+**Data expansion** | |
+Polynomial product expansion | ✓ | ✓
+Polynomial expansion | ✓ | ✓
+Function expansion | ✓ | ✓
+Intercept expansion | ✓ | ✓
+Blank expander | ✓ | ✓
+**Outlier filtering** | |
+IQR multiple from median | ✓ | ✓
+Stdev multiple from mean | ✓ | ✓
+Median absolute deviation | ✓ | ✓
+Blank filter | ✓ | ✓
 
 ### Optimisation
 
-Item | Completed | Tested | Logged
------|-----------|--------|-------
-**Linear regression** | | |
-Batch gradient descent | ✓ | - | -
-Stochastic gradient descent | - | - | -
-Mini-batch descent | - | - | -
-Multi threaded BGD | - | - | -
+Item | Completed | Tested
+-----|-----------|-------
+**Linear regression** | |
+Batch gradient descent | ✓ | -
+Stochastic gradient descent | - | -
+Mini-batch descent | - | -
+Multi threaded BGD | - | -
 
 ### Prediction
-Item | Completed | Tested | Logged
------|-----------|--------|-------
-Data prediction | ✓ | ✓ | -
-**Reproducible predictions** | | |
-Config saving | ✓ | ✓ | -
-Config loading | ✓ | ✓ | -
+Item | Completed | Tested
+-----|-----------|-------
+Data prediction | ✓ | ✓
+**Reproducible predictions** | |
+Config saving | ✓ | ✓
+Config loading | ✓ | ✓
 
 ### Integration Testing
 Item | Completed
