@@ -8,6 +8,7 @@
     <PackageLicenseUrl>https://github.com/XACT-RobA/EasyRegression.NET/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/XACT-RobA/EasyRegression.NET</RepositoryUrl>
     <PackageTags>regression;preprocessing;open source; net standard</PackageTags>
+    <PackageReleaseNotes>Added TrainingModel to handle x and y data, and also fixes data filters</PackageReleaseNotes>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
