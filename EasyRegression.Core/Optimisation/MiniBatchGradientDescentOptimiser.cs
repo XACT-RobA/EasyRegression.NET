@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using EasyRegression.Core.Common.Models;
+using System.Linq;
 using EasyRegression.Core.Common.Maths;
 using Newtonsoft.Json;
-using System.Linq;
 
 namespace EasyRegression.Core.Optimisation
 {
-    public class BatchGradientDescentOptimiser : BaseOptimiser
+    public class MiniBatchGradientDescentOptimiser : BaseOptimiser
     {
         private int _length;
         private int _width;
@@ -17,34 +16,40 @@ namespace EasyRegression.Core.Optimisation
 
         private double _learn;
         private double _limit;
+        private int _defaultBatchSize;        
+        private int _batchSize;
         private int _iter;
         private int _maxIter;
         private bool _converged;
         private bool _diverged;
         private List<double> _errors;
-        
+
         private double[] _params;
         private double[] _diffs;
         private double[] _grads;
 
-        public BatchGradientDescentOptimiser()
+        private int[] _rowIndexes;
+        private int[] _iterRowIndexes;
+
+        public MiniBatchGradientDescentOptimiser()
         {
-            _iter = 0;
-            _maxIter = 1000;
             _learn = 0.1;
             _limit = 1e-9;
+            _defaultBatchSize = 100;
+            _iter = 0;
+            _maxIter = 1000;
             _converged = false;
             _diverged = false;
             _errors = new List<double>(_maxIter);
         }
 
-        internal BatchGradientDescentOptimiser(double[] parameters)
-            : this()
+        internal MiniBatchGradientDescentOptimiser(double[] parameters)
+            :this()
         {
             _params = parameters;
         }
 
-       public void SetLearningRate(double learningRate)
+        public void SetLearningRate(double learningRate)
         {
             base.ValidateLearningRate(learningRate);
 
@@ -63,7 +68,7 @@ namespace EasyRegression.Core.Optimisation
             base.ValidateConvergenceLimit(convergenceLimit);
 
             _limit = convergenceLimit;
-        }       
+        }
 
         public override void Train(Matrix<double> x, double[] y)
         {
@@ -72,11 +77,11 @@ namespace EasyRegression.Core.Optimisation
             while(_iter < _maxIter &&
                 !_converged &&
                 !_diverged)
-            {
-                UpdateParameters();
-                UpdateError();
-                _iter++;
-            }
+                {
+                    UpdateParameters();
+                    UpdateError();
+                    _iter++;
+                }
         }
 
         public override double Predict(double[] x)
@@ -108,37 +113,48 @@ namespace EasyRegression.Core.Optimisation
             _x = x.Data;
             _y = y;
 
+            _batchSize = Math.Min(_defaultBatchSize, _length);
+
             _params = new double[_width];
-            _diffs = new double[_length];
+            _diffs = new double[_batchSize];
             _grads = new double[_width];
+
+            _rowIndexes = Enumerable.Range(0, _length)
+                                    .ToArray();
         }
 
         private void UpdateParameters()
         {
-            for (int row = 0; row < _length; row++)
+            _iterRowIndexes = _rowIndexes.Shuffle<int>()
+                                         .Take(_batchSize)
+                                         .ToArray();
+
+            for (int i = 0; i < _batchSize; i++)
             {
+                var row = _iterRowIndexes[i];
                 var product = _x[row].DotProduct(_params);
-                _diffs[row] = product - _y[row];
+                _diffs[i] = product - _y[row];
             }
 
             Array.Clear(_grads, 0, _width);
-            for (int row = 0; row < _length; row++)
+            for (int i = 0; i < _batchSize; i++)
             {
+                int row = _iterRowIndexes[i];
                 for (int column = 0; column < _width; column++)
                 {
-                    _grads[column] += _diffs[row] * _x[row][column];
+                    _grads[column] += _diffs[i] * _x[row][column];
                 }
             }
 
             for (int column = 0; column < _width; column++)
             {
-                _params[column] -= _learn * (_grads[column] / _length);
+                _params[column] -= _learn * (_grads[column] / _batchSize);
             }
         }
 
         private void UpdateError()
         {
-            _errors.Add(_diffs.DotProduct(_diffs) / (2 * _length));
+            _errors.Add(_diffs.DotProduct(_diffs) / (2 * _batchSize));
             if (_iter > 0)
             {
                 var diff = Math.Abs(_errors[_iter] - _errors[_iter - 1]);

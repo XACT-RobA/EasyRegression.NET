@@ -1,3 +1,5 @@
+using System;
+using EasyRegression.Core.Common.Maths;
 using EasyRegression.Core.Common.Models;
 using Newtonsoft.Json.Linq;
 
@@ -34,11 +36,38 @@ namespace EasyRegression.Core.Optimisation
             switch (type)
             {
                 case nameof(BatchGradientDescentOptimiser):
-                    var parameters = ((JArray)json["parameters"]).ToObject<double[]>();
-                    return new BatchGradientDescentOptimiser(parameters);
+                    return new BatchGradientDescentOptimiser(((JArray)json["parameters"]).ToObject<double[]>());
+                case nameof(MiniBatchGradientDescentOptimiser):
+                    return new MiniBatchGradientDescentOptimiser(((JArray)json["parameters"]).ToObject<double[]>());
                 default:
                     return null;
             }
+        }
+
+        protected void ValidateLearningRate(double learningRate)
+        {
+            if (learningRate <= 0 ||
+                !learningRate.IsValidDouble())
+            {
+                throw new ArgumentException("Learning rate must be greater than 0");
+            }
+        }
+
+        protected void ValidateMaxIterations(int maxIterations)
+        {
+            if (maxIterations <= 0)
+            {
+                throw new ArgumentException("Maximum iterations must be greater than 0");
+            };
+        }
+
+        protected void ValidateConvergenceLimit(double convergenceLimit)
+        {
+            if (convergenceLimit <= 0 ||
+                !convergenceLimit.IsValidDouble())
+            {
+                throw new ArgumentException("Convergence limit must be greater than 0");
+            };
         }
     }
 }

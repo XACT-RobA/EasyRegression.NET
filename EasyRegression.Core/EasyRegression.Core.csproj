@@ -1,14 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>EasyRegression.NET</PackageId>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>Rob Anderson</Authors>
-    <Title>An easy to use regression library with flexible data preprocessing</Title>
+    <Title>EasyRegression.NET</Title>
+    <Description>An easy to use regression library with flexible data preprocessing</Description>
     <PackageProjectUrl>https://github.com/XACT-RobA/EasyRegression.NET</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/XACT-RobA/EasyRegression.NET/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/XACT-RobA/EasyRegression.NET</RepositoryUrl>
     <PackageTags>regression;preprocessing;open source; net standard</PackageTags>
-    <PackageReleaseNotes>Added TrainingModel to handle x and y data, and also fixes data filters</PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
