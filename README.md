@@ -10,8 +10,8 @@
 - Flexible data preprocessing
 - Fast single/multi threaded optimisation
 - Reliable data prediction
+- Good data clustering
 - Unit test all calculation based methods
-- Solid integration tests
 - Minimal dependancies (currently just Newtonsoft.Json)
 
 ## Installation
@@ -254,14 +254,10 @@ Multi threaded BGD | - | -
 ### Prediction
 Item | Completed | Tested
 -----|-----------|-------
-Data prediction | ✓ | ✓
+Linear regression | ✓ | ✓
+Logistic regression | - | -
+K-means clustering | - | -
+
 **Reproducible predictions** | |
 Config saving | ✓ | ✓
 Config loading | ✓ | ✓
-
-### Integration Testing
-Item | Completed
------|----------
-Preprocessing | - | -
-Optimisation | - | -
-Prediction | - | -
