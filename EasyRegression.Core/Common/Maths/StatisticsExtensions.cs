@@ -277,16 +277,18 @@ namespace EasyRegression.Core.Common.Maths
 
         public static IEnumerable<t> Shuffle<t>(this t[] input)
         {
-            var indexes = input.Select((x, i) => i).ToList();
+            return input.Shuffle(new Random());
+        }
+
+        public static IEnumerable<t> Shuffle<t>(this t[] input, Random rnd)
+        {
+            var indexes = Enumerable.Range(0, input.Length);
             var taken = new List<int>();
 
-            var rnd = new Random();
-
             List<int> remaining; 
-
             while ((remaining = indexes.Except(taken).ToList()).Count > 0)
             {
-                var index = rnd.Next(remaining.Count);
+                var index = remaining[rnd.Next(remaining.Count)];
                 taken.Add(index);
                 yield return input[index];
             }
