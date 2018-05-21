@@ -49,7 +49,7 @@ double[] y;
 var trainingData = new TrainingModel<double>(x, y);
 
 // Create an instance of the LinearRegressionEngine class with no parameters
-var regression = new LinearRegressionEngine();
+var regressionEngine = new LinearRegressionEngine();
 
 // Train the linear regression engine using real data
 regressionEngine.Train(trainingData);
