@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>EasyRegression.NET</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Authors>Rob Anderson</Authors>
     <Title>EasyRegression.NET</Title>
     <Description>An easy to use regression library with flexible data preprocessing</Description>

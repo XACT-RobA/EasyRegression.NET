@@ -1,5 +1,5 @@
 # EasyRegression.NET
-## v1.0.3
+## v1.0.4
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Build Status](https://travis-ci.org/XACT-RobA/EasyRegression.NET.svg?branch=master)](https://travis-ci.org/XACT-RobA/EasyRegression.NET) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/38176ef1f92440199875caf61eb70121)](https://www.codacy.com/app/XACT-RobA/EasyRegression.NET?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=XACT-RobA/EasyRegression.NET&amp;utm_campaign=Badge_Grade)
 
@@ -49,7 +49,7 @@ double[] y;
 var trainingData = new TrainingModel<double>(x, y);
 
 // Create an instance of the LinearRegressionEngine class with no parameters
-var regression = new LinearRegressionEngine();
+var regressionEngine = new LinearRegressionEngine();
 
 // Train the linear regression engine using real data
 regressionEngine.Train(trainingData);
@@ -246,9 +246,9 @@ Blank filter | ✓ | ✓
 Item | Completed | Tested
 -----|-----------|-------
 **Linear regression** | |
-Batch gradient descent | ✓ | -
+Batch gradient descent | ✓ | ✓
 Stochastic gradient descent | - | -
-Mini-batch descent | ✓ | -
+Mini-batch descent | ✓ | ✓
 Multi threaded BGD | - | -
 
 ### Prediction
@@ -257,7 +257,6 @@ Item | Completed | Tested
 Linear regression | ✓ | ✓
 Logistic regression | - | -
 K-means clustering | - | -
-
 **Reproducible predictions** | |
 Config saving | ✓ | ✓
 Config loading | ✓ | ✓
