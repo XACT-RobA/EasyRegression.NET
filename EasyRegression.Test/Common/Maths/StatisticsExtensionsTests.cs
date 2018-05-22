@@ -452,5 +452,56 @@ namespace EasyRegression.Test.Common.Maths
                 Assert.Equal(expected, actual[i]);
             }
         }
+
+        // Shuffle
+
+        [Fact]
+        public static void TestShuffleWithSeed()
+        {
+            var arr = new[] { 1, 2, 3, 4, 5 };
+
+            var shuffled0 = arr.Shuffle(new Random(0))
+                               .ToArray();
+
+            var shuffled1 = arr.Shuffle(new Random(1))
+                               .Take(3)
+                               .ToArray();
+
+            var expected0 = new[] { 4, 5, 3, 2, 1 };
+
+            var expected1 = new[] { 2, 1, 4 };
+
+            Assert.Equal(expected0.Length, shuffled0.Length);
+
+            for (int i = 0; i < expected0.Length; i++)
+            {
+                Assert.Equal(expected0[i], shuffled0[i]);
+            }
+
+            Assert.Equal(expected1.Length, shuffled1.Length);
+
+            for (int i = 0; i < expected1.Length; i++)
+            {
+                Assert.Equal(expected1[i], shuffled1[i]);
+            }
+        }
+
+        [Fact]
+        public static void TestShuffle()
+        {
+            var arr = new[] { 1, 2, 3, 4, 5 };
+
+            var shuffled = arr.Shuffle()
+                              .ToArray();
+
+            Assert.Equal(arr.Length, shuffled.Length);
+            Assert.Equal(arr.Length, shuffled.Distinct().Count());
+
+            for (int i = 0; i < shuffled.Length; i++)
+            {
+                var value = shuffled[i];
+                Assert.True(arr.Contains(value));
+            }
+        }
     }
 }

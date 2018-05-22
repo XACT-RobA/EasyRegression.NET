@@ -272,5 +272,26 @@ namespace EasyRegression.Core.Common.Maths
                         .Select((x, i) => input.ColumnQuartile(i))
                         .ToArray();
         }
+
+        // Shuffle
+
+        public static IEnumerable<t> Shuffle<t>(this t[] input)
+        {
+            return input.Shuffle(new Random());
+        }
+
+        public static IEnumerable<t> Shuffle<t>(this t[] input, Random rnd)
+        {
+            var indexes = Enumerable.Range(0, input.Length);
+            var taken = new List<int>();
+
+            List<int> remaining; 
+            while ((remaining = indexes.Except(taken).ToList()).Count > 0)
+            {
+                var index = remaining[rnd.Next(remaining.Count)];
+                taken.Add(index);
+                yield return input[index];
+            }
+        }
     }
 }

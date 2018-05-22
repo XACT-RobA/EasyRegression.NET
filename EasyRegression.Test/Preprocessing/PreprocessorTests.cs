@@ -4,9 +4,9 @@ using EasyRegression.Core.Common.Models;
 using EasyRegression.Core.Preprocessing;
 using Xunit;
 
-namespace EasyRegression.Test.Integration
+namespace EasyRegression.Test.Preprocessing
 {
-    public static class PreprocessorIntegrationTests
+    public static class PreprocessorTests
     {
         private const int _places = 6;
         private const double _nan = double.NaN;

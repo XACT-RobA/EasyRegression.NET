@@ -18,6 +18,16 @@ namespace EasyRegression.Core
             _optimiser = new BatchGradientDescentOptimiser();
         }
 
+        public IPreprocessor GetPreprocessor()
+        {
+            return _preprocessor;
+        }
+
+        public IOptimiser GetOptimiser()
+        {
+            return _optimiser;
+        }
+
         public void SetPreprocessor(IPreprocessor preprocessor)
         {
             _preprocessor = preprocessor ?? _preprocessor;
