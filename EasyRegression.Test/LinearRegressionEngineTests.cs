@@ -12,7 +12,7 @@ namespace EasyRegression.Test.Integration
         [Fact]
         public static void TestDefault()
         {
-            var trainingData = new TrainingModel<double>(OptimisationTestData.TrainingXData, OptimisationTestData.TrainingYData);
+            var trainingData = OptimisationTestData.GetTrainingModel();
 
             var engine = new LinearRegressionEngine();
             engine.Train(trainingData);
@@ -25,7 +25,7 @@ namespace EasyRegression.Test.Integration
         [Fact]
         public static void TestHigherLearning()
         {
-            var trainingData = new TrainingModel<double>(OptimisationTestData.TrainingXData, OptimisationTestData.TrainingYData);
+            var trainingData = OptimisationTestData.GetTrainingModel();
 
             var optimiser = new BatchGradientDescentOptimiser();
             optimiser.SetLearningRate(1.0);
@@ -42,7 +42,7 @@ namespace EasyRegression.Test.Integration
         [Fact]
         public static void TestSerialise()
         {
-            var trainingData = new TrainingModel<double>(OptimisationTestData.TrainingXData, OptimisationTestData.TrainingYData);
+            var trainingData = OptimisationTestData.GetTrainingModel();
 
             var engine = new LinearRegressionEngine();
             engine.Train(trainingData);

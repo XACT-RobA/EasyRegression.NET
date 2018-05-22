@@ -15,8 +15,7 @@ namespace EasyRegression.Core.Optimisation
         private double[] _y;
 
         private double _learn;
-        private double _limit;
-        private int _defaultBatchSize;        
+        private double _limit;        
         private int _batchSize;
         private int _iter;
         private int _maxIter;
@@ -31,22 +30,30 @@ namespace EasyRegression.Core.Optimisation
         private int[] _rowIndexes;
         private int[] _iterRowIndexes;
 
+        private Random _rng;
+
         public MiniBatchGradientDescentOptimiser()
         {
             _learn = 0.1;
             _limit = 1e-9;
-            _defaultBatchSize = 100;
+            _batchSize = 100;
             _iter = 0;
             _maxIter = 1000;
             _converged = false;
             _diverged = false;
             _errors = new List<double>(_maxIter);
+            _rng = new Random();
         }
 
         internal MiniBatchGradientDescentOptimiser(double[] parameters)
             :this()
         {
             _params = parameters;
+        }
+
+        public void SetRandom(Random rng)
+        {
+            _rng = rng;
         }
 
         public void SetLearningRate(double learningRate)
@@ -68,6 +75,13 @@ namespace EasyRegression.Core.Optimisation
             base.ValidateConvergenceLimit(convergenceLimit);
 
             _limit = convergenceLimit;
+        }
+
+        public void SetBatchSize(int batchSize)
+        {
+            base.ValidateBatchSize(batchSize);
+
+            _batchSize = batchSize;
         }
 
         public override void Train(Matrix<double> x, double[] y)
@@ -113,7 +127,10 @@ namespace EasyRegression.Core.Optimisation
             _x = x.Data;
             _y = y;
 
-            _batchSize = Math.Min(_defaultBatchSize, _length);
+            if (_batchSize > _length)
+            {
+                _batchSize = _length;
+            }
 
             _params = new double[_width];
             _diffs = new double[_batchSize];
@@ -125,7 +142,7 @@ namespace EasyRegression.Core.Optimisation
 
         private void UpdateParameters()
         {
-            _iterRowIndexes = _rowIndexes.Shuffle<int>()
+            _iterRowIndexes = _rowIndexes.Shuffle<int>(_rng)
                                          .Take(_batchSize)
                                          .ToArray();
 

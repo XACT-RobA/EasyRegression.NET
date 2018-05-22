@@ -69,5 +69,13 @@ namespace EasyRegression.Core.Optimisation
                 throw new ArgumentException("Convergence limit must be greater than 0");
             };
         }
+
+        protected void ValidateBatchSize(int batchSize)
+        {
+            if (batchSize <= 0)
+            {
+                throw new ArgumentException("Batch size must be greate than 0");
+            }
+        }
     }
 }

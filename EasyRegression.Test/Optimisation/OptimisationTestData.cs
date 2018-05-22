@@ -1,7 +1,14 @@
+using EasyRegression.Core;
+
 namespace EasyRegression.Test.Optimisation
 {
     public static class OptimisationTestData
     {
+        public static TrainingModel<double> GetTrainingModel()
+        {
+            return new TrainingModel<double>(TrainingXData, TrainingYData);
+        }
+
         // data from:
         // http://openclassroom.stanford.edu/MainFolder/DocumentPage.php?course=MachineLearning&doc=exercises/ex3/ex3.html
         public static double[][] TrainingXData
