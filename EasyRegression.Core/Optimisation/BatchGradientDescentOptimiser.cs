@@ -38,10 +38,23 @@ namespace EasyRegression.Core.Optimisation
             _errors = new List<double>(_maxIter);
         }
 
-        internal BatchGradientDescentOptimiser(double[] parameters)
+        internal BatchGradientDescentOptimiser(
+            double[] parameters,
+            int iter,
+            bool converged,
+            bool diverged,
+            double[] errors,
+            double limit,
+            int maxIter)
             : this()
         {
             _params = parameters;
+            _iter = iter;
+            _converged = converged;
+            _diverged = diverged;
+            _errors = new List<double>(errors);
+            _limit = limit;
+            _maxIter = maxIter;
         }
 
        public void SetLearningRate(double learningRate)
@@ -162,6 +175,12 @@ namespace EasyRegression.Core.Optimisation
             {
                 optimiserType = GetOptimiserType(),
                 parameters = _params,
+                iter = _iter,
+                converged = _converged,
+                diverged = _diverged,
+                errors = GetCostProgression(),
+                limit = _limit,
+                maxIter = _maxIter,
             };
             return JsonConvert.SerializeObject(data);
         }

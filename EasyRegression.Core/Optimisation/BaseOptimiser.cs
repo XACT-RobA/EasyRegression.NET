@@ -36,7 +36,14 @@ namespace EasyRegression.Core.Optimisation
             switch (type)
             {
                 case nameof(BatchGradientDescentOptimiser):
-                    return new BatchGradientDescentOptimiser(((JArray)json["parameters"]).ToObject<double[]>());
+                    return new BatchGradientDescentOptimiser(
+                        ((JArray)json["parameters"]).ToObject<double[]>(),
+                        json["iter"].ToObject<int>(),
+                        json["converged"].ToObject<bool>(),
+                        json["diverged"].ToObject<bool>(),
+                        ((JArray)json["errors"]).ToObject<double[]>(),
+                        json["limit"].ToObject<double>(),
+                        json["maxIter"].ToObject<int>());
                 case nameof(MiniBatchGradientDescentOptimiser):
                     return new MiniBatchGradientDescentOptimiser(((JArray)json["parameters"]).ToObject<double[]>());
                 default:
