@@ -94,5 +94,23 @@ namespace EasyRegression.Core
 
             UpdateXAndY(matrix, filteredY.ToArray());
         }
+
+        public static TrainingModel<T> Combine(params TrainingModel<T>[] models)
+        {
+            var totalLength = models.Select(m => m.Length).Sum();
+            var xData = new List<T[]>(totalLength);
+            var yData = new List<double>(totalLength);
+
+            for (int i = 0; i < models.Length; i++)
+            {
+                for (int j = 0; j < models[i].Length; j++)
+                {
+                    xData.Add(models[i].X[j]);
+                    yData.Add(models[i].Y[j]);
+                }
+            }
+
+            return new TrainingModel<T>(xData.ToArray(), yData.ToArray());
+        }
     }
 }
