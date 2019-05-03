@@ -23,7 +23,7 @@
 - Clone this repository: `git clone https://github.com/XACT-RobA/EasyRegression.NET.git`
 - Restore dependancies: `dotnet restore`
 - Build source: `dotnet build`
-- Run tests: `dotnet test EasyResression.Test/`
+- Run tests: `dotnet test EasyRegression.Test/`
 
 #### To create a release version with dependancies:
 - `dotnet publish EasyRegression.Core -c Release`
